@@ -1,0 +1,180 @@
+说明：
+    整合：codemirror2.25
+    整合：zendcoding
+    增加：zendcoding style代码优化，html代码补全优化
+    增加：服务器端保存操作
+    增加：统一工具栏(优化codemirror的查找替换，代码格式化，table对齐等功能)
+    增加：字体调整，代码编写主题。
+
+快捷键：
+ctrl+a	全选
+ctrl+l	选中当前行
+ctrl+c	复制
+ctrl+x	剪切
+ctrl+v	粘贴
+-------------------
+"Ctrl-Backspace": "delWordLeft",
+"Ctrl-F": "find",
+"Ctrl-G": "findNext",
+"Shift-Ctrl-G": "findPrev",
+"Shift-Ctrl-F": "replace",
+"Shift-Ctrl-R": "replaceAll",
+"Ctrl-[": "indentLess",
+"Ctrl-]": "indentMore",
+
+ctrl+s	保存
+ctrl+z	撤销   redo
+ctrl+y	反撤销 undo
+ctrl+/	注释&反注释(选中即可注释 ，停留行即可反注释)
+shift+tab	缩进格式化(调整table)
+alt+f8		代码格式化(暂时支持html js css)
+--------------------------------
+End		跳到当前行结尾
+home		行首
+ctrl+home	文档首部
+ctrl+End	跳到文档结尾
+ctrl+shift+end	选中当前到结尾
+shift+end	选中当前到行尾
+shift+上下左右	选中
+上下左右	光标按照字符跳转。
+ctrl +左右	光标按照单词跳转
+
+home和end相同
+1.支持insert插入模式
+2.支持选中table批量缩进功能，table缩进，ctrl+table反缩进
+
+-------------------------------
+zendCoding
+  代码主页：http://code.google.com/p/zen-coding/wiki/ZenHTMLSelectorsEn
+  说明：整合zendcoding在线版。提供编辑快捷键支持。
+	css代码补全增强，html代码补全增强
+
+  快捷键：
+	html代码补全
+	html代码块中，按下Tab键自动填充为标签。
+	----------------------------
+	div		<div></div>
+	div.aa		<div class="aa"></div>
+	div#aa		<div id="aa"></div>
+	div.a.b#c	<div class="a b" id="c"></div>
+	div#s$*3	<div id='s1'></div><div id='s2'></div><div id='s3'></div>
+	div.a>div.b	<div class="a"><div class="b"></div></div>
+	div.a+div#b	<div class='a'></div><div id="b"></div>
+	div.a>(div.b+div.c)<div class='a'><div class='b'></div><div class='c'></div></div>
+	div[action=aaa].b		<div action="aaa" class="b"></div>
+	input[type=text][name=b].a#	<input type="text" name="b" class="a" id="" />
+	ul+				<ul><li></li></ul>
+	其他所有html标签均支持以上规则。并可以混合书写
+
+	html		文档模型所有常用代码
+	meta:utf	<meta http-equiv="Content-Type"content="text/html;charset=UTF-8" />
+	_css(或者link)	<link rel="stylesheet" type="text/css" href="" />
+	_js		<script language="JavaScript" src=""></script>
+	style		<style type="text/css"></style>
+	script		<script type="text/javascript"></script>
+	_clear		<div style="clear:both"></div>
+	form增强：
+	input		<input type=""/>
+	_input		<input type="" name="" value="" />
+	_text		<input type="text" name="" value="" class="" />
+	_button		<input type="button" name="" value="" class="" />
+	_submit		<input type="submit" value="" class="" />
+	_reset		<input type="reset" value="重置" class="" />
+	_password	<input type="password" name="" class="" />
+	_hidden		<input type="hidden" name="" value="" />
+	_button		<input type="button" name="" value="" class="" />
+
+	css代码补全支持：举例说明：
+	----------------------------
+	p	padding:;
+	pl	padding-left:;
+	pr	padding-right:;
+	...
+	m	margin:;
+	ml	margin-left:;
+	mt	margin-top:;
+	...
+	b	border:1px solid #;
+	bot	border-top:1px solid #;
+	bol	border-left:
+	...
+	po	position:;
+	por	position:relative;
+	poa	position:absolution;
+	fl	float:left
+	fr	float:right
+	db	display:block;
+	di	display:inline;
+	tac	text-align:center;
+	tar	text-align:right;
+	tal	text-align:left;
+	cb	clear:both;
+	t	top:;
+	b	bottom:;
+	l	left:;
+	r	right:;
+	c	color:;
+	f	font:;
+	fs	font-size:;
+	ff	font-family:;
+	……其他皆遵循以上规则。
+	----------------------------
+
+	混合代码支持：增加css自动补全支持
+	    html中css补全屏蔽，不起作用
+	    style代码块进行了检测，屏蔽html代码规则。
+
+	
+
+===========================================================
+最常用
+----------------------------
+html----补全&自定义Editplus补全  下划线
+css ----补全&自定义补全。属性+值合并，zendCoding为冒号隔开。左右缩写
+link	link css
+script	javascript
+meta:utf
+……
+
+div.s	<div class="s"></div>
+div#s	<div id="s"></div>	
+div#s.s	<div id="s" class="s"></div>
+div.a.s	<div class="a s"></div>
+
+
+div>div>a		<div><div><a href=""></a></div></div>
+table>tr>td		<table><tr><td></td></tr></table>
+ul#name>li.item		<ul id="name"><li class="item"></li></ul>
+td[colspan=2]		<td colspan="2"></td>
+span[title="Hello" rel]	<span title="Hello" rel=""></span>
+p.title|e		&lt;p class="title"&gt;&lt;/p&gt;
+
+
+div.s$*2		<div id="s1"></div><div id="s2"></div>
+select>option#item-$*3	
+			<select>
+			    <option id="item-1"></option>
+			    <option id="item-2"></option>
+			    <option id="item-3"></option>
+			</select>
+
+ul+			<ul><li></li></ul>
+table+			<table><tr><td></td></tr></table>
+dl+			<dl><dt></dt><dd></dd></dl>
+
+div#name>p.one+p.two	<div id="name"><p class="one"></p><p class="two"></p></div>
+
+
+div.main>(div.top>div.top+div.title)+(div.body>div.left+div.right)+div.footer
+---->
+<div class="main">
+    <div class="top">
+	<div class="top"></div>
+	<div class="title"></div>
+    </div>
+    <div class="body">
+	<div class="left"></div>
+	<div class="right"></div>
+    </div>
+    <div class="footer"></div>
+</div>

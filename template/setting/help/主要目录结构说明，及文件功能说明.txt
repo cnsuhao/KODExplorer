@@ -1,0 +1,72 @@
+
+主要目录结构说明，及文件功能说明
+-------------
+├  ajax.php			//统一控制层,处理各种数据请求以及操作
+│  config.php			//配置文件
+│  index.php			//主入口，url统一分发中心
+├─data			//数据相关存放目录(序列化数据)
+│      history.php		//历史记录
+│      password.php		//用户名密码
+│      skin_media.php		//播放器对应高宽比例
+├─include			//模型层目录，涵盖几乎所有的系统相关，大的逻辑模块函数以及类
+│  │  arraysql.class.php	//文本模拟数据库操作类
+│  │  common.function.php	//通用函数集合
+│  │  ext.function.php	//扩展名关联js高亮函数
+│  │  file.function.php	//文件操作系统封装集合
+│  │  history.class.php	//历史记录操作类
+│  │  login.php		//登录退出操作
+│  │  login_check.php		//登录检验
+│  ├─upload			//文件上传单独模块
+│  └─zip			//解压缩
+│          unZip.class.php	//解压操作类
+│          zip.class.php	//压缩操作类
+├─static			//静态文件目录，包含图片，js，css
+│  ├─images			//代码中img包含的图片,css中的图片跟随css目录
+│  ├─js			//js目录
+│  │  │  common.js		//常用js操作函数集合
+│  │  │  framefunc.js	//子框架间相互通信函数，跨frame的js调用实现
+│  │  │  jquery-1.7.js	//jquery 库
+│  │  │  rightkey.js		//右键操作js
+│  │  ├─artDialog		//对话框js插件
+│  │  ├─cloud		//退出时，webGL用到的js
+│  │  ├─cmp4		//cmp4媒体播放插件
+│  │  ├─codemirror		//代码高亮js插件
+│  │  └─ztree		//树目录插件
+│  ├─style			//css目录，根目录css为通用css以及各个view的css
+│  │  │  button.css		//
+│  │  │  code_edit.css	//
+│  │  │  common.css		//文件列表css
+│  │  │  header.css		//头部地址栏操作css
+│  │  │  left.css		//左边树目录css
+│  │  │  scroll.css		//通用css,css3 滚动条
+│  │  │  setting.css		//设置view用到的css
+│  │  ├─images		//通用css中引用到的图片
+│  │  │  └─toolbar		//工具栏css调用的图片
+│  │  └─skin		//文件列表主题风格，目录结构都如同default一样
+│  │      ├─default
+│  │      │  │  file_icon.css//大图标列表css
+│  │      │  │  file_list.css//列表模式css
+│  │      │  └─images	//用到的图片
+│  │      │      └─file	//大图标列表css用到的图片
+│  │      │      └─file_16	//列表模式css用到的图片
+│  │      ├─kawayi
+│  │      ├─mac		//四套皮肤
+│  │      └─simple
+│  └─swf			//一些flash放置的目录
+└─template			//view层模板放置目录
+    ├─fileinfo		//文件属性模板
+    │      fileinfo.php	//文件属性模板
+    │      pathinfo.php	//文件夹属性模板
+    ├─fileopen		//文件对应打开模板
+    │      edit_code.php	//文档编辑模板
+    │      html.php		//html文档以及未知文档打开模板
+    │      media.php		//音视频播放器模板
+    ├─frame			//各个功能模块对应模板
+    │      frame.php		//主框架view 
+    │      header.php		//头部框架view
+    │      left.php		//左边树目录view
+    │      login.php		//登录view
+    │      login_out.php	//退出view
+    │      main.php		//文件列表目标。
+    │      setting.php		//系统设置模板
+    └─setting			//系统设置子功能模版

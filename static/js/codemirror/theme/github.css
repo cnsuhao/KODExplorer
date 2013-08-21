@@ -1,0 +1,38 @@
+.cm-s-github{
+	font:14px Consolas, "Liberation Mono", Courier, monospace !important;
+	line-height:1.3em;
+}
+.cm-s-github .CodeMirror-gutter {
+	background: #f2f2f2;
+	border-right: solid #ccc 1px;
+	padding:0 3px 0 5px;
+}
+.cm-s-github .cm-searching{background: #ff9;background: rgba(255, 255, 0,0.5);}
+.cm-s-github .CodeMirror-cursor { border-left: 2px solid #226 !important; }
+.cm-s-github .CodeMirror-activeline-background{background:#ffc !important;} /* 当前行背景色 */
+.cm-s-github div.CodeMirror-selected {background: #BDD5FC !important;}
+.cm-s-github .CodeMirror-matchingbracket {
+	border-bottom: 2px solid #400;
+	color:#000 !important;;
+}
+
+.cm-s-github span.cm-meta {color: #FF1717;}
+.cm-s-github span.cm-keyword { line-height: 1em; font-weight: bold; color: #7F0055; }
+.cm-s-github span.cm-atom {color: #f00;}
+.cm-s-github span.cm-number {color: #099;}
+.cm-s-github span.cm-def {color: #00f;}
+.cm-s-github span.cm-variable {color: #008080 !important;}
+.cm-s-github span.cm-variable-2 {color: #008080;}
+.cm-s-github span.cm-variable-3 {color: #008080;}
+.cm-s-github span.cm-property {color: #f66;}
+.cm-s-github span.cm-operator {color: #22c;}
+.cm-s-github span.cm-comment {color: #aaa;}
+.cm-s-github span.cm-string {color: #d14;}
+.cm-s-github span.cm-string-2 {color: #d14;}
+.cm-s-github span.cm-error {color: #f00;}
+.cm-s-github span.cm-qualifier {color: #555;}
+.cm-s-github span.cm-builtin {color: #30a;}
+.cm-s-github span.cm-bracket {color: #cc7;}
+.cm-s-github span.cm-tag {color: #00f;}
+.cm-s-github span.cm-attribute {color: #f06;}
+.cm-s-github span.cm-link {color: #219;}

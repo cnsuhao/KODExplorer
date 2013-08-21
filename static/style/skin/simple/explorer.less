@@ -1,0 +1,149 @@
+@tree_background:#f3f3f3;
+
+/* 颜色微调【同样颜色灰度值调节】 */
+::-webkit-scrollbar-track-piece{background-color:#f5f5f5;border-left:1px solid #d2d2d2}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background-color:#c2c2c2;background-clip:padding-box;border:1px solid #979797;min-height:28px}
+::-webkit-scrollbar-thumb:hover{border:1px solid #636363;background-color:#929292}
+
+textarea,input,pre{.user-select(auto) }
+body{.user-select(none)}
+.frame-header{
+    height:49px;position: absolute;top:@navbar_height;width:100%;
+    background:#fff url(./images/bg.gif) 0px 5px repeat-x;
+    border-bottom:1px solid #ddd;
+    .nouse{cursor: default;background:#eee;}
+    .nouse:hover{
+        border:1px solid #ddd;
+        margin-right:0px;padding-right:10px;
+        background:#eee;
+        .box-shadow(none);
+        .border-radius(2px);
+    }
+    .header-content {
+        padding-top: 10px;
+        img{border:none; width:18px;height:18px;}
+        a{display:block;float:left;height:19px;}
+        .font-icon{font-size: 18px;line-height: 20px;padding-right:4px;color: #888;}
+        .header-left{float: left;width: 170px;padding-left: 35px;}
+        .header-middle{
+            position:absolute;left:200px;top:10px;right:0px;
+            #yarnball{/* Yarnball 地址栏操作 */
+                height:27px;width:50%;cursor:text;
+                float:left;border:1px solid #ddd;
+                box-shadow:#e6e6e6 0px 0px 20px inset;
+                background:#f8f8f8 url(./images/bg.gif) 0px -2px repeat-x;                
+                .yarnball {
+                    list-style: none;margin: 0;margin-top:-1px;padding: 0;
+                    .yarnlet {
+                        display: inline;
+                        a,a:link,a:visited{color: #666;display: inline-block;font-size: 12px;padding: 5px 15px 10px 20px;margin-left: -15px;position: relative;text-decoration: none;vertical-align:top;}
+                        &.first a{margin-left: 0px;padding-left: 8px;}
+                        a {background-image: url(./images/ybutton.png);background-repeat: no-repeat;background-position: 100% 0;cursor: pointer;}
+                        &:hover a{background-position: 100% -48px;color: #333;}
+                        &:active a {background-position: 100% -96px;color: #333;}
+                        .left-yarn {background: url(./images/ybutton.png) no-repeat;margin-left: -17px;padding: 5px 6px 11px 4px;z-index: 11;padding-top:5px~'\9';}
+                        a:hover .left-yarn {background-position: 0 -48px;}
+                        a:active .left-yarn {background-position: 0 -96px;}          
+                    }
+                }
+            }
+            #yarnball_input{
+                height:27px;width:50%;cursor:text;float:left;
+                border:1px solid #ddd;display:none;
+                input{
+                    &.path{
+                        border:none;height:27px;display: block;width: 100%;         
+                        padding-left:10px;padding-right: 10px;                        
+                        text-shadow:1px 1px 3px #cce;color:#888;
+                        box-shadow:#e6e6e6 0px 0px 20px inset;
+                        background:#f8f8f8 url(./images/bg.gif) 0px -2px repeat-x;
+                    }
+                    &:focus{outline: none;}
+                }
+            }
+        }
+        .header-right{
+            position: absolute;right:20px;top:10px;
+            a.logout,a.setting{}
+            a.logout:hover,a.setting:hover{}
+        }
+    }
+}
+    
+.frame-main{
+    position: absolute;left: 0;right: 0;top: 90px;bottom: 0;        
+    .frame-left{
+        position: absolute;left: 0;top: 0;bottom: 0;width: 199px;overflow: auto;border-right:1px solid #ddd;
+        background:#fff url(./images/left.jpg) bottom repeat-x;background-attachment: fixed;
+    };
+    .frame-resize{
+        width:10px;cursor:col-resize;z-index:10;background:none;
+        position: absolute;left: 195px;top: 0;bottom: 0;overflow: hidden;
+        &.active{background: #ddd;}
+    }
+    .frame-right{
+        left: 200px;right: 0;position: absolute;top: 0;bottom: 0;overflow: auto;
+        .frame-right-main{
+            .font-icon{text-shadow: 0 0 1px;line-height: 16px;padding: 0 2px;font-size: 14px;}
+            .tools{
+                z-index: 100;
+                height:33px;
+                background:#f6f6f6;
+                border-bottom:1px solid #ddd;                
+                .box-shadow(1px 2px 15px  #eee);
+                a.left:hover,a.middle:hover{margin-right:2px;padding-right:8px;}
+                a.this{background:#eee;cursor: default;
+                    &:hover{
+                        margin-right:0px;padding-right:10px;
+                        border:1px solid #ddd;
+                        background:#eee;
+                        .box-shadow(0 2px 8px rgba(0, 0, 0, 0.05));
+                        .border-radius(2px);
+                    } 
+                }
+                .tools-left{
+                    .font-icon{padding-right: 5px;}
+                    float:left;margin:4px 0 0 10px;
+                    span.msg{padding-left:20px;display:none;font-size:14px;color:#666;}
+                    span.msg img{padding-left:6px;}
+                }
+                .tools-right{
+                    float: right;margin:4px 20px 0 0;
+                    .icon{background:url(./images/iocn.png) -248px -462px no-repeat;padding:5px 8px;}
+                    .list{background:url(./images/iocn.png) -340px -462px no-repeat;padding:5px 8px;}
+                    .theme{background:url(./images/skin.png) 0 no-repeat;padding:5px 6px;}
+                    .fullscreen{background:url(./images/fullscreen.png) 0 no-repeat;padding:5px 6px;}
+                }
+            }
+        }
+        .theme_list{
+            z-index: 50;top: 20px;right: 20px;
+            position: absolute;
+            display:none;
+            border:1px solid #aaa;
+            color:#666;width:100px;
+            background:#fff;
+            .box-shadow(1px 2px 10px #888);
+
+            .list{
+                list-style-type: none;
+                padding:3px 0 3px 8px;
+                border-top:1px solid #fff;
+                border-bottom:1px solid #eee;
+                line-height:22px;
+                cursor:pointer;
+                margin-left: -40px;
+                letter-spacing:1px;
+            };
+            .themehover,.this{
+                background:#eee;color:#224;
+                border-top:1px solid #ccc;
+                border-bottom:1px solid #ccc;
+            }
+        }
+        .bodymain{position: absolute;zoom: 1;z-index: 0;top: 35px;bottom: 0;left: 0;
+            overflow: auto;width: 100%;
+        }
+    }
+}

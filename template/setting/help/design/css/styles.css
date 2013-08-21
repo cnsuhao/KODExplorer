@@ -1,0 +1,30 @@
+*{color: #666;font-size: 1em;font-family:"微软雅黑";}
+html { overflow-y: hidden;overflow-x:hidden; }
+body{font-size:15px;overflow-x:hidden;overflow-y:hidden;overflow:hidden;}
+
+#content { background: #aaa }
+.contenu {width: 900px;margin: 0 auto;margin-top: 100px;}
+.contenu h1 img{border:1px solid #ddd;}
+.contenu h2 {display:block;width:100;margin:0 auto;background:#eee;border:1px dashed #ddd;}
+.contenu h2 img{width:auto;height:auto;display:inline;text-align:center !important;margin:0 auto;float:left;border-right:1px dashed #ddd;margin-right:10px;}
+.houseNavigationButton{cursor:pointer;background:rgba(200,200,200,0.6) !important;}
+.houseNavigationButton:hover{cursor:pointer;background:rgba(200,200,200,0.8) !important;}
+
+.contenu p { line-height: 24px;padding:10px; }
+.contenu p.text{padding-left:20px;}
+
+#house0 { background: #fff;text-align: center;}
+#house0 p {width: 400px; margin: 0 auto;margin-bottom: 20px;}
+#house0 h1 { margin-bottom: 100px }
+
+#house1,#house3,#house5,#house7,#house9 { background: #f6f6f6 }
+#house1 h2,#house3 h2,#house5 h2,#house7 h2,#house9 h2 { margin-bottom: 10px }
+
+#house2,#house4,#house6,#house8 { background: #fcfcfc }
+#house2 h2,#house4 h2,#house6 h2,#house8 h2{ margin-bottom: 10px }
+
+
+#housePrev,#houseNext{text-decoration:none;background:#7EC7E7 !important;color:#fff;font-weight:800;}
+#houseNext{border-left:1px solid #eee;}
+#housePrev:hover,#houseNext:hover{background:#9df !important;color:#888;}
+
