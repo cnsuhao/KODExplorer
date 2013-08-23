@@ -1,4 +1,5 @@
-CodeMirror.validate = (function() {
+(function() {
+  "use strict";
   var GUTTER_ID = "CodeMirror-lint-markers";
   var SEVERITIES = /^(?:error|warning)$/;
 
@@ -52,14 +53,16 @@ CodeMirror.validate = (function() {
     this.onMouseOver = function(e) { onMouseOver(cm, e); };
   }
 
-  function parseOptions(options) {
+  function parseOptions(cm, options) {
     if (options instanceof Function) return {getAnnotations: options};
-    else if (!options || !options.getAnnotations) throw new Error("Required option 'getAnnotations' missing (lint addon)");
+    if (!options || options === true) options = {};
+    if (!options.getAnnotations) options.getAnnotations = cm.getHelper(CodeMirror.Pos(0, 0), "lint");
+    if (!options.getAnnotations) throw new Error("Required option 'getAnnotations' missing (lint addon)");
     return options;
   }
 
   function clearMarks(cm) {
-    var state = cm._lintState;
+    var state = cm.state.lint;
     if (state.hasGutter) cm.clearGutter(GUTTER_ID);
     for (var i = 0; i < state.marked.length; ++i)
       state.marked[i].clear();
@@ -105,16 +108,16 @@ CodeMirror.validate = (function() {
   }
 
   function startLinting(cm) {
-          var state = cm._lintState, options = state.options;
-          if (options.async)
-                  options.getAnnotations(cm, updateLinting, options);
-          else
-                 updateLinting(cm, options.getAnnotations(cm.getValue()));
+    var state = cm.state.lint, options = state.options;
+    if (options.async)
+      options.getAnnotations(cm, updateLinting, options);
+    else
+      updateLinting(cm, options.getAnnotations(cm.getValue()));
   }
 
   function updateLinting(cm, annotationsNotSorted) {
     clearMarks(cm);
-    var state = cm._lintState, options = state.options;
+    var state = cm.state.lint, options = state.options;
 
     var annotations = groupByLine(annotationsNotSorted);
 
@@ -135,7 +138,7 @@ CodeMirror.validate = (function() {
         if (state.hasGutter) tipLabel.appendChild(annotationTooltip(ann));
 
         if (ann.to) state.marked.push(cm.markText(ann.from, ann.to, {
-          className: "CodeMirror-lint-span-" + severity,
+          className: "CodeMirror-lint-mark-" + severity,
           __annotation: ann
         }));
       }
@@ -148,7 +151,7 @@ CodeMirror.validate = (function() {
   }
 
   function onChange(cm) {
-    var state = cm._lintState;
+    var state = cm.state.lint;
     clearTimeout(state.timeout);
     state.timeout = setTimeout(function(){startLinting(cm);}, state.options.delay || 500);
   }
@@ -164,7 +167,7 @@ CodeMirror.validate = (function() {
   var nearby = [0, 0, 0, 5, 0, -5, 5, 0, -5, 0];
 
   function onMouseOver(cm, e) {
-    if (!/\bCodeMirror-lint-span-/.test((e.target || e.srcElement).className)) return;
+    if (!/\bCodeMirror-lint-mark-/.test((e.target || e.srcElement).className)) return;
     for (var i = 0; i < nearby.length; i += 2) {
       var spans = cm.findMarksAt(cm.coordsChar({left: e.clientX + nearby[i],
                                                 top: e.clientY + nearby[i + 1]}));
@@ -175,23 +178,26 @@ CodeMirror.validate = (function() {
     }
   }
 
-  CodeMirror.defineOption("lintWith", false, function(cm, val, old) {
+  function optionHandler(cm, val, old) {
     if (old && old != CodeMirror.Init) {
       clearMarks(cm);
       cm.off("change", onChange);
-      CodeMirror.off(cm.getWrapperElement(), "mouseover", cm._lintState.onMouseOver);
-      delete cm._lintState;
+      CodeMirror.off(cm.getWrapperElement(), "mouseover", cm.state.lint.onMouseOver);
+      delete cm.state.lint;
     }
 
     if (val) {
       var gutters = cm.getOption("gutters"), hasLintGutter = false;
       for (var i = 0; i < gutters.length; ++i) if (gutters[i] == GUTTER_ID) hasLintGutter = true;
-      var state = cm._lintState = new LintState(cm, parseOptions(val), hasLintGutter);
+      var state = cm.state.lint = new LintState(cm, parseOptions(cm, val), hasLintGutter);
       cm.on("change", onChange);
       if (state.options.tooltips != false)
         CodeMirror.on(cm.getWrapperElement(), "mouseover", state.onMouseOver);
 
       startLinting(cm);
     }
-  });
+  }
+
+  CodeMirror.defineOption("lintWith", false, optionHandler); // deprecated
+  CodeMirror.defineOption("lint", false, optionHandler); // deprecated
 })();

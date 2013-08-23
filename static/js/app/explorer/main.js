@@ -25,7 +25,7 @@ Main.Config = {
 				   'cmd','reg','bat','vbs','sh'],
 		'text'	: ['txt','ini','inf','conf','oexe','md','htaccess','csv','log'],
 		'bindary':['zip','rar','exe','dll','dat','chm','pdf','doc','docx',
-					'xls','xlsx','ppt','pptx','class','psd','ttf','class'],
+					'xls','xlsx','ppt','pptx','class','psd','ttf','class']
 	}
 };
 Main.Global = {
@@ -168,7 +168,7 @@ Main.Player = {
 			Main.Player._create(type);
 			setTimeout(function(){
 				Main.Player._insert(fileList);
-			},500);
+			},1000);
 		}else{
 			Main.Player._insert(fileList);
 		}		
@@ -694,15 +694,18 @@ Main.UI = (function() {
 		},
 		// setting 对话框
 		setting:function(setting){
-			if (setting == undefined) setting = '';				
-			var url='?setting#'+setting;
-			$.dialog.open(url,{
-				id:'setting_mode',
-				fixed:true,
-				title:'系统设置',
-				width:910,
-				height:580
-			});
+			if (setting == undefined) setting = '';	
+			if (window.top.frames["Opensetting_mode"] == undefined) {
+				$.dialog.open('?setting#'+setting,{
+					id:'setting_mode',
+					fixed:true,
+					title:'系统设置',
+					width:880,
+					height:550
+				});
+			}else{
+				FrameCall.doTopFunction('Opensetting_mode','setGoto','"'+setting+'"');
+			}
 		},
 
 		// tips 
@@ -755,7 +758,8 @@ Main.UI = (function() {
 					$("#yarnball_input input").focus();
 				});
 				// 头部功能绑定
-				$('.header-content a').click(function(){
+				$('.header-content a').click(function(e){
+					stopPP(e);
 					var action = $(this).attr('id');
 					switch (action){
 						case 'history_back':
@@ -774,13 +778,14 @@ Main.UI = (function() {
 							break;
 						case 'home':Main.UI.tree.gotoPath(HOME);break;
 						case 'go':Main.UI.header.gotoPath();break;
-						case 'up':Main.UI.header.gotoFather();	break;
+						case 'up':Main.UI.header.gotoFather();break;
 						case 'setting':Main.UI.setting();break;
 						case 'logout':
 							window.location='?user/logout';
 							break;
 						default:break;
 					}
+					return false;
 				});
 			},
 
@@ -876,7 +881,7 @@ Main.UI = (function() {
 				async: {
 					enable: true,
 					url:Main.Config.treeAjaxURL,//直接上次拿到的json变量。
-					autoParam:["name=name","father","this_path"],
+					autoParam:["name=name","father","this_path"]
 				},
 				edit: {
 					enable: true,
@@ -1025,7 +1030,7 @@ Main.UI = (function() {
 			},
 			cute:function(){
 			},
-			delete:function(){
+			pathDelete:function(){
 				var zTree = $.fn.zTree.getZTreeObj("folderList"),path,
 					nodes = zTree.getSelectedNodes(),
 					treeNode = nodes[0];

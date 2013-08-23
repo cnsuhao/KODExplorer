@@ -1,8 +1,8 @@
 function upload_success_one() {//单个上传完成回调
-	
+	FrameCall.fatherFunction('Main.UI.f5','');
 }
 function upload_success() {//所有上传完成回调
-	//alert('全部');
+	//FrameCall.fatherFunction('Main.UI.f5','');
 }
 
 
@@ -42,6 +42,7 @@ function fileDialogStart() {
 }
 function fileQueued(file) {
 	try {
+		this.startUpload();
 		// You might include code here that prevents the form from being submitted while the upload is in
 		// progress.  Then you'll want to put code in the Queue Complete handler to "unblock" the form
 		var progress = new FileProgress(file, this.customSettings.progressTarget);

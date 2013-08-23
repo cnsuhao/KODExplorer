@@ -13,7 +13,7 @@ Main.Config = {
 				   'cmd','reg','bat','vbs','sh'],
 		'text'	: ['txt','ini','inf','conf','oexe','md','htaccess','csv','log'],
 		'bindary':['zip','rar','exe','dll','dat','chm','pdf','doc','docx',
-					'xls','xlsx','ppt','pptx','class','psd','ttf','class'],
+					'xls','xlsx','ppt','pptx','class','psd','ttf','class']
 	}
 };
 Main.Global = {
@@ -150,19 +150,26 @@ Main.UI = (function() {
 				if (Main.Global.isIE && Main.Global.isDragSelect) return;
 			});
 		},
+		setTheme:function(thistheme){
+			//window.top.location.reload();
+			var url = static_path+'style/skin/'+thistheme+'/app_editor.css';
+			$("#link_css_list").attr("href",url);
+		},
 		// setting 对话框
 		setting:function(setting){
-			if (setting == undefined) setting = '';				
-			var url='?setting/setting='+setting;
-			$.dialog.open(url,{
-				id:'setting_mode',
-				fixed:true,
-				title:'系统设置',
-				width:910,
-				height:580
-			});
+			if (setting == undefined) setting = '';	
+			if (window.top.frames["Opensetting_mode"] == undefined) {
+				$.dialog.open('?setting#'+setting,{
+					id:'setting_mode',
+					fixed:true,
+					title:'系统设置',
+					width:880,
+					height:550
+				});
+			}else{
+				FrameCall.doTopFunction('Opensetting_mode','setGoto','"'+setting+'"');
+			}
 		},
-
 		// tips 
 		tips:{
 			loading:function(msg){
@@ -171,7 +178,7 @@ Main.UI = (function() {
 				$('.messageBox .content').html(msg+"&nbsp;&nbsp;  <img src='./static/images/loading.gif'/>");
 				$('.messageBox')
 				.css({'display':'block','left':-$('.messageBox').width()})
-				.animate({opacity:0.6,left:0},300);
+				.animate({opacity:0.8,left:0},300);
 			},
 			close:function(msg,time){
 				var timeout = 0;		
@@ -189,7 +196,7 @@ Main.UI = (function() {
 				$('.messageBox .content').html(msg);
 				$('.messageBox')
 				.css({'display':'block','left':-$('.messageBox').width()})
-				.animate({opacity:0.6,left:0},300,0)
+				.animate({opacity:0.8,left:0},300,0)
 				.delay(1000)
 				.animate({opacity:0,left:'-=50'},500,0,function(){
 					$(this).css('display','none');
@@ -202,7 +209,7 @@ Main.UI = (function() {
 				async: {
 					enable: true,
 					url:Main.Config.treeAjaxURL,
-					autoParam:["name=name","father","this_path"],
+					autoParam:["name=name","father","this_path",'type'],
 				},
 				edit: {
 					enable: true,
@@ -221,7 +228,7 @@ Main.UI = (function() {
 					selectedMulti: false,
 					dblClickExpand: false,
 					dblClickExpand: function(treeId, treeNode) {
-						return treeNode.level > 0;
+						return treeNode.level >= 0;
 					},// 双击 展开&折叠
 					addDiyDom: function(treeId, treeNode) {
 						var spaceWidth = Main.Global.treeSpaceWide;
@@ -237,8 +244,7 @@ Main.UI = (function() {
 					}
 				},
 				callback: {//事件处理回调函数
-					onClick:function(event, treeId,treeNode){
-						
+					onClick:function(event, treeId,treeNode){						
 						if (treeNode.iconSkin =='doc') {
 							var filePath = treeNode.father+treeNode.name;
 							Main.Editor.open(filePath);
@@ -250,19 +256,24 @@ Main.UI = (function() {
 						zTree.selectNode(treeNode);
 						var treeNode = zTree.getSelectedNodes()[0];
 						if (!treeNode.father && !treeNode.this_path) return;
-						Main.RightMenu.show('.menuTree',event.clientX, event.clientY);						
-					},
+						if (treeNode.type == 'folder') {
+							Main.RightMenu.show('.menuTreeFolder',event.clientX, event.clientY);
+						}else if (treeNode.type == 'file') {
+							Main.RightMenu.show('.menuTreeFile',event.clientX, event.clientY);
+						}else if (treeNode.type == 'root'){
+							Main.RightMenu.show('.menuTreeRoot',event.clientX, event.clientY);
+						}
+					},				
 					onRename:function(event, treeId,treeNode){
 						var zTree = $.fn.zTree.getZTreeObj("folderList");
 						if (treeNode.father == undefined
 							&& treeNode.this_path == undefined
 							&& treeNode.children == undefined
 						){//新建目录
-							var path,parent = treeNode.getParentNode(),
-								newNode = {name:"新建文件夹",pId:treeNode.id};
-							if (!parent.father && !parent.this_path) return;							
+							var path,parent = treeNode.getParentNode();							
+							if (!parent.father && !parent.this_path) return;
 							if (parent.this_path) path=parent.this_path;
-							if (parent.father) path=parent.father+parent.name+'/';
+							if (parent.father) path=parent.father+parent.name;
 
 							if (parent.children.length >0) {
 								for (var i = parent.children.length - 2; i >= 0; i--) {
@@ -273,23 +284,30 @@ Main.UI = (function() {
 									}
 								};
 							}
-							Main.PathOperate.newFolderTree(path,treeNode.name,treeNode);
+							Main.PathOperate.newPathTree(path,treeNode);
 						}else if (treeNode.father != undefined){
-							Main.PathOperate.pathRnameTree(treeNode.father,treeNode.beforeName,treeNode.name,treeNode);
+							Main.PathOperate.pathRnameTree(treeNode.father,
+								treeNode.beforeName,treeNode.name,treeNode);
 						}
-					},
-					beforeDrag: function(treeId, treeNodes){
-						for (var i=0,l=treeNodes.length; i<l; i++) {
-							if (treeNodes[i].drag === false) return false;
-						}
-						return true;
-					},
-					beforeDrop: function(treeId, treeNodes, targetNode, moveType){
-						return targetNode ? targetNode.drop !== false : true;
-					},
-					onDrop:function(event, treeId, treeNodes, targetNode, moveType){
-    					Main.UI.tree.refresh(targetNode);
 					}
+					// beforeDrag: function(treeId, treeNodes){
+					// 	for (var i=0,l=treeNodes.length; i<l; i++) {
+					// 		if (treeNodes[i].drag === false) return false;
+					// 	}
+					// 	return true;
+					// },
+					// beforeDrop: function(treeId, treeNodes, targetNode, moveType){
+					// 	return targetNode ? targetNode.drop !== false : true;
+					// },
+					// onDrop:function(event, treeId, treeNodes, targetNode, moveType){
+					// 	var path = '',path_to='';
+					// 	var treeNode = treeNodes[0];
+					// 	if (!treeNode.father && !treeNode.this_path) return;
+
+					// 	path = treeNode.father+urlEncode(treeNode.name);
+					// 	path_to = targetNode.father+urlEncode(targetNode.name)+'/';
+					// 	Main.PathOperate.pathDragTree(path,treeNode.type,path_to,targetNode);
+					// }
 				}
 			},
 			init:function(){
@@ -315,14 +333,33 @@ Main.UI = (function() {
 			},
 			
 			//右键操作
-			add:function(){				
+			newfile:function(){				
 				var zTree = $.fn.zTree.getZTreeObj("folderList"),
 					treeNode = zTree.getSelectedNodes()[0],
-					newNode = {name:"新建文件夹",pId:treeNode.id};
-
-				if (treeNode) treeNode = zTree.addNodes(treeNode,newNode);
-				if (treeNode) zTree.editName(treeNode[0]);
+					newNode = {name:"newfile.txt",pId:treeNode.id,'type':'file','iconSkin':'doc'};
+				
+				//zTree.expandNode(treeNode, true, true, true);
+				if(treeNode.children != undefined){
+					if (treeNode) treeNode = zTree.addNodes(treeNode,newNode);
+					if (treeNode) zTree.editName(treeNode[0]);					
+				}else{
+					zTree.reAsyncChildNodes(treeNode, "refresh");
+				}
 			},
+			//右键操作
+			newfolder:function(){
+				var zTree = $.fn.zTree.getZTreeObj("folderList"),
+					treeNode = zTree.getSelectedNodes()[0],
+					newNode = {name:"新建文件夹",pId:treeNode.id,'type':'folder'};
+
+				//zTree.expandNode(treeNode, true, true, true);
+				if(treeNode.children != undefined){
+					if (treeNode) treeNode = zTree.addNodes(treeNode,newNode);
+					if (treeNode) zTree.editName(treeNode[0]);					
+				}else{
+					zTree.reAsyncChildNodes(treeNode, "refresh");
+				}
+			},			
 			edit:function(){
 				var zTree = $.fn.zTree.getZTreeObj("folderList"),
 					treeNode = zTree.getSelectedNodes()[0];
@@ -337,7 +374,7 @@ Main.UI = (function() {
 				if (!nodes.father && !nodes.this_path) return;
 				if (nodes.father) path = nodes.father+urlEncode(nodes.name);
 				if (nodes.this_path) path = nodes.this_path;
-				Main.PathOperate.pathCopyTree(path);
+				Main.PathOperate.pathCopyTree(path,nodes.type);
 			},
 			cute:function(){
 				var zTree = $.fn.zTree.getZTreeObj("folderList"),path,
@@ -346,18 +383,18 @@ Main.UI = (function() {
 				if (!nodes.father && !nodes.this_path) return;
 				if (nodes.father) path = nodes.father+urlEncode(nodes.name);
 				if (nodes.this_path) path = nodes.this_path;
-				Main.PathOperate.pathCuteTree(path);
+				Main.PathOperate.pathCuteTree(path,nodes.type);
 			},
 			past:function(){
 				var zTree = $.fn.zTree.getZTreeObj("folderList"),path,
 					nodes = zTree.getSelectedNodes()[0];
 
 				if (!nodes.father && !nodes.this_path) return;
-				if (nodes.father) path = nodes.father+urlEncode(nodes.name);
-				if (nodes.this_path) path = nodes.this_path;
-				Main.PathOperate.pathPastTree(path);
+				if (nodes.father) path = nodes.father+urlEncode(nodes.name)+'/';
+				if (nodes.this_path) path = nodes.this_path+'/';
+				Main.PathOperate.pathPastTree(nodes,path);
 			},			
-			delete:function(){
+			pathDelete:function(){
 				var zTree = $.fn.zTree.getZTreeObj("folderList"),path,
 					nodes = zTree.getSelectedNodes(),
 					treeNode = nodes[0];
@@ -373,10 +410,8 @@ Main.UI = (function() {
 				var zTree = $.fn.zTree.getZTreeObj("folderList"),path,
 					nodes = zTree.getSelectedNodes()[0];
 
-				if (!nodes.father && !nodes.this_path) return;
-				if (nodes.father) path = nodes.father+urlEncode(nodes.name);
-				if (nodes.this_path) path = nodes.this_path;
-				Main.PathOperate.pathInfoTree(path);
+				if (!nodes.father && !nodes.this_path) return;				
+				Main.PathOperate.pathInfoTree(nodes);
 			}
 		}
 	}
@@ -413,11 +448,18 @@ Main.PathOperate = (function() {
 		return false;
 	};
 	// 树目录新建文件夹
-	var _newFolderTree = function(path,filename,treeNode){
-		if (!_pathAllow(filename)) return;
-		path=path+urlEncode(filename);
+	var _newPathTree = function(path,treeNode){
+		if (!_pathAllow(treeNode.name)) return;
+		path=path+'/'+urlEncode(treeNode.name);
+		var action = '';
+
+		if (treeNode.type == 'folder') {
+			action = 'mkdir';
+		}else if (treeNode.type == 'file') {
+			action = 'mkfile';
+		}
 		$.ajax({
-			url: '?explorer/mkdir&path='+path,
+			url: '?explorer/'+action+'&path='+path,
 			success: function(data) {
 		  		Main.UI.tips.tips(data);
 		  		Main.UI.tree.refresh(treeNode.getParentNode());
@@ -445,14 +487,14 @@ Main.PathOperate = (function() {
 	};
 	// 树目录删除文件夹
 	var _pathDeleteTree = function(path,treeNode,filename){
-		var msg = '确认要删除 "'+filename+'"文件夹吗?';
-		var delete_list = _getSelectJsonTree('delete_list',path);
+		var msg = '确认要删除 "'+filename+'"吗?';
+		var delete_list = _getSelectJsonTree('delete_list',path,treeNode.type);
 		$.dialog({
 			fixed: true,//不跟随页面滚动
 			resize: false,//调整大小
 			icon:'question',
 			drag: true,//拖曳
-			title:'删除文件夹',
+			title:'删除提示',
 			content: msg,
 			ok:function() {
 				isDeleteDialog=0;
@@ -472,36 +514,51 @@ Main.PathOperate = (function() {
 		});
 	};
 	//包装数据请求
-	var _getSelectJsonTree = function(param_name,path){
-		var select_list = param_name+'=[{"type":"folder","file":"'+path+'"}]';
+	var _getSelectJsonTree = function(param_name,path,type){
+		var select_list = param_name+'=[{"type":"'+type+'","file":"'+path+'"}]';
 		return select_list;
 	};
 	//树目录复制
-	var _pathCopyTree = function(path){
+	var _pathCopyTree = function(path,type){
 		$.ajax({
 			url:'?explorer/pathCopy',
 			type:'POST',
-			data:_getSelectJsonTree('copy_list',path),
+			data:_getSelectJsonTree('copy_list',path,type),
 			success:function(data){
 				Main.Global.canPast = true;
 				Main.UI.tips.tips(data);
 			}
 		});
 	};
+
+	//拖拽剪切
+	var _pathDragTree = function(path,type,path_to,targetNode){
+		$.ajax({
+			url:'?explorer/pathCuteDrag',
+			type:'POST',
+			data:_getSelectJsonTree('cute_list',path_to,type)+'&path='+path,
+			success:function(data){
+				Main.UI.tips.tips(data);
+				Main.UI.tree.refresh(targetNode);
+			}
+		});
+	};
+
+
 	//树目录剪切
-	var _pathCuteTree = function(path){
+	var _pathCuteTree = function(path,type){
 		$.ajax({
 			url:'?explorer/pathCute',
 			type:'POST',
-			data:_getSelectJsonTree('cute_list',path),
+			data:_getSelectJsonTree('cute_list',path,type),
 			success:function(data){
 				Main.UI.tips.tips(data);
 			}
 		});
 	};
 	// 树目录粘贴
-	var _pathPastTree = function(path){
-		var url='?explorer/pathPast&path='+path;
+	var _pathPastTree = function(treeNode,path){
+		var url='?explorer/pathPast&path='+urlEncode(path);
 		$.ajax({
 			url:url,
 			dataType:'json',
@@ -509,14 +566,21 @@ Main.PathOperate = (function() {
 				Main.UI.tips.loading("粘贴操作中...");
 			},
 			success:function(jsonback){
+				Main.UI.tree.refresh(treeNode);
 				Main.UI.tips.close(jsonback['msg']);
 			}
 		});
 	};
 	// 树目录文件夹属性
-	var _pathInfoTree = function(path){
+	var _pathInfoTree = function(treeNode){
+		var type = treeNode.type;
+		var filename = treeNode.name;
+		var path = '';		
+		if (treeNode.father) path = treeNode.father+urlEncode(filename);
+		if (treeNode.this_path) path = treeNode.this_path;
+
 		$.ajax({
-			url:'?explorer/pathInfo&type=folder&path='+urlEncode(path),
+			url:'?explorer/pathInfo&type='+type+'&path='+urlEncode(path),		
 			beforeSend: function(){
 				Main.UI.tips.loading('获取中!  ');
 			},
@@ -525,17 +589,42 @@ Main.PathOperate = (function() {
 		  		$.dialog({
 		  			padding:5,
 		  			fixed: true,//不跟随页面滚动
-		  			resize:false,
 				    drag: true,//拖曳
-		  			title:'文件夹属性',
-				    content:data				   
+				    resize:false,
+		  			title:filename+' 属性',
+				    content:data,
+				    ok: function(){//ok按钮提交表单，修改文件夹名
+						rname_to=$('.pathinfo div input').val();
+						if (rname_to==filename){
+							return true;
+						}
+						if (!_pathAllow(rname_to)){
+							return true;
+						}else{				
+							path	=treeNode.father+urlEncode(filename);
+							rname_to=treeNode.father+urlEncode(rname_to);
+							$.ajax({
+								type: "POST", 
+								url: '?explorer/pathRname',
+								data: 'path='+path+'&rname_to='+rname_to,				  
+								success: function(data) {
+									Main.UI.tree.refresh(treeNode.getParentNode());
+									Main.UI.tips.tips(data);
+								}
+							});						
+						}
+						return true;
+				    },
+				    cancel: true
 				});
-			}
+			},
+			error:false//请求出错处理
 		});
 	};
 	return{
 		// 树目录新建文件夹
-		newFolderTree:_newFolderTree,
+		newPathTree:_newPathTree,
+		pathDragTree:_pathDragTree,
 		pathRnameTree:_pathRnameTree,
 		pathDeleteTree:_pathDeleteTree,
 		pathCopyTree:_pathCopyTree,
@@ -687,7 +776,9 @@ Main.PathOpen = (function() {
 //流程：给需要右键菜单的元素，加上menu属性，并赋值，把值作为右键菜单div的id值
 
 Main.RightMenu = (function(){
-	var selectTreeSelector = ".menuTree";
+	var selectRoot   = ".menuTreeRoot";	
+	var selectFolder = ".menuTreeFolder";
+	var selectFile   = ".menuTreeFile";
 	var _init = function(){
 		$('.context-menu-list').unbind("click").live("click",function(e){
 			stopPP(e);
@@ -697,41 +788,107 @@ Main.RightMenu = (function(){
 			Main.RightMenu.hidden();
 			return true;
 		});//屏蔽工具栏右键
-		_bindTree();
-	}
-	var _bindTree = function(){
+
+		_bindRoot();
+		_bindFolder();
+		_bindFile();		
+	};
+	
+	var _bindRoot = function(){
 		$.contextMenu({
 			zIndex:9999,
-			selector: selectTreeSelector, 
-			callback: function(key, options) {_menuTree(key);},
-			items: {
+			selector: selectRoot, 
+			callback: function(key, options) {_menuRoot(key);},
+			items: {	
 				"refresh":{name:"刷新数据(E)",icon:"refresh",accesskey: "e"},
-				"new":{name:"新建文件夹(N)",icon:"folder-close-alt",accesskey: "n"},	
-				"rename":{name:"重命名(R)",icon:"pencil",accesskey: "r"},
+				"newfolder":{name:"新建文件夹(N)",icon:"folder-close-alt",accesskey: "n"},
+				"newfile":{name:"新建文本文件(N)",icon:"file-alt",accesskey: "n"},				
 				"sep1":"--------",
-				"copy":{name:"复制(C)",icon:"copy",accesskey: "c"},
-				"cute":{name:"剪切(T)",icon:"cut",accesskey: "t"},
-				//"past":{name:"粘贴(P)",icon:"past",accesskey: "p"},
-				"sep2":"--------",
-				"delete":{name:"删除(D)",icon:"trash",accesskey: "d"},
-				"info":{name:"属性(I)",icon:"info",accesskey: "i"}
+				"past":{name:"粘贴(P)",icon:"paste",accesskey: "p"},
+				"sep3":"--------",
+				"remove":{name:"关闭菜单(Q)",icon:"remove",accesskey: "q"}
 			}
 		});
-	}
-	var _menuTree = function(action) {//右键操作
+	};
+	var _menuRoot = function(action) {//文件操作
 		switch(action){
-			case 'refresh':Main.UI.tree.refresh();break;			
-			case 'new':Main.UI.tree.add();break;
-			case 'copy':Main.UI.tree.copy();break;
-			case 'cute':Main.UI.tree.cute();break;
-			//case 'past':Main.UI.tree.past();break;
-			case 'rename':Main.UI.tree.edit();break;
-			case 'delete':Main.UI.tree.delete();break;
+			case 'refresh':Main.UI.tree.refresh();break;
+			case 'newfolder':Main.UI.tree.newfolder();break;
+			case 'newfile':Main.UI.tree.newfile();break;
+			case 'past':Main.UI.tree.past();break;
 			case 'info':Main.UI.tree.info();break;
+			case 'remove':;break;
 			default:break;
 		}
 	};
 
+	var _bindFolder = function(){
+		$.contextMenu({
+			zIndex:9999,
+			selector: selectFolder, 
+			callback: function(key, options) {_menuFolder(key);},
+			items: {
+				"refresh":{name:"刷新数据(E)",icon:"refresh",accesskey: "e"},
+				"newfolder":{name:"新建文件夹(N)",icon:"folder-close-alt",accesskey: "n"},
+				"newfile":{name:"新建文本文件(N)",icon:"file-alt",accesskey: "n"},				
+				"rename":{name:"重命名(R)",icon:"pencil",accesskey: "r"},
+				"sep1":"--------",
+				"copy":{name:"复制(C)",icon:"copy",accesskey: "c"},
+				"cute":{name:"剪切(T)",icon:"cut",accesskey: "t"},
+				"past":{name:"粘贴(P)",icon:"paste",accesskey: "p"},
+				"sep2":"--------",
+				"delete":{name:"删除(D)",icon:"trash",accesskey: "d"},
+				"info":{name:"属性(I)",icon:"info",accesskey: "i"},
+				"sep3":"--------",
+				"remove":{name:"关闭菜单(Q)",icon:"remove",accesskey: "q"}
+			}
+		});
+	};
+	var _menuFolder = function(action) {//右键操作
+		switch(action){
+			case 'refresh':Main.UI.tree.refresh();break;			
+			case 'newfolder':Main.UI.tree.newfolder();break;
+			case 'newfile':Main.UI.tree.newfile();break;
+			case 'copy':Main.UI.tree.copy();break;
+			case 'cute':Main.UI.tree.cute();break;
+			case 'past':Main.UI.tree.past();break;
+			case 'rename':Main.UI.tree.edit();break;
+			case 'delete':Main.UI.tree.pathDelete();break;
+			case 'info':Main.UI.tree.info();break;
+			case 'remove':;break;
+			default:break;
+		}
+	};
+	var _bindFile = function(){
+		$.contextMenu({
+			zIndex:9999,
+			selector: selectFile, 
+			callback: function(key, options) {_menuFile(key);},
+			items: {	
+				"rename":{name:"重命名(R)",icon:"pencil",accesskey: "r"},
+				"sep1":"--------",
+				"copy":{name:"复制(C)",icon:"copy",accesskey: "c"},
+				"cute":{name:"剪切(T)",icon:"cut",accesskey: "t"},
+				"delete":{name:"删除(D)",icon:"trash",accesskey: "d"},
+				"sep2":"--------",				
+				"info":{name:"属性(I)",icon:"info",accesskey: "i"},
+				"remove":{name:"关闭菜单(Q)",icon:"remove",accesskey: "q"}
+			}
+		});
+	};
+	var _menuFile = function(action) {//文件操作
+		switch(action){
+			case 'rename':Main.UI.tree.edit();break;
+			case 'copy':Main.UI.tree.copy();break;
+			case 'cute':Main.UI.tree.cute();break;
+			case 'past':Main.UI.tree.past();break;
+			
+			case 'delete':Main.UI.tree.pathDelete();break;
+			case 'info':Main.UI.tree.info();break;
+			case 'remove':;break;
+			default:break;
+		}
+	};
 	return{
 		init:_init,
 		show:function(select,left,top){

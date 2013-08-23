@@ -195,9 +195,15 @@ Main.FileSelect = (function(){
 		var startY			= null;
 		var $selectDiv		= null;
 		var offset_top  	= 85+Main.Global.topbar_height;
+		var mainScrollTop	= 0;	//初始滚动条位置
 		var mainOffsetTop	= 0;
 		
 		$(Main.Config.BodyContent).unbind('mousedown').live('mousedown',function(e){
+			if ($(e.target).hasClass('bodymain') && 
+				($(document).width() - e.pageX<20)) {
+				return;// 屏蔽滚动条上的消息
+			}
+
 			if (Main.UI.isEdit()) return true;
 			if (isDraging || e.which != 1) return true;
 			__dragSelectInit(e);
@@ -216,7 +222,8 @@ Main.FileSelect = (function(){
 
 		//创建模拟 选择框，框选开始
 		var __dragSelectInit = function(e) {
-			mainOffsetTop = offset_top  - $(Main.Config.BodyContent).scrollTop();
+			mainScrollTop = $(Main.Config.BodyContent).scrollTop();
+			mainOffsetTop = offset_top  - mainScrollTop;
 			if ($(e.target).parent().hasClass(Main.Config.FileBoxClassName)
 				|| $(e.target).parent().parent().hasClass(Main.Config.FileBoxClassName)
 				|| $(e.target).hasClass('fix')
@@ -243,16 +250,17 @@ Main.FileSelect = (function(){
 			}
 			var mouseX = e.pageX- Main.Global.frameLeftWidth;
 			var mouseY = e.pageY- mainOffsetTop;
+			var scroll_cute = $(Main.Config.BodyContent).scrollTop() - mainScrollTop;
 			$selectDiv.css({
 				'left'	: Math.min(mouseX,  startX),
 				'top'	: Math.min(mouseY,  startY),
 				'width' : Math.abs(mouseX - startX),
-				'height': Math.abs(mouseY - startY)
+				'height': Math.abs(mouseY - startY) + scroll_cute
 			});
 			// ---------------- 框中选择关键算法 ---------------------
 			var _l = $selectDiv.offset().left - Main.Global.frameLeftWidth;
 			var _t = $selectDiv.offset().top  - mainOffsetTop;
-			var _w = $selectDiv.width(), _h = $selectDiv.height();
+			var _w = $selectDiv.width(), _h = $selectDiv.height() + scroll_cute;
 			var totalNum = Main.Global.fileListNum;
 
 			for ( var i = 0; i < totalNum; i++) {

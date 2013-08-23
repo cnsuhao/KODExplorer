@@ -1,7 +1,4 @@
-﻿
-
-
-Main.PathOperate = (function() {
+﻿Main.PathOperate = (function() {
 	var selectObj = '';
 	var selectNum = 0;
 	var path_not_allow	= ['/','\\',':','*','?','"','<','>','|'];//win文件名命不允许的字符
@@ -638,6 +635,7 @@ Main.PathOperate = (function() {
 			id:'id_upload_file',
 			title:'多文件上传',
 			width:380,
+			resize: false,//调整大小
 			padding:0,
 			height:310,
 			resize:false,
@@ -754,6 +752,7 @@ Main.PathOperate = (function() {
 						dialog = $.dialog({
 							id:'file_drag_upload',
 							title:'拖拽上传',
+							resize: false,//调整大小
 							width:box_width,
 							height:box_height,
 							content:$('.file_list').html(),
@@ -1066,7 +1065,7 @@ Main.PathOpen = (function() {
 			name = 'openWindow'+Math.floor(Math.random()*1000);
 		}
 		//id 会在dialog控件中加入iframe的name
-		art.dialog.open(url,{id:name,title:title,width:'90%',height:'85%'});
+		art.dialog.open(url,{id:name,title:title,width:'80%',height:'75%'});
 	};
 
 

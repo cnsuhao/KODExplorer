@@ -36,17 +36,27 @@
     var isRE = query.match(/^\/(.*)\/([a-z]*)$/);
     return isRE ? new RegExp(isRE[1], isRE[2].indexOf("i") == -1 ? "" : "i") : query;
   }
-  function doSearch(cm, rev) {	
+  function doSearch(cm, rev) {
+  	console.log('search start,',editor_current.search,','+$('#code_find').val())
     var state = getSearchState(cm);
-	if (state.query){
+	if (state.query && editor_current.search == $('#code_find').val()){
 		return findNext(cm, rev);
 	}else{
-		var selected_str=cm.getSelection();//选中内容。
-		if(selected_str == '') selected_str='';
+		var selected_str=cm.getSelection();//选中内容
+		// 搜索内容改变条件：选择后重新搜索、搜索框内容改变
+		if (editor_current.search!= undefined
+		 && selected_str != ''
+		 && selected_str != editor_current.search) {
+			$('#code_find').val(selected_str);
+		}
+		console.log('------,',editor_current.search,','+$('#code_find').val())
+
 		$.dialog({
 			title:"字符串查找替换",
 			id:'code_find',
 			close:function(){//搜索对话框被关闭，则清空搜索选中状态。
+				editor_current.search = undefined;
+				editor_current.focus();
 				clearSearch(cm);
 			},
 			content:'<div class="findbox">'+
@@ -57,12 +67,13 @@
 				'<div class="line"><span>替换：</span>'+
 				'<input type="text" id="code_replace" />'+
 				'<button id="id_find_replace">替换</button>'+
-				'<button id="id_find_replaceall">全部</button></div>'+
-				'<div class="info">查找后即高亮选中，可以替换</div></div>',
+				'<button id="id_find_replaceall">替换全部</button></div>'+
+				'<div class="info">查找后即高亮选中，可以替换</div></div>'
 		});
-		$('#code_find').focus();			
+		$('#code_find').focus();
 		query = $('#code_find').val();
 		if (query == '') return;
+		editor_current.search = query;
 
 		state.query = parseQuery(query);
         cm.removeOverlay(state.overlay);
@@ -127,6 +138,7 @@
   CodeMirror.commands.clearSearch = clearSearch;
   CodeMirror.commands.replace = replace;
   CodeMirror.commands.replaceAll = function(cm) {replace(cm, true);};
+
 
 
 	//事件绑定。

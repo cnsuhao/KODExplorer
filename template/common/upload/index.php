@@ -3,6 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="<?=STATIC_PATH;?>js/swfUpload/style.css">
+<script src="<?=STATIC_PATH;?>js/jquery-1.8.0.min.js"></script>	
+<script src="<?=STATIC_PATH;?>js/frameCall.js"></script>	
 <script src="<?=STATIC_PATH;?>js/swfUpload/swfupload.js"></script>
 <script src="<?=STATIC_PATH;?>js/swfUpload/swfupload.queue.js"></script>
 <script src="<?=STATIC_PATH;?>js/swfUpload/fileprogress.js"></script>
@@ -59,8 +61,8 @@
 			<div>
 				<div style="padding-left: 5px;">
 					<span id="spanButtonPlaceholder" title='上传'></span>
-					<a href="#" class="left button" onclick="upload.startUpload();">开始上传</a>
-					<a href="#" class="right button" onclick="cancelQueue(upload);" id="btnCancel">取消上传</a>
+					<!-- <a href="#" class="left button" onclick="upload.startUpload();">开始上传</a>
+					<a href="#" class="right button" onclick="cancelQueue(upload);" id="btnCancel">取消上传</a> -->
 				</div>
 				<div class="filelist" id="fsUploadProgress"></div>
 			</div>

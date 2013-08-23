@@ -499,6 +499,8 @@ artDialog.fn = artDialog.prototype = {
 		var dialog_index = 0;
 		var dialog_this = '';
 		for (var i in artDialog.list) {
+			if (artDialog.list[i]['config'] == undefined) return;
+
 			var this_index =artDialog.list[i]['config']['zIndex'];
 			if (dialog_index < this_index){
 				dialog_index = this_index;
@@ -750,7 +752,7 @@ artDialog.fn = artDialog.prototype = {
 			this.DOM.wrap.css({
 				'left':0,
 				'top':0,
-				'width':_$window.width(),
+				'width':_$window.width()
 			});
 			this.DOM.main[0].style.height = (_$window.height()-_titleBarHeight)  + 'px';
 		}

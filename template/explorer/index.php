@@ -75,6 +75,7 @@ var static_path = "<?=STATIC_PATH;?>";
 				</a>
 			</div><!-- /header-middle end-->
 
+			<!-- 			
 			<div class='header-right'>
 				<a href="#" id='setting' class="setting left button" title='设置'>
 					<i class="font-icon icon-cog"></i>
@@ -82,7 +83,9 @@ var static_path = "<?=STATIC_PATH;?>";
 				<a href="#" id='logout' class="logout right button" title='退出'>
 					<i class="font-icon icon-off"></i>
 				</a>
-			</div><!-- / header-right end -->	
+			</div>
+			-->
+
 		</div>
 	</div><!-- / header end -->
 

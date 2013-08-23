@@ -100,10 +100,11 @@ class explorer extends Controller{
     }
     function folderListEditor(){
         if ($this->in['this_path'] !='') {
-            $path=urldecode($this->in['this_path']).'/';
+            $path=urldecode($this->in['this_path']);
         }else if($this->in['father'] !=''){
             $path=urldecode($this->in['father'].$this->in['name']).'/';
         }
+
         $folderlist=tree_list($path,true);
         if ($folderlist == NULL) {
             echo "[]";return;
@@ -113,6 +114,7 @@ class explorer extends Controller{
         foreach($folderlist as $val){
             if ($val['fileType'] != '') {
                 array_push($listFile,array(
+                    'type'=>'file',
                     'name'=>$val['name'],
                     'father'=>$path,
                     'iconSkin'=>$val['fileType'],
@@ -121,6 +123,7 @@ class explorer extends Controller{
                 );                  
             }else{
                 array_push($listFolder,array(
+                    'type'=>'folder',
                     'name'=>$val['name'],
                     'father'=>$path,
                     'isParent'=>$val['hasChildren']
@@ -142,9 +145,12 @@ class explorer extends Controller{
 			$list = array(
 				array('name'	=> "根目录",
 					'iconSkin'	=> "lib",
+                    'this_path' => HOME,
+                    'type'      => 'root',
 					'open'		=> true,
 					'children'	=> $list,
 					'drop'		=> false,
+                    'isParent'  => true,
 					'drag'		=> false
 				)
 			);
@@ -172,14 +178,10 @@ class explorer extends Controller{
                 array('name'=>"我的视频",'iconSkin'=>"movie",'this_path'=> USER.'movie/','isParent'=>true,'drop'=>false,'drag'=>false), 
                 array('name'=>"我的下载",'iconSkin'=>"download",'this_path'=> USER.'download/','isParent'=>true,'drop'=>false,'drag'=>false),   
             );
-            $my_array =  array(
-                array('name'=>"本地磁盘 (C:)",'iconSkin'=>"root",'this_path'=>"C:/",'isParent'=>true),
-                array('name'=>"本地磁盘 (D:)",'iconSkin'=>"root",'this_path'=>"D:/",'isParent'=>true),
-                array('name'=>"本地磁盘 (E:)",'iconSkin'=>"root",'this_path'=>"E:/",'isParent'=>true),
-            );
             $tree_root = array(
                 array('name'=>"收藏夹",'iconSkin'=>"fav",'open'=>true,'children'=>$fav_array,'drop'=>false,'drag'=>false),
-                array('name'=>"库",'iconSkin'=>"lib",'open'=>true,'children'=>$lib_array,'drop'=>false,'drag'=>false)
+                array('name'=>"库",'iconSkin'=>"lib",'open'=>true,'children'=>$lib_array,'drop'=>false,'drag'=>false),
+                array('name'=>'webroot','open'=>false,'this_path'=> HOME,'isParent'=>true,'drop'=>false,'drag'=>false)
                 
             );
             echo json_encode($tree_root);

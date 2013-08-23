@@ -43,11 +43,13 @@ var editPath	= app_path+'./';//ajax请求文件路径
 		</div><!-- / frame-left end-->
 		<div class='frame-resize'></div>
 		<div class='frame-right'>
-			<div class="frame-right-main">
+			<div class="frame-right-main"  style="height:99%;padding:0;margin:0;">
 				<div class="resizeMask"></div>
-				<div class="messageBox menuTree" ><div class="content"></div></div>
+				<div class="messageBox menuTreeRoot" ><div class="content"></div></div>
+				<div class="messageBox menuTreeFolder" ><div class="content"></div></div>
+				<div class="messageBox menuTreeFile" ><div class="content"></div></div>
 				<div class ='frame'>
-					 <iframe name="editor" src="?editor/edit" style="width:100%;height:100%;border:0;" ></iframe>
+					 <iframe name="editor" src="?editor/edit" style="width:100%;height:100%;border:0;" frameborder=0></iframe>
 				</div>	
 			</div>
 		</div><!-- / frame-right end-->

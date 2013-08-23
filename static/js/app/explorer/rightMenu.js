@@ -304,7 +304,7 @@ Main.RightMenu = (function(){
 			case 'copy':Main.UI.tree.copy();break;
 			case 'cute':Main.UI.tree.cute();break;
 			case 'rename':Main.UI.tree.edit();break;
-			case 'delete':Main.UI.tree.delete();break;
+			case 'delete':Main.UI.tree.pathDelete();break;
 			case 'info':Main.UI.tree.info();break;
 			default:break;
 		}

@@ -13,7 +13,6 @@ Main.Tap = (function(){
 				if (!$(this).hasClass('this') && e.target.nodeName !='A'){
 					$(this).removeClass('hover').addClass('this');
 					Main.Editor.select($(this).attr('id'));
-					editor_current.focus();
 					//return false;
 				}
 			});
@@ -151,6 +150,11 @@ Main.Tap = (function(){
 			startTime = 0;
 			$('.dragMaskView').remove();
 			
+			 // 点击事件回调会影响两个事件：选择，和拖拽弹起，
+			 //此处后执行，设置需要再次设置焦点
+			 editor_current.focus();
+			if ($drag == undefined) return;
+
 			box_left = $self.get(0).getBoundingClientRect().left;
 			$drag.animate({left:box_left+'px'},animate_time,function(){
 				$self.css('opacity',1);
@@ -356,22 +360,27 @@ Main.Editor = (function(){
 	//选中
 	var select = function(selectID,exist) {
 		if(selectID == undefined || selectID =='') return;
-		if (editors[selectID] != undefined){
-			editor_current_id = selectID;
-			editor_current = editors[selectID].editor;
-			editor_current.focus();
-		}
+
 		//添加最初标签，或者标签不存在
 		$('.edit_tab .this').removeClass('this');
 		$('.edit_tab #'+selectID).addClass('this');
 		$('.edit_body .this').removeClass('this');
 		$('.edit_body div#'+selectID).addClass('this');
+
+		if (editors[selectID] != undefined){
+			editor_current_id = selectID;
+			editor_current = editors[selectID].editor;
+			editor_current.focus();
+		}
 		if (exist == true) {
 			$('.edit_tab .this')
+				.stop(true)
 				.animate({"opacity":0.3},100)
 				.animate({"opacity":0.8},100)
 				.animate({"opacity":0.5},40)
-				.animate({"opacity":1},40);
+				.animate({"opacity":1},40,function(){
+					editor_current.focus();
+				});
 		}
 	};
 
@@ -385,51 +394,7 @@ Main.Editor = (function(){
 	};
 
 	var refresh = function(){
-		var this_editor = CodeMirror.fromTextArea(document.getElementById('text_'+jsonData.id), {
-			lineNumbers: true,
-			styleActiveLine: true,
-			indentUnit: 4,
-			tabMode: "shift",	
-			enterMode: "keep",
-			indentWithTabs: true,
-			autofocus:true,
-			matchBrackets: true,
-			theme: codetheme,	
-			//lineWrapping: true,//自动换行
-			//readOnly:true,//只读
-			onKeyEvent: function() {//zendCoding 插件
-				return zen_editor.handleKeyEvent.apply(zen_editor, arguments);
-			},
-			extraKeys: {
-				"Ctrl-S": function() {
-					Main.Editor.save(editor_current_id);
-					return false;
-				}
-			}
-		});
-
-
-		if (jsonData.mode != undefined) {
-			if(jsonData.mode[0] == 'clike'){
-				this_editor.setOption("mode",jsonData.mode[1]);
-			}else{
-				this_editor.setOption("mode",jsonData.mode[0]);
-			}
-			CodeMirror.autoLoadMode(this_editor,jsonData.mode[0]);			
-		}
-		this_editor.setOption('lineWrapping',true);//设置自动换行,为刷新全屏
-		this_editor.focus();
-		editor_current = this_editor;
-		editor_current_id = jsonData.id;
-
-		editors[jsonData.id] = {
-			id:jsonData.id,
-			name:jsonData.name,
-			charset:jsonData.charset,
-			filename:jsonData.filename,
-			editor:this_editor
-		};
-
+		//	
 	};
 
 	//检测是否修改
@@ -440,6 +405,51 @@ Main.Editor = (function(){
 		}
 		return false;	
 	};
+
+
+	var _saveSend = function(editorID,filename,isDelete){
+		var edit_this = editors[editorID].editor;
+		var html = edit_this.getValue();
+		html=html.replace(/&/g,'-@$@-');//post数据之前,&会引起歧义，so转义。
+		html=html.replace(/\+/g,'-($)-');//post数据之前,加号会引起歧义，so转义。
+		$.ajax({
+			type:'POST',
+			async:false,
+			url:'?editor/fileSave',
+			data:'path='+filename+'&charset='+edit_this.charset+'&filestr='+html,
+			beforeSend: function(){
+				$.dialog({
+					id:'id_filesave',
+					icon:'loading',
+					padding:10,
+					title:false,
+					content:'数据发送中...'
+				});
+			},
+			success:function(data){
+				// 保存成功 记录上次保存时的修改时间。
+				edit_this.doc.history.lastSaveTime = edit_this.doc.history.lastTime;
+				$.dialog({id:'id_filesave'}).close();
+				$.dialog({
+					title:false,
+					icon:'succeed',
+					padding:10,
+					time:0.7,
+					content:'保存成功!'+data
+				});
+				if (isDelete) {
+					_removeData(editorID);
+				}
+			}
+		});
+		editor_current.focus();
+	}
+
+	//新建并保存
+	var _new2save = function(editorID,isDelete){
+		var filename= 'D:/t.txt';
+		_saveSend(editorID,filename,isDelete);
+	}
 
 	// 编辑保存，如果是新建标签则新建文件，询问保存路径。
 	var save = function(editorID,isDelete){
@@ -454,43 +464,12 @@ Main.Editor = (function(){
 			});
 			return;
 		}
-		var html = edit_this.getValue();
-		html=html.replace(/&/g,'-@$@-');//post数据之前,&会引起歧义，so转义。
-		html=html.replace(/\+/g,'-($)-');//post数据之前,加号会引起歧义，so转义。
+		// 通过标签建立的文件。
+		if (filename == '') {
+			new2save();return;
+		};
 		var filename= urlEncode(editors[editorID].filename);
-		$.ajax({
-			type:'POST',
-			async:false,
-			url:'?editor/fileSave',
-			data:'path='+filename+'&charset='+edit_this.charset+'&filestr='+html,
-			beforeSend: function(){
-				$.dialog({
-					id:'id_filesave',
-					top:35,
-					icon:'loading',
-					padding:10,
-					title:false,
-					content:'数据发送中...'
-				});
-			},
-			success:function(data){
-				// 保存成功 记录上次保存时的修改时间。
-				edit_this.doc.history.lastSaveTime = edit_this.doc.history.lastTime;
-				$.dialog({id:'id_filesave'}).close();
-				$.dialog({
-					title:false,
-					top:35,
-					icon:'succeed',
-					padding:10,
-					time:0.5,
-					content:'保存成功!'+data
-				});
-				if (isDelete) {
-					_removeData(editorID);
-				}
-			}
-		});
-		editor_current.focus();
+		_saveSend(editorID,filename,isDelete);
 	};
 
 	var saveall = function(){
@@ -499,24 +478,30 @@ Main.Editor = (function(){
 		}
 	};
 	
-
+	//安全删除标签，先检测该文档是否修改。
 	var removeSafe = function(editorID) {
 		var edit_this = editors[editorID].editor;
-		console.log(edit_this,editor_current);
 		if (isChanged(edit_this)) {
 			$.dialog({
 				title:'警告!',
 				resize:false,
+				background: '#fff',
+   				opacity: 0.4,
+				lock:true,
 				icon: 'question',
 				content:'文件尚未保存,是否保存？',
-				okVal:'保存',
-				cancel:'取消',
-				ok:function(){
-					save(editorID,true);
-				},
-				cancle:function(){
-					return false;
-				}
+				padding:30,
+				button:[
+					{name:'保存',focus:true,callback:function(){
+						save(editorID,true);
+					}},
+					{name:'不保存',callback:function(){
+						_removeData(editorID);
+					}},
+					{name:'取消',callback:function(){
+						editor_current.focus();
+					}}
+				]
 			});
 		}else{
 			_removeData(editorID);
@@ -598,13 +583,18 @@ Main.Toolbar=(function(){
 			var line=$("#gotoline input").val();
 			editor_current.setCursor(line-1, 0, 1);
 		});
+		
+
 		$("#fontsize li").mouseenter(function () {
 			$(this).addClass("lihover");	
 			$(this).unbind('click').click(function(){//点击选中
 				var val=$(this).text();
 				$('a.font span').text(val);
 				$('.CodeMirror-lines').css('font-size',val);
-				$('.dropbox').css("display","none");				
+				$('.dropbox').css("display","none");	
+
+				$("#fontsize li.this").removeClass('this');
+				$(this).addClass('this');			
 			});
 		}).mouseleave(function (){
 			$(this).toggleClass("lihover");
@@ -628,12 +618,11 @@ Main.Toolbar=(function(){
 							title:false,
 							icon:result['state'],
 							content:result['msg'],
-							top:'50%',
 							time:1
 						});
 					}
 				});
-				$("#codetheme li.this").toggleClass('this');
+				$("#codetheme li.this").removeClass('this');
 				$(this).addClass('this');
 			});
 		}).mouseleave(function (){
@@ -642,7 +631,7 @@ Main.Toolbar=(function(){
 	};
 	
 	var bindTools = function(){
-		$('.tools a').click(function(){
+		$('.tools a').click(function(e){
 			if (editor_current == undefined) return;
 			var action = $(this).attr('class');
 			switch (action) {
@@ -661,8 +650,20 @@ Main.Toolbar=(function(){
 						content:'<div id="gotoline"><span>跳转到:</span><input value="" type="text"/><a class="button">go</a></div>'
 					});
 					break;
-				case 'font':$('#fontsize').css('display','block');break;
-				case 'codetheme':$('#codetheme').css('display','block');break;			
+				case 'font':
+					if ($('#fontsize').css('display')=='block') {
+						$('#fontsize').fadeOut(100);
+					}else{
+						$('#fontsize').fadeIn(100);
+					}
+					break;
+				case 'codetheme':
+					if ($('#codetheme').css('display')=='block') {
+						$('#codetheme').fadeOut(100);
+					}else{
+						$('#codetheme').fadeIn(100);
+					}
+					break;			
 				case 'wordbreak'://设置与取消自动换行。
 					if (editor_current.getOption('lineWrapping')) {
 						editor_current.setOption('lineWrapping',false);
@@ -681,6 +682,7 @@ Main.Toolbar=(function(){
 					break;
 				default:break;
 			}
+			stopPP(e);
 		});
 	};			
 	return{

@@ -22,7 +22,7 @@ table.aui_border, table.aui_dialog { width: 100%;border:0; margin:0; border-coll
 .aui_title { overflow:hidden; text-overflow: ellipsis; }
 .aui_state_noTitle .aui_title { display:none; }
 .aui_main { text-align:center; min-width:9em; min-width:0~'\9'/*IE8 BUG*/;visibility: auto;}
-.aui_content {text-align:left; border:none 0;color:#666;width:100%;height:100%;}
+.aui_content {text-align:left;font-size: 14px;color:#666; border:none 0;color:#666;width:100%;height:100%;}
 .aui_content.aui_state_full { display:block; width:100%; margin:0; padding:0!important; height:100%; }
 .aui_content iframe{}
 
@@ -55,7 +55,7 @@ table.aui_border, table.aui_dialog { width: 100%;border:0; margin:0; border-coll
     }
 }
 
-.aui_outer{border:@dialog_border_width solid @dialog_color;border-width:5px~'\9';.box-shadow(0px 0px 20px #000);}
+.aui_outer{border:@dialog_border_width solid @dialog_color;border-width:3px~'\9';.box-shadow(0px 0px 20px #000);}
 .aui_inner {background:#FFF;}
 .aui_state_lock .aui_nw, .aui_state_lock .aui_n, .aui_state_lock .aui_ne, .aui_state_lock .aui_w, .aui_state_lock .aui_e, .aui_state_lock .aui_sw, .aui_state_lock .aui_s, .aui_state_lock .aui_se { background:rgba(0, 0, 0, .5); background:#000~'\9'!important; filter:~'alpha(opacity=50)'; }
 .aui_titleBar { position:relative; height:100%; }
@@ -93,9 +93,9 @@ table.aui_border, table.aui_dialog { width: 100%;border:0; margin:0; border-coll
 .aui_state_noTitle{
     .aui_nw,.aui_ne,.aui_sw,.aui_se { width:5px; height:5px; }
     .aui_titleBar { bottom:0; _bottom:0; _margin-top:0; }
-    .aui_outer{box-shadow: none;}
+    .aui_outer{box-shadow: none;border:none;}
     .aui_inner { border:1px solid #aaa;}
-    .tips{font-size: 14px;padding-top: 20px;padding-bottom: 20px;padding-left: 10px;}
+    .tips{font-size: 14px;padding: 15px;padding-left: 10px;}
     .aui_nw,.aui_n,.aui_ne,.aui_w,.aui_e,.aui_sw,.aui_s,.aui_se { 
         background:rgba(0, 0, 0, .1); background:#000~'\9'!important; 
         filter:~'alpha(opacity=10)!important';

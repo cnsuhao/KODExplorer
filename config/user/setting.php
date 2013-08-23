@@ -11,7 +11,7 @@ $config['list_sort_order']="up";	// up||down
 
 //文件列表主题
 $config['themeall']="default=淡蓝(默认)/simple=简洁白/metro=metro风格";
-$config['theme']="default";		// 文件列表主题(规则，前面为css目录，后面为显示描述)
+$config['theme']="metro";		// 文件列表主题(规则，前面为css目录，后面为显示描述)
 
 $config['codethemeall']="default/eclipse/github/monokai/ambiance/cobalt/dark";
 $config['codetheme']="github";	//代码编辑器主题

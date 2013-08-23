@@ -24,7 +24,7 @@ Main.Config = {
 				   'cmd','reg','bat','vbs','sh'],
 		'text'	: ['txt','ini','inf','conf','oexe','md','htaccess','csv','log'],
 		'bindary':['zip','rar','exe','dll','dat','chm','pdf','doc','docx',
-					'xls','xlsx','ppt','pptx','class','psd','ttf','class'],
+					'xls','xlsx','ppt','pptx','class','psd','ttf','class']
 	}
 };
 Main.Global = {
@@ -193,7 +193,7 @@ Main.Player = {
 			Main.Player._create(type);
 			setTimeout(function(){
 				Main.Player._insert(fileList);
-			},500);
+			},1000);
 		}else{
 			Main.Player._insert(fileList);
 		}		
@@ -208,6 +208,7 @@ Main.UI = (function() {
 		Main.SetSelect.init();
 		Main.PathOpen.initPicasaData();
 		Main.UI.setStyle();
+		_ieCss();
 	}
 	var _bindHotKey = function(){
 		$(document).keydown(function (event){
@@ -261,6 +262,29 @@ Main.UI = (function() {
 			return true;
 		});		
 	};
+
+	var _ieCss = function(){
+		if (!Main.Global.isIE) return;
+		var top 	= 10;
+		var left 	= 10;
+		var width 	= 80;
+		var height 	= 100;
+		var margin 	= 10;
+
+		var w_height= $(document).height() - 60;
+		var col_num   = Math.floor((w_height-top)/(height+margin));
+		var row=0,col=0,x=0,y=0;
+		$('.fileContiner .file').css('position','absolute');
+		$('.fileContiner .file').each(function(i){
+			row = i%col_num;
+			col = Math.floor(i/col_num);
+			x = left + (width+margin)*col;
+			y = top + (height+margin)*row;
+
+			$(this).css({'left':x,'top':y});
+		});
+	}
+
 	//列表排序操作。
 	var _jsonSort = function(field,order){
 		//如果传入0,则不修改排序方式
@@ -442,6 +466,7 @@ Main.UI = (function() {
 		},
 		init:function(){
 			_f5(true,false);//生成文件列表
+			_ieCss();
 			_bindHotKey();
 			$.ajax({
 				url:'?explorer/pathHasCopy',
@@ -491,6 +516,7 @@ Main.UI = (function() {
 
 		setStyle:function(){//设置文件列表高宽。
 			//main当前宽度所容纳每行文件个数。
+			_ieCss();
 			Main.Global.fileRowNum = (function(){
 				var main_height=$(Main.Config.FileBoxSelector).height();//获取main主体的
 				var file_height=
@@ -500,7 +526,7 @@ Main.UI = (function() {
 					parseInt($(Main.Config.FileBoxClass).css('margin-top'))+
 					parseInt($(Main.Config.FileBoxClass).css('margin-bottom'));
 				return parseInt(main_height/file_height);
-			})();					
+			})();		
 		},
 		json_sort:function(field,order){
 			//如果传入0,则不修改排序方式
@@ -514,15 +540,18 @@ Main.UI = (function() {
 		},
 		// setting 对话框
 		setting:function(setting){
-			if (setting == undefined) setting = '';				
-			var url='?setting#'+setting;
-			$.dialog.open(url,{
-				id:'setting_mode',
-				fixed:true,
-				title:'系统设置',
-				width:910,
-				height:580
-			});
+			if (setting == undefined) setting = '';
+			if (window.top.frames["Opensetting_mode"] == undefined) {
+				$.dialog.open('?setting#'+setting,{
+					id:'setting_mode',
+					fixed:true,
+					title:'系统设置',
+					width:880,
+					height:550
+				});
+			}else{
+				FrameCall.doTopFunction('Opensetting_mode','setGoto','"'+setting+'"');
+			}
 		},
 		// tips 
 		tips:{

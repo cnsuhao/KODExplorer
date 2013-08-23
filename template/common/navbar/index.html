@@ -12,10 +12,10 @@
 		<div class="top_right">
 			<a href="#" class="topbar_user"><i class="icon-user"></i>Admin<span style="padding-left:10px ;font-size:12px;corlor:#ddd;">▼</span></a>
 			<ul class="dropmenu">
-				<li><a href="./?setting"><i class="font-icon icon-user"></i>用户设置</a></li>
-				<li><a href="./?setting#theme"><i class="font-icon icon-dashboard"></i>主题设置</a></li>
-				<li><a href="./?setting#help"><i class="font-icon icon-question"></i>帮助</a></li>
-				<li><a href="./?setting#about"><i class="font-icon icon-info-sign"></i>关于</a></li>
+				<li><a href="javascript:Main.UI.setting('user');"><i class="font-icon icon-user"></i>用户设置</a></li>
+				<li><a href="javascript:Main.UI.setting('theme');"><i class="font-icon icon-dashboard"></i>主题设置</a></li>
+				<li><a href="javascript:Main.UI.setting('help');"><i class="font-icon icon-question"></i>帮助</a></li>
+				<li><a href="javascript:Main.UI.setting('about');"><i class="font-icon icon-info-sign"></i>关于</a></li>
 				<li class="line" style="margin:8px 4px;height:2px;border-bottom:1px solid #ddd;"></li>
 				<li><a href="./?user/logout"><i class="font-icon icon-off"></i>退出</a></li>
 			</ul>
@@ -26,14 +26,14 @@
 
 <script>
 	$(document).ready(function() {
-		$('.top_right').click(function(){
+		$('.top_right').click(function(e){
 			var _this = $(this);
 			if (_this.hasClass('this')) {
 				_this.removeClass('this').find('.dropmenu').hide();
 			}else{
 				_this.addClass('this').find('.dropmenu').show();
 			}
-			event.stopPropagation();
+			e.stopPropagation();
 		});
 		$(document).click(function(){
 			var _this = $('.top_right');

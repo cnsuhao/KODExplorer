@@ -5,7 +5,7 @@
 	<title>Cloud Explorer——云。在线资源管理</title>
 	<link rel="Shortcut Icon" href="<?=STATIC_PATH;?>images/favicon.ico">
 	<!-- 	// <script src="http://libs.baidu.com/jquery/1.8.0/jquery.min.js"></script> -->
-		<script src="<?=STATIC_PATH;?>js/jquery-1.8.0.min.js"></script>	
+	<script src="<?=STATIC_PATH;?>js/jquery-1.8.0.min.js"></script>	
 	<script src="<?=STATIC_PATH;?>js/artDialog/jquery.artDialog.js"></script>
 	<script src="<?=STATIC_PATH;?>js/artDialog/iframeTools.js"></script>
 	<script src="<?=STATIC_PATH;?>js/contextMenu/jquery.ui.position.js"></script>

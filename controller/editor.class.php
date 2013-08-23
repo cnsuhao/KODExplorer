@@ -50,7 +50,7 @@ class editor extends Controller{
         if ($charset=='gbk'){
             $filestr=iconv('utf-8','gbk',$filestr);
         }
-        $replace_from = array('-@$@-','-($)-',"\x0a",'<\/textarea>');       
+        $replace_from = array('-@$@-','-($)-',"\x0a",'<\/textarea>');
         $replace_to   = array('&','+',"\x0d\x0a",'</textarea>');
         $filestr=str_replace($replace_from,$replace_to,$filestr);
 

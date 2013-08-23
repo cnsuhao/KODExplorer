@@ -886,7 +886,7 @@ Main.PathOperate = (function() {
 							left:'99%',
 							padding:0,
 							top:'100%',
-							fixed: true,
+							fixed: true
 						    //drag: false,
 						    //resize: false
 						});
@@ -1123,7 +1123,7 @@ Main.PathOpen = (function() {
 		var filename=this_path+urlEncode(Main.SetSelect.getObjName(selectObj));
 		var url='?explorer/fileDownload&path='+filename;
 		Main.UI.tips.tips("即将开始下载");
-		art.dialog.open(url,{title:false,time:0.1,width:0,height:0,});	
+		art.dialog.open(url,{title:false,time:0.1,width:0,height:0});	
 	};
 	//新的页面作为地址打开。鼠标右键，IE下打开
 	var _openIE = function(){
@@ -1141,16 +1141,16 @@ Main.PathOpen = (function() {
 			name = 'openWindow'+Math.floor(Math.random()*1000);
 		}
 		//id 会在dialog控件中加入iframe的name
-		art.dialog.open(url,{id:name,title:title,width:'90%',height:'85%'});
+		art.dialog.open(url,{id:name,title:title,width:'80%',height:'75%'});
 	};
 
 
 	var _openEditor = function(path,title,ext){
-		if (window.frames["OpenopenEditor"] == undefined) {
+		if (window.top.frames["OpenopenEditor"] == undefined) {
 			path ='?editor/edit&type='+ext+'&filename='+path;
 			_openWindow(path,title,'openEditor');
 		}else{
-			FrameCall.doFunction('OpenopenEditor','Main.Editor.add','"'+urlDecode(path)+'"');
+			FrameCall.doTopFunction('OpenopenEditor','Main.Editor.add','"'+urlDecode(path)+'"');
 		}
 	}
 

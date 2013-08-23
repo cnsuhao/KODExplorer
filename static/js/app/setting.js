@@ -4,10 +4,9 @@ function tips(msg,icon){
 	$.dialog({
 		title:false,
 		icon:icon,
-		top:'50%',
 		time:1,
-		content:"<div class='tips'>"+msg+"</div>",
-		padding:0
+		padding:0,
+		content:"<div class='tips'>"+msg+"</div>"
 	});
 }
 
@@ -19,6 +18,8 @@ function setTheme(){
 	FrameCall.fatherFunction('Main.UI.setTheme','"'+thistheme+'"');
 }
 
+
+// 设置子内容动作处理
 function tools(action){  		
 	var page=$('.selected').attr('id');
 	switch (page){
@@ -91,7 +92,25 @@ function tools(action){
 	}
 }
 
-
+function setGoto(slider){
+	if (slider == '') slider = 'user';
+	$('.selected').removeClass('selected');
+	$('ul.setting li#'+slider).addClass('selected');
+	$.ajax({
+		url:'?setting/slider&slider='+slider,
+		beforeSend:function (data){
+			$('.main').html("<img src='./static/images/loading.gif'/>");
+		},
+		success:function(data){
+			$('.main').css('display','none');
+			$('.main').html(data);
+			$('.main').fadeIn('fast');
+			if (slider=='fav'){//收藏夹，则首次初始化ajax数据
+				favInit();
+			}
+		}
+	});
+}
 
 
 // 收藏夹处理
@@ -156,22 +175,7 @@ $(document).ready(function() {
 
 	$('ul.setting li').click(function(){
 		var slider=$(this).attr('id');
-		$('.selected').toggleClass('selected');
-		$(this).addClass('selected');
-		$.ajax({
-			url:'?setting/slider&slider='+slider,
-			beforeSend:function (data){
-				$('.main').html("<img src='./static/images/loading.gif'/>");
-			},
-			success:function(data){
-				$('.main').css('display','none');
-				$('.main').html(data);
-				$('.main').fadeIn('fast');
-				if (slider=='fav'){//收藏夹，则首次初始化ajax数据
-					favInit();
-				}
-			}
-		});
+		setGoto(slider);
 	});
 	$('ul.setting li').hover(
 		function(){	$(this).addClass('hover');},

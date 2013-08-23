@@ -29,17 +29,17 @@ textarea,input,button{.font-family();}
 	user-select: @type;
 }
 .background-color(@color,@alpha:0.8){
-  //background:@color~'\9';
+  background:@color~'\9';
   background:rgba(red(@color),green(@color),blue(@color),@alpha); 
 }
 .border-color(@color,@alpha:0.8){
-  //border-color:@color~'\9';
+  border-color:@color~'\9';
   border-color:rgba(red(@color),green(@color),blue(@color),@alpha);  
 }
 
 /* 渐变色 */
 .gradient (@origin: left, @start: #ffffff, @stop: #000000) {
-    background-color: @start;
+    background:@stop;
     background-image: -webkit-linear-gradient(@origin, @start, @stop);
     background-image: -moz-linear-gradient(@origin, @start, @stop);
     background-image: -o-linear-gradient(@origin, @start, @stop);

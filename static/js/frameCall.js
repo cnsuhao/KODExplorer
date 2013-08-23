@@ -26,12 +26,16 @@ var FrameCall = (function(){
 
 		//该窗口调用父窗口的子窗口api,调用iframe框架的js函数.封装控制器。
 		doFunction:function(iframe,action,value){
-			var obj;
-			if (ie){//获取兄弟frame的dom树
-				obj=window.parent.document.getElementById(iframe).contentDocument;//IE
-			}else{
-				obj=window.parent.frames[iframe].document;//chrome safari firefox...
-			}
+			var obj = window.parent.frames[iframe].document;
+			obj=obj.getElementById(idName);		
+			$(obj).attr("action",action);
+			$(obj).attr("value",value);
+			obj.click();
+		},
+
+		//该窗口调用父窗口的子窗口api,调用iframe框架的js函数.封装控制器。
+		doTopFunction:function(iframe,action,value){
+			var obj = window.top.frames[iframe].document;
 			obj=obj.getElementById(idName);		
 			$(obj).attr("action",action);
 			$(obj).attr("value",value);

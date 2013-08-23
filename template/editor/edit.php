@@ -51,7 +51,7 @@ http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 		<div class="tools">
 			<div class="left">
 				<a class="save" href="#" title='保存'><i class="font-icon icon-save"></i></a>
-				<a class="saveall" href="#" title='保存全部'><i class="font-icon icon-refresh"></i></a>
+				<a class="saveall" href="#" title='全部保存'><i class="font-icon icon-paste"></i></a>
 				<span class="line"></span>
 				<a class="pre" href="#" title="撤销"><i class="font-icon icon-undo"></i></a>
 				<a class="next" href="#" title="反撤销"><i class="font-icon icon-repeat"></i></a>
@@ -59,7 +59,7 @@ http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 				<a class="find" href="#" title="查找"><i class="font-icon icon-search"></i></a>
 				<a class="gotoline" href="#" title="定位到N行"><i class="font-icon icon-pushpin"></i></a>
 				<span class="line"></span>
-				<a onclick="Main.Toolbar['font'];" class="font" href="#" title="字体大小">
+				<a class="font" href="#" title="字体大小">
 					<i class="font-icon icon-font"></i>字体<i class="font-icon icon-caret-down"></i>
 				</a>		
 				<a class="codetheme" href="#" title="代码风格">

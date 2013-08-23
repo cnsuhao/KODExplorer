@@ -589,15 +589,18 @@ Main.UI = (function() {
 		},
 		// setting 对话框
 		setting:function(setting){
-			if (setting == undefined) setting = '';				
-			var url='?setting#'+setting;
-			$.dialog.open(url,{
-				id:'setting_mode',
-				fixed:true,
-				title:'系统设置',
-				width:910,
-				height:580
-			});
+			if (setting == undefined) setting = '';	
+			if (window.top.frames["Opensetting_mode"] == undefined) {
+				$.dialog.open('?setting#'+setting,{
+					id:'setting_mode',
+					fixed:true,
+					title:'系统设置',
+					width:880,
+					height:550
+				});
+			}else{
+				FrameCall.doTopFunction('Opensetting_mode','setGoto','"'+setting+'"');
+			}
 		},
 
 		// tips 

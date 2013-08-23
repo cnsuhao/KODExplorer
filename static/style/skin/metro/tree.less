@@ -4,7 +4,7 @@
         padding:0; margin:0; list-style:none;text-align:left; 
         white-space:nowrap; outline:0;line-height:@height+2;
         ul{margin:0; padding:0;}
-        &.level0{margin-bottom:15px;}
+        &.level0{margin-bottom:5px;}
         span{
             line-height:@height;
             &.button{
@@ -21,9 +21,7 @@
                     background-position:0px -353px;
                     &.switch_hover{background-position:-32px -353px !important;}
                 }
-                .ico_loading{margin-right:2px;vertical-align:top; *vertical-align:middle;
-                    background:url(./images/loading.gif) no-repeat scroll 0 0 transparent; 
-                }
+                &.ico_loading{background:url(./images/loading.gif) no-repeat scroll 0 0 transparent;}
             }
         }
         a{ padding-top:1px;cursor:pointer;text-decoration:none;
@@ -35,14 +33,14 @@
             }
             &.curSelectedNode {
                 border:1px solid @file_select_color;background:@file_select_color;
-                padding-top:1px;line-height:@height;height:@height;color:#fff;
+                line-height:@height;height:@height;color:#fff;
             }
             &.curSelectedNode_Edit {
                 border:1px solid @file_select_color;background:@file_select_color;
-                color:black; height:@height+1;padding-top:0px; 
+                color:black; height:@height+1;
             }
-            input.rename {height:@height+1;line-height:@height+1; width:100px; padding:0;margin:0;
-               border:none;outline:none;padding-left:5px;
+            input.rename {height:20px;line-height:22px; width:100px; padding:0;margin:0;
+               border:none;outline:none;padding-left:5px;font-size: 12px;
             }
             span{
                 &.button{
