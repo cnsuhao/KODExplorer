@@ -15,14 +15,14 @@ body{font-size:13px;padding:0px;margin:0px;font-family:"微软雅黑";.user-sele
 
 @navbar_height:40px;
 .navbar{
-	@back:#41bbec;
-	width:100%;height:(@navbar_height);color:#ddd;z-index:100;height: 40px !important;
-	background:@back url(../../../images/topBanner2.png) repeat-x;
+	@back:#47a1ca;
+	width:100%;height:(@navbar_height);color:#ddd;z-index:100;
+	background:@back url(../../../images/topBanner.jpg) repeat-x;
 	position:fixed;box-shadow:0 -20px 50px #000;
 	.content{		
-		padding:0px;line-height:40px;
+		padding:0px;line-height:38px;
 		i{display: inline-block;padding-right: 10px;text-shadow:0 0 1px;font-size: 1.1em;}
-		a{display:block;text-decoration:none;color:#fff;
+		a{display:block;text-decoration:none;color:#fff;padding:0px 1.5em;
 			.transition();padding:0px 1.5em;
 		}		
 		ul.dropmenu{list-style: none;padding: 0;margin: 0;padding: 5px 0 0px;
@@ -34,8 +34,8 @@ body{font-size:13px;padding:0px;margin:0px;font-family:"微软雅黑";.user-sele
 			}
 		}
 		.top_left{			
-			a{	float:left;
-				&:hover,&.this{background:#80dbff;}
+			a{	float:left;border-right:1px solid;margin-left:-1px;border-left:1px solid;border-color:#60a8ca;
+				&:hover,&.this{background:#307fa4;}
 				&.title{font-size:18px;font-weight:800;width:150px;padding-left:49px;padding-right: 0;}
 				&.title:hover{background:none;}
 			}

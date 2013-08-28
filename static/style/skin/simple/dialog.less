@@ -2,7 +2,7 @@
     position: absolute;
     top: 15%;left: 0px;z-index:88;
     background:#000;color:#fff;
-    .opacity(50);
+    .opacity(70);
     .border-radius(1px);
     .box-shadow(0 10px 80px rgba(0,0,0,0.6));
     display:none;
@@ -49,14 +49,6 @@ button.aui_state_highlight:active { border-color:#1c6a9e; filter: ~"progid:DXIma
 .aui_nw, .aui_n, .aui_ne, .aui_w, .aui_e, .aui_sw, .aui_s, .aui_se {background:#000~'\9'!important;background:#000; .opacity(50);}
 /*所有边框颜色*/
 
-
-.dialogMax{
-    .aui_nw, .aui_ne,.aui_sw, .aui_se,.aui_w, .aui_e{width:0px;}
-    .aui_sw, .aui_n,.aui_se {height:0px;}
-    .aui_outer { border:none;}
-}
-
-
 .aui_state_focus .aui_mask {display:none;}
 .aui_titleBar { width:100%; height:0; position:relative; bottom:33px; _bottom:0; _margin-top:-33px; }
 .aui_title { height:27px; line-height:27px; padding:0 16px 0 5px; color:#FFF; font-weight:700; text-shadow:0 1px 0 #000; }
@@ -74,8 +66,9 @@ button.aui_state_highlight:active { border-color:#1c6a9e; filter: ~"progid:DXIma
     }
     &:active{box-shadow: none;background:#f00; }
 }
-.aui_min{right: 65px;font-size: 16px;line-height: 22px;}
-.aui_max{right: 35px;font-size: 16px;line-height: 14px;}
+.aui_min{right: 65px;line-height: 22px;}
+.aui_max{right: 35px;line-height: 14px;}
+.aui_max,.aui_min{display: none;font-size: 16px;}
 .aui_close{right: 5px;}
 
 .aui_state_noTitle{
@@ -92,6 +85,13 @@ button.aui_state_highlight:active { border-color:#1c6a9e; filter: ~"progid:DXIma
     .aui_close,.aui_max,.aui_min{display: none;font-size:13px; }
 }
 
+
+/*------------最大化最小化，窗口大小调整-----------*/
+.dialogMax{
+    .aui_nw, .aui_ne,.aui_sw, .aui_se,.aui_w, .aui_e{width:0px;}
+    .aui_sw, .aui_n,.aui_se {height:0px;}
+    .aui_outer { border:none;}
+}
 .dialog-can-resize{
     .resize-handle{position: absolute;font-size: 0.1px;z-index: 99999; display: block; }
     .resize-top{z-index:0; cursor: n-resize; height: 7px; width: 100%; top: 0px; left: -4px; }
@@ -103,7 +103,8 @@ button.aui_state_highlight:active { border-color:#1c6a9e; filter: ~"progid:DXIma
         background:url('./images/resize_corner.png') no-repeat;}
     .resize-bottom-left{cursor: sw-resize; width: 15px; height: 15px; left: -5px; bottom: -5px;}
     .resize-top-left{cursor: nw-resize; width: 15px; height: 15px; left: -5px; top: -5px;}
-    .resize-top-right{cursor: ne-resize; width: 15px; height: 15px; right: -5px; top: -5px;}    
+    .resize-top-right{cursor: ne-resize; width: 15px; height: 15px; right: -5px; top: -5px;}   
+    .aui_min,.aui_max{display: block;}   
 }
 
 

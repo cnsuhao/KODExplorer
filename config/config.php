@@ -15,9 +15,9 @@ define('CORER_DIR',		LIB_DIR .'core/');			//核心目录
 define('HOME',WEB_ROOT);							//当前下的0000目录
 define('USER',BASIC_PATH.'data/User/');				//当前下的0000目录
 define('DESKTOP',BASIC_PATH.'data/User/desktop/');	//当前下的0000目录
-define('STATIC_PATH','./static/');							//静态文件目录
+define('STATIC_PATH','./static/');					//静态文件目录
 //define('STATIC_PATH','http://static.kalcaddle.com/static/');
-
+define('USE_NO_LESS',true);							//是否使用less
 
 include(CORER_DIR.'Application.class.php');
 include(CORER_DIR.'Controller.class.php');
@@ -52,16 +52,6 @@ if (strtoupper(substr(PHP_OS, 0,3)) === 'WIN') {
 }
 
 
-// app 配置 [?index/list&a=1]
-$config['db'] = array(
-	'db_type'     => 'mysql',
-	'db_host'     => 'localhost',
-	'db_port'     => '3306',
-	'db_name'     => 'friend_link',
-	'db_user'     => 'root',
-	'db_password' => '123',
-	'db_charset'  => 'utf8'	
-);
 $in = parse_incoming();//所有过滤处理。
 $config['autorun'] = array(
 	array('controller'=>'user','function'=>'loginCheck')

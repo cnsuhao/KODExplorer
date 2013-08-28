@@ -1,5 +1,4 @@
-﻿var Main = {};
-Main.Config = {
+﻿Main.Config = {
 	BodyContent:".bodymain",	// 框选事件起始的dom元素
 	FileBoxSelector:'.fileContiner',// dd
 	FileBoxClass:".file",		// 文件选择器
@@ -12,20 +11,7 @@ Main.Config = {
 	HoverClassName:"hover",		// hover类名
 	FileOrderAttr:"number",		// 所有文件排序属性名
 	navbar:'navbar',			// 头部导航栏选择器
-
-	AnimateTime:200,			// 动画时间设定
-	filetype : {
-		'music'	: ['mp3','wma','wav','mid','acc'],
-		'movie'	: ['avi','flv','f4v','wmv','3gp','rmvb','mp4'],
-		'image'	: ['jpg','jpeg','png','bmp','gif','ico'],
-		'code'	: ['html','htm','js','css','less','scss','sass','py','php','rb','erl','lua','pl',
-				   'c','cpp','m','h','java','jsp','cs','asp','sql','as','go','lsp',
-				   'yml','json','tpl','xml',
-				   'cmd','reg','bat','vbs','sh'],
-		'text'	: ['txt','ini','inf','conf','oexe','md','htaccess','csv','log'],
-		'bindary':['zip','rar','exe','dll','dat','chm','pdf','doc','docx',
-					'xls','xlsx','ppt','pptx','class','psd','ttf','class']
-	}
+	AnimateTime:200				// 动画时间设定
 };
 Main.Global = {
 	fileListAll:'',				// 当前路径下文件对象集合,缓存起来便于全局使用
@@ -77,7 +63,6 @@ Main.SetSelect = {
 		Main.Global.fileListSelectNum = $list.length;
 		if ($list.length > 1) {				
 			$list.removeClass("menufile menufolder menudesktop").addClass("menuMore");
-			Main.PathOperate.media.init();
 		}
 	},
 	//获取文件&文件夹名字
@@ -127,79 +112,8 @@ Main.SetSelect = {
 		});
 		Main.Global.fileListSelect = '';
 		Main.Global.fileListSelectNum = 0;
-		Main.PathOperate.media.clear();
 	}
 };
-
-Main.Player = {
-	// 创建播放器；动态获取皮肤以及对应大小尺寸
-	_create:function(type){
-		if(type == undefined) type = 'mp3';
-		$.ajax({
-			url:"?explorer/playerSkin&type="+type,
-			dataType:'json',
-			success:function(data){
-				var htmlContent = 			
-					'<object type="application/x-shockwave-flash" id="cmp_media" data="./static/js/cmp4/cmp.swf" width="100%" height="100%">'
-					+	'<param name="movie" value="./static/js/cmp4/cmp.swf" />'
-					+	'<param name="allowfullscreen" value="true" />'
-					+	'<param name="allowscriptaccess" value="always" />'
-					+	'<param name="flashvars" value="context_menu=2&auto_play=1&play_mode=1&skin=skins/'+data.skin+'.zip" />'
-					+	'<param name="wmode" value="transparent" />'
-					+'</object>';
-
-				//art.dialog.through({
-				$.dialog({
-					title:data.title,
-					width:data.width,							
-					height:data.height,
-					content:htmlContent,
-					padding:0,
-					fixed:true
-				});
-			}
-		});
-	},
-	// 文件数组创建播放器列表
-	_makeList:function(fileList){
-		var play_url,i,xml='';
-		for (i = fileList.length - 1; i >= 0; i--) {
-			play_url=web_path+encodeURIComponent(fileList[i]);
-			if(Main.Global.isIE){
-				play_url=web_path+encodeURI(fileList[i]);
-			}
-			play_url=play_url.replace(/%3A/g,':');
-			play_url=play_url.replace(/%2F/g,'/');
-			play_url=play_url.replace(/\+/g,' ');
-			play_url=web_host+play_url;
-			xml +='<list><m type="" src="'+play_url+'" label="'+fileList[i]+'"/></list>';
-		};
-		return xml;
-	},
-	_insert:function(fileList){
-		var new_list = Main.Player._makeList(fileList);
-		var cmpo = CMP.get("cmp_media");//检测播放器是否存在,存在则加入列表
-		if (cmpo) {
-			cmpo.config('play_mode', 'normal');//写入配置,播放模式改为自动跳到next
-			cmpo.list_xml(new_list,true);			
-			if (fileList.length==1) {//若只有一首则加入到最后时，播放最后一首
-				cmpo.sendEvent('view_play',cmpo.list().length);
-			}							
-		}
-	},
-	play:function(fileList,type){		
-		var cmpo = CMP.get("cmp_media");
-		if (!cmpo) {
-			Main.Player._create(type);
-			setTimeout(function(){
-				Main.Player._insert(fileList);
-			},1000);
-		}else{
-			Main.Player._insert(fileList);
-		}		
-	}
-};
-
 
 //__________________________________________________________________________________//
 Main.UI = (function() {
@@ -318,7 +232,7 @@ Main.UI = (function() {
 		var html="";
 		var filePath = web_host+urlDecode(web_path)+urlEncode(file['name']);
 		var thumbPath = '?explorer/image&path='+this_path+urlEncode(file['name']);
-		if (inArray(Main.Config.filetype['image'],file['ext'])) {//如果是图片，则显示缩略图，并绑定幻灯片插件。运行缓慢？？！
+		if (inArray(Main.Common.filetype['image'],file['ext'])) {//如果是图片，则显示缩略图，并绑定幻灯片插件。运行缓慢？？！
 			html+="<div class='file fileBox menufile' title='"+file['name']+"' >";
 			html+="<div picasa='"+filePath+"' title='"+file['name']+"' class='picasaImage picture ico' filetype='"+file['ext']+"' style='margin:3px 0 0 8px;background:url("+thumbPath+");'></div>";
 			html+="<div id='"+file['name']+"' class='titleBox'><span class='title' title='双击重命名'>"+file['name']+"</span></div></div>";
@@ -428,7 +342,7 @@ Main.UI = (function() {
 				//async:false,//同步阻塞.阻塞其他线程，等待执行完成。//解决重命名后设置选中
 				success:function(data){
 					if (data == false) {				
-						Main.UI.tips.tips('目录不存在或没有权限访问该目录');
+						Main.Common.tips.tips('目录不存在或没有权限访问该目录');
 						$(Main.Config.FileBoxSelector).html('');
 						return false;
 					}
@@ -436,7 +350,7 @@ Main.UI = (function() {
 					_mainSetData(is_animate);
 				},
 				error:function(data){
-					Main.UI.tips.tips('系统错误');	
+					Main.Common.tips.tips('系统错误');	
 					$(Main.Config.FileBoxSelector).html('');
 				}
 			});		
@@ -538,53 +452,10 @@ Main.UI = (function() {
 					json_sort_field+'&order='+json_sort_order
 			});
 		},
-		// setting 对话框
-		setting:function(setting){
-			if (setting == undefined) setting = '';
-			if (window.top.frames["Opensetting_mode"] == undefined) {
-				$.dialog.open('?setting#'+setting,{
-					id:'setting_mode',
-					fixed:true,
-					title:'系统设置',
-					width:880,
-					height:550
-				});
-			}else{
-				FrameCall.doTopFunction('Opensetting_mode','setGoto','"'+setting+'"');
-			}
-		},
-		// tips 
-		tips:{
-			loading:function(msg){
-				$('.messageBox').stop(true,true);//停止正在运行的动画，从新开始动画
-				if (msg == undefined) msg = '操作中...';
-				$('.messageBox .content').html(msg+"&nbsp;&nbsp;  <img src='./static/images/loading.gif'/>");
-				$('.messageBox')
-				.css({'display':'block','left':-$('.messageBox').width()})
-				.animate({opacity:0.8,left:0},300);
-			},
-			close:function(msg,time){
-				var timeout = 0;		
-				if (msg != undefined){
-					timeout = 1000;
-					$('.messageBox .content').html(msg);
-				}
-				if (time != undefined) timeout=time;
-				$('.messageBox').delay(timeout).animate({opacity:0,left:'-=50'},500,0,function(){
-					$(this).css('display','none');
-				});	
-			},
-			tips:function(msg,icon){
-				$('.messageBox').stop(true,true);//停止正在运行的动画，从新开始动画
-				$('.messageBox .content').html(msg);
-				$('.messageBox')
-				.css({'display':'block','left':-$('.messageBox').width()})
-				.animate({opacity:0.8,left:0},300,0)
-				.delay(1000)
-				.animate({opacity:0,left:'-=50'},500,0,function(){
-					$(this).css('display','none');
-				});
-			}
+		//编辑器全屏
+		editorFull:function(){
+			var $frame = $('iframe[name=OpenopenEditor]');
+			$frame.toggleClass('frame_fullscreen');
 		}
 	}
 })();

@@ -2,7 +2,7 @@ var editors			= {};
 var editor_current	= undefined;
 var editor_current_id= '';
 var Main			= {};
-var animate_time	= 120;
+var animate_time	= 160;
 Main.Tap = (function(){
 	var _bindTab = function(){
 		$('.edit_tab .tab').live('mouseenter',function (e) {
@@ -167,11 +167,11 @@ Main.Tap = (function(){
 		var max_width	= 122;
 		var reset_width = max_width;
 		var $tabs		= $('.edit_tab .tab');
-		var full_width	= $('.edit_tab').width() - parseInt($('.edit_tab').css('padding-left'))-4;
+		var full_width	= $('.edit_tab .tabs').width()-4;
 		var margin		= parseInt($tabs.css('margin-right')) + parseInt($tabs.css('border-right'));
 		var add_width	= parseInt($('.edit_tab .add').outerWidth())+margin*2;
 		var count		= $tabs.length;				
-		//不用变化的个数				
+		//不用变化的个数
 		var max_count = Math.floor((full_width-add_width)/(max_width+margin));
 		if (count > max_count) {
 			reset_width = Math.floor((full_width - add_width)/count) - margin;
@@ -277,6 +277,8 @@ Main.Editor = (function(){
 				$.dialog({
 					id:'id_fileget',
 					icon:'loading',
+					top:'50%',
+					left:'50%',
 					padding:10,
 					title:false,
 					content:'数据获取中...'
@@ -314,7 +316,7 @@ Main.Editor = (function(){
 		var this_editor = CodeMirror.fromTextArea(document.getElementById('text_'+jsonData.id), {
 			lineNumbers: true,
 			styleActiveLine: true,
-			indentUnit: 4,
+			indentUnit: 7,
 			tabMode: "shift",	
 			enterMode: "keep",
 			indentWithTabs: true,
@@ -326,6 +328,12 @@ Main.Editor = (function(){
 			onKeyEvent: function() {//zendCoding 插件
 				return zen_editor.handleKeyEvent.apply(zen_editor, arguments);
 			},
+			foldGutter: {
+		    	rangeFinder: new CodeMirror.fold.combine(
+		    		CodeMirror.fold.brace, CodeMirror.fold.comment)
+		    },    
+		    gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+		    autoCloseBrackets: true,
 			extraKeys: {
 				"Ctrl-S": function() {
 					Main.Editor.save(editor_current_id);
@@ -590,11 +598,12 @@ Main.Toolbar=(function(){
 			$(this).unbind('click').click(function(){//点击选中
 				var val=$(this).text();
 				$('a.font span').text(val);
-				$('.CodeMirror-lines').css('font-size',val);
+				$('.CodeMirror-scroll').css('font-size',val);
 				$('.dropbox').css("display","none");	
 
 				$("#fontsize li.this").removeClass('this');
-				$(this).addClass('this');			
+				$(this).addClass('this');	
+				editor_current.focus();
 			});
 		}).mouseleave(function (){
 			$(this).toggleClass("lihover");
@@ -624,6 +633,7 @@ Main.Toolbar=(function(){
 				});
 				$("#codetheme li.this").removeClass('this');
 				$(this).addClass('this');
+				editor_current.focus();
 			});
 		}).mouseleave(function (){
 			$(this).toggleClass("lihover");
@@ -678,11 +688,15 @@ Main.Toolbar=(function(){
 				case 'tabbeautify':editor_current.indentSelection("smart");break;//table对齐
 				case 'about':
 					var url='?setting#help';
-					$.dialog.open(url,{id:'setting_mode',title:'系统设置',width:910,height:580});
+					$.dialog.open(url,{id:'setting_mode',title:'系统设置',width:910,height:580,resize:true});
 					break;
+
+				case 'max':FrameCall.fatherFunction('Main.UI.editorFull',"''");break;
+				case 'close':Main.Editor.remove(editor_current_id);break;
 				default:break;
 			}
 			stopPP(e);
+			editor_current.focus();
 		});
 	};			
 	return{

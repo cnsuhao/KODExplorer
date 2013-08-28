@@ -14,28 +14,34 @@
 	<script src="<?=STATIC_PATH;?>js/frameCall.js"></script> <!-- 跨窗口函数调用 -->
 	<script src="<?=STATIC_PATH;?>js/ztree/js/jquery.ztree.all-3.5.min.js"></script>
 	<link   href="<?=STATIC_PATH;?>style/font-awesome/style.css" rel="stylesheet"/>
-	<!-- 
-	<link   href="<?=STATIC_PATH;?>style/skin/<?=$value['config']['theme'];?>/app_editor.css" rel="stylesheet" id='link_css_list'/>
-	!-->
 
+	<?php if(USE_NO_LESS){?>
+	<link   href="<?=STATIC_PATH;?>style/skin/<?=$value['config']['theme'];?>/app_editor.css" rel="stylesheet" id='link_css_list'/>
+	<?php }else{?>	
 	<link rel="stylesheet/less" type="text/css" href="<?=STATIC_PATH;?>style/skin/<?=$value['config']['theme'];?>/app_editor.less">
 	<script src="<?=STATIC_PATH;?>js/less-1.3.3.min.js"></script>
+	<?php }?>
 	
 </head>
 
 <script>
+var web_host	= '<?=HOST;?>';// localhost 访问根目录
 var app_path	= '<?=urlencode(APPHOST);?>';	///www/explorer/
 var rootPath	= '<?=WEB_ROOT;?>';
 var editPath	= app_path+'./';//ajax请求文件路径
+var static_path = "<?=STATIC_PATH;?>";
 </script>
 
 <body onselectstart="return false" style="overflow:hidden;">
 	<?php include(TEMPLATE.'common/navbar/index.html');?>
 	<div class="frame-main">
 		<div class='frame-left'>
-			<div class="tools-left">						
-		        <a id='newfolder' href="#" class="button"><i class="font-icon icon-folder-close-alt"></i>新建分类</a>		        
-				<span class='msg'></span>
+			<div class="tools-left">
+				<a class="home" href="#"  title='根目录'><i class="icon-home"></i></a>
+				<a class="view" href="#"  title='管理目录'><i class="icon-laptop"></i></a>
+				<a class="folder" href="#" title='新建文件夹'><i class="icon-folder-close-alt"></i></a>
+				<a class="file" href="#" title='新建txt'><i class="icon-file-alt"></i></a>		
+				<a class="refresh" href="#" title='刷新'><i class="icon-refresh"></i></a>		 
 			</div>
 			<ul id="folderList" class="ztree">
 				<div class="loading " style="text-align:center;padding:20px;"><img src="./static/images/loading_content.gif"/></div>
@@ -45,15 +51,17 @@ var editPath	= app_path+'./';//ajax请求文件路径
 		<div class='frame-right'>
 			<div class="frame-right-main"  style="height:99%;padding:0;margin:0;">
 				<div class="resizeMask"></div>
-				<div class="messageBox menuTreeRoot" ><div class="content"></div></div>
-				<div class="messageBox menuTreeFolder" ><div class="content"></div></div>
-				<div class="messageBox menuTreeFile" ><div class="content"></div></div>
+				<div class="messageBox"><div class="content"></div></div>
+				<div class="menuTreeRoot"></div>
+				<div class="menuTreeFolder"></div>
+				<div class="menuTreeFile"></div>				
 				<div class ='frame'>
-					 <iframe name="editor" src="?editor/edit" style="width:100%;height:100%;border:0;" frameborder=0></iframe>
+					 <iframe name="OpenopenEditor" src="?editor/edit" style="width:100%;height:100%;border:0;" frameborder=0></iframe>
 				</div>	
 			</div>
 		</div><!-- / frame-right end-->
 	</div><!-- / frame-main end-->
+<script src="<?=STATIC_PATH;?>js/app/common/common.js"></script>
 <script src="<?=STATIC_PATH;?>js/app/edit/editor.js"></script>
 </body>
 </html>

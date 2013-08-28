@@ -19,14 +19,15 @@
 	<script src="<?=STATIC_PATH;?>js/picasa/picasa.js"></script>
 	<link  href="<?=STATIC_PATH;?>js/picasa/style/style.css" rel="stylesheet"/>
 	<link   href="<?=STATIC_PATH;?>style/font-awesome/style.css" rel="stylesheet"/>
-	<!-- 
+
+	<?php if(USE_NO_LESS){?>
 	<link  href="<?=STATIC_PATH;?>style/skin/<?=$value['config']['theme'];?>/app_explorer.css" rel="stylesheet" id='link_css_list'/>
-	!-->
+	<?php }else{?>	
 	<link rel="stylesheet/less" type="text/css" href="<?=STATIC_PATH;?>style/skin/<?=$value['config']['theme'];?>/app_explorer.less">
 	<script src="<?=STATIC_PATH;?>js/less-1.3.3.min.js"></script>
+	<?php }?>
 	
 </head>
-
 
 <script>
 var HOME    = '<?=HOME;?>';//$dir为初次进入或者刷新浏览器后的当前目录。
@@ -46,7 +47,6 @@ var static_path = "<?=STATIC_PATH;?>";
 
 <body onselectstart="return false" style="overflow:hidden;">
 	<?php include(TEMPLATE.'common/navbar/index.html');?>
-
 	<div class="frame-header">
 		<div class="header-content">
 			<div class="header-left">
@@ -105,7 +105,7 @@ var static_path = "<?=STATIC_PATH;?>";
 				        <a id='newfolder' href="#" class="button left"><i class="font-icon icon-folder-close-alt"></i>新建文件夹</a>
 				        <a id='newfile' href="#" class="button middle"><i class="font-icon icon-file-alt"></i>新建文件</a>
 				        <a id='upload' href="#" class="button right"><i class="font-icon icon-cloud-upload"></i>上传</a>
-						<span class='msg'></span>
+						<span class='msg'>载入中...</span>
 					</div>
 					<div class="tools-right">
 						<a id='set_icon' href="#" class="button left" title="显示图标模式"><i class="font-icon icon-th"></i></a>
@@ -131,6 +131,9 @@ var static_path = "<?=STATIC_PATH;?>";
 			</div>
 		</div><!-- / frame-right end-->
 	</div><!-- / frame-main end-->
+<script src="<?=STATIC_PATH;?>js/app/common/taskTap.js"></script>
+<script src="<?=STATIC_PATH;?>js/app/common/CMPlayer.js"></script>
+<script src="<?=STATIC_PATH;?>js/app/common/common.js"></script>
 <script src="<?=STATIC_PATH;?>js/app/explorer/main.js"></script>
 <script src="<?=STATIC_PATH;?>js/app/explorer/rightMenu.js"></script>
 <script src="<?=STATIC_PATH;?>js/app/explorer/pathOperate.js"></script>

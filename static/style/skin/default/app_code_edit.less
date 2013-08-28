@@ -11,9 +11,9 @@ a{text-decoration:none;}
 @tab_color:#3377ff;
 .edit_main{color:#444;font-size:13px;width:100%;}		
 .edit_tab{
-	height:28px;border-bottom: 1px solid #bbb;
+	height:28px;
 	.tabs{
-		background:#fff;
+		background:#fff;overflow: hidden;border-bottom: 1px solid #ddd;
 		.tab{
 			position:relative;
 			height:28px;line-height:28px;color:#666;
@@ -28,7 +28,7 @@ a{text-decoration:none;}
 				&:active{color:#f00;};
 			}
 			&.hover{background:url(./images/buttons_40.png) 0 10px repeat-x;}
-			&.this{z-index:100;color:#23B2EC;.gradient(top,lighten(@tab_color,10%),@tab_color);color: #fff;
+			&.this{z-index:20;color:#23B2EC;.gradient(top,lighten(@tab_color,10%),@tab_color);color: #fff;
 				.close{color:darken(@tab_color,10%);
 					&:hover{color:#af5250;};
 					&:active{color:#f00;};
@@ -46,7 +46,7 @@ a{text-decoration:none;}
 }
 
 .draggable-dragging{
-	position:absolute;z-index:100;color: #fff;
+	position:absolute;z-index:20;color: #fff;
 	height:28px;line-height:28px;
 	width:120px;float:left;.gradient(top,lighten(@tab_color,6%),@tab_color);
 	span{margin-left:5px;display:block;width:80%;height:28px;overflow:hidden;
@@ -59,11 +59,36 @@ a{text-decoration:none;}
 
 /*编辑区*/
 .edit_body{
-	width:100%;background:#fff;position:absolute;bottom:0;top: 63px;
+	width:100%;background:#fff;position:absolute;bottom:0;top: 64px;
 	.tabs{
 		width:100%;height:100%;
 		.tab{padding:10px;display:none;background:#def;}
 		.this{padding:10px;display:block;background: #fff;}
+	}
+}
+.introduction{
+	margin:0 auto;;font-size:13px;position: absolute;width: 100%;
+	.intro_left{width:40%;float:left;border-right:1px solid #eee;margin-right:1%;}
+	.tips {
+		margin: 30px;margin-bottom: 0;padding-bottom: 8px;color:#888;
+		p{padding-left:2em;word-break:break-all;line-height:1.2em;}
+		p:before{content: "\f006";font-family: FontAwesome;padding-right: 8px;}	
+		h1{font-size:25px;font-weight: 400;border-bottom:1px dashed #ddd;padding:4px 0 9px 5px;}
+		h1 span{border-bottom: 3px solid #ddd;padding:8px;color:#666;}
+	}
+	.intro_right{width:40%;float:left;
+		.tips{margin-left:10px;}
+	}
+
+	.blue{color:#8BB7D5;
+		h1 span{border-color: #8BB7D5;color:#8BB7D5;}	
+	}
+	.orange{
+		color:#F27642;
+		h1 span{color:#F27642;border-color: #F27642;}
+	}
+	.green{color:#56A238;
+		h1 span{color:#56A238;border-color: #56A238;}
 	}
 }
 
@@ -103,11 +128,13 @@ div.tools{
 	.line{border-left:1px solid #ccc;margin:0 4px;padding-bottom:3px;}
 }
 
+
+
 ul.dropbox{
 	border:1px solid #ddd;
 	border-bottom:2px solid #aaa;
 	color:#666;width:100px;	
-	position:absolute;top:57px;
+	position:absolute;top:27px;
 	z-index:1000;margin: 0px;
 	background:#fff;
 	.box-shadow(2px 4px 16px #aaa);

@@ -19,18 +19,28 @@ http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <script src="<?=STATIC_PATH;?>js/codemirror/self/zen_codemirror.min.js"></script><!--zendCoding-->
     <script src="<?=STATIC_PATH;?>js/codemirror/addon/selection/active-line.js"></script>
     <script src="<?=STATIC_PATH;?>js/codemirror/addon/edit/matchbrackets.js"></script>
+    <script src="<?=STATIC_PATH;?>js/codemirror/addon/edit/closebrackets.js"></script>
     <script src="<?=STATIC_PATH;?>js/codemirror/addon/mode/loadmode.js"></script>
+
+	<script src="<?=STATIC_PATH;?>js/codemirror/addon/fold/foldcode.js"></script>
+	<script src="<?=STATIC_PATH;?>js/codemirror/addon/fold/foldgutter.js"></script>
+	<script src="<?=STATIC_PATH;?>js/codemirror/addon/fold/brace-fold.js"></script>
+	<script src="<?=STATIC_PATH;?>js/codemirror/addon/fold/xml-fold.js"></script>
+	<script src="<?=STATIC_PATH;?>js/codemirror/addon/fold/comment-fold.js"></script>
+
 
 	<!-- 搜索 -->
     <script src="<?=STATIC_PATH;?>js/codemirror/addon/search/searchcursor.js"></script>
     <script src="<?=STATIC_PATH;?>js/codemirror/self/my_search.js"></script>
 	<link href="<?=STATIC_PATH;?>style/font-awesome/style.css" rel="stylesheet"/>
 	<link href="<?=STATIC_PATH;?>js/codemirror/theme/all.css" rel="stylesheet" >
-	<!-- 
-	<link href="./static/style/skin/<?=$this->config['theme'];?>/app_code_edit.css" rel="stylesheet" id='link_css_list'/>
-	!-->
+	
+	<?php if(USE_NO_LESS){?>
+	<link href="./static/style/skin/<?=$this->config['theme'];?>/app_code_edit.css" rel="stylesheet" id='link_css_list'/>	
+	<?php }else{?>	
     <link href="<?=STATIC_PATH;?>style/skin/<?=$this->config['theme'];?>/app_code_edit.less" rel="stylesheet/less" type="text/css" >
 	<script src="<?=STATIC_PATH;?>js/less-1.3.3.min.js"></script>
+	<?php }?>
   </head>
   <script>
 	var app_path		= "<?php echo APPHOST;?>";
@@ -38,16 +48,8 @@ http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	var codetheme 		= "<?php echo $this->config['codetheme'];?>";
 	CodeMirror.modeURL	= "<?=STATIC_PATH;?>js/codemirror/mode/%N/%N.js";
   </script>
-
-
-  <body onselectstart="return false">
+  <body>
 	<div class="edit_main">
-		<div class="edit_tab">
-			<div class="tabs">
-				<a  href="javascript:Main.Editor.add()" class="add icon-plus"></a>
-				<div style="clear:both"></div>
-			</div>
-		</div>
 		<div class="tools">
 			<div class="left">
 				<a class="save" href="#" title='保存'><i class="font-icon icon-save"></i></a>
@@ -88,7 +90,57 @@ http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 			echo getTplList('/','=',$this->config['codethemeall'],$tpl,$this->config['codetheme']);
 		?>
 		</ul>
+		
+
+		<!-- 主体部分 -->
+		<div class="edit_tab">
+			<div class="tabs">
+				<a  href="javascript:Main.Editor.add()" class="add icon-plus"></a>
+				<div style="clear:both"></div>
+			</div>
+		</div>
 		<div class="edit_body">
+			<div class="introduction">
+				<div class="intro_left">
+					<div class="tips blue">
+						<h1> <span>丰富的功能</span> </h1>
+						<p>多主题：选择你喜欢的编程风格</p>
+						<p>自定义字体：适合种场景下使用</p>
+						<p>zendcodeing支持,从此爱上在线编程</p>
+						<p>代码块折叠、展开</p>
+						<p>支持多标签，拖动切换顺序;</p>
+						<p>维持多个文档、查找替换；历史记录</p>
+						<p>自动补全[],{},(),"",''</p>
+						<p>自动换行</p>
+						<p>更多功能,等待你的发现……</p>
+					</div>
+					<div class="tips orange">
+						<h1> <span>多种代码高亮</span> </h1>
+						<p>前端：html,JavaScript,css,less,sass,scss</p>
+						<p>web开发：php,perl,python,ruby,elang,go...</p>
+						<p>本地语言：java,c,c++,c#,actionScript,VBScript...</p>
+						<p>其他：markdown,shell,sql,lua,xml,yaml...</p>
+					</div>
+				</div>
+				<div class="intro_right">
+					<div class="tips green">
+						<h1> <span>快捷键操作</span> </h1>
+						<p>ctrl+s：保存</p>
+						<p>ctrl+f/ctrl+G: 查找,替换</p>
+						<p>ctrl+c/ctrl+x/ctrl+v:复制/剪切/粘贴</p>
+						<p>ctrl+z/ctrl+y:撤消/反撤销操作</p>
+						<p>ctrl+l: 选择当前行</p>				
+						<p>ctrl+A: 选择到起始/结尾/全选</p>
+						<p>home/end/移动光标到行首/行尾；
+						<p>ctrl+home/ctrl+end:文档起始/结束部分</p>
+						<p>shift+home/shift+end 从光标选择到行首/行尾
+						<p>shift+ctrl+home: 从光标处选择到文档起始</p>
+						<p>shift+ctrl+end: 从光标处选择到文档结尾</p>
+						<p>tab: tab对齐</p>			
+						<p>del：删除</p>
+					</div></div>
+				<div style="clear:both"></div>
+			</div>
 			<div class="tabs"></div>
 		</div>
 	</div>

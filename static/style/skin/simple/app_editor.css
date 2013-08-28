@@ -9,12 +9,161 @@ input,
 button {
   font-family: "微软雅黑", "Microsoft Yahei", "STXihei", arial, sans-serif;
 }
+.frame_fullscreen {
+  position: fixed;
+  z-index: 999499;
+  left: 0;
+  top: 0;
+}
 .font-icon {
   text-shadow: 0 0 1px;
 }
 /*--------------------------*/
 /* 渐变色 */
 /* 动画 */
+/* 颜色微调【同样颜色灰度值调节】 */
+::-webkit-scrollbar-track-piece {
+  background-color: #f5f5f5;
+  border-left: 1px solid #d2d2d2;
+}
+::-webkit-scrollbar {
+  width: 12px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #c2c2c2;
+  background-clip: padding-box;
+  border: 1px solid #979797;
+  min-height: 28px;
+}
+::-webkit-scrollbar-thumb:hover {
+  border: 1px solid #636363;
+  background-color: #929292;
+}
+body {
+  font-size: 13px;
+  padding: 0px;
+  margin: 0px;
+  font-family: "微软雅黑";
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  /* Chrome all / Safari all */
+
+  -moz-user-select: none;
+  /* Firefox all */
+
+  -ms-user-select: none;
+  /* IE 10+ */
+
+  -o-user-select: none;
+  user-select: none;
+}
+.navbar {
+  width: 100%;
+  height: 40px;
+  color: #ddd;
+  z-index: 100;
+  background: #333;
+  position: fixed;
+  box-shadow: 0 0 1px #111;
+}
+.navbar .content {
+  padding: 0px;
+  line-height: 40px;
+}
+.navbar .content i {
+  display: inline-block;
+  padding-right: 10px;
+  text-shadow: 0 0 1px;
+  font-size: 1.1em;
+}
+.navbar .content a {
+  display: block;
+  text-decoration: none;
+  color: #fff;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  -ms-transition: all 0.2s;
+  transition: all 0.2s;
+  padding: 0px 1.5em;
+}
+.navbar .content ul.dropmenu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  padding: 5px 0 0px;
+  position: absolute;
+  top: 38px;
+  z-index: 9999;
+  background: #fff;
+  color: #666;
+  display: none;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 5px #ccc;
+  border-top: none;
+}
+.navbar .content ul.dropmenu li {
+  height: 30px;
+  margin: 0;
+  padding: 0;
+  line-height: 30px;
+}
+.navbar .content ul.dropmenu li a {
+  margin: 0;
+  padding-left: 30px;
+  width: 100px;
+  border: none;
+  color: #666;
+}
+.navbar .content ul.dropmenu li a:hover {
+  background: #ddd;
+  color: #000;
+}
+.navbar .content .top_left a {
+  float: left;
+  border-right: 1px solid;
+  margin-left: -1px;
+  border-left: 1px solid;
+  border-color: #555;
+}
+.navbar .content .top_left a:hover,
+.navbar .content .top_left a.this {
+  background: #666;
+}
+.navbar .content .top_left a.title {
+  font-size: 18px;
+  font-weight: 800;
+  width: 150px;
+  padding-left: 49px;
+  padding-right: 0;
+}
+.navbar .content .top_left a.title:hover {
+  background: none;
+}
+.navbar .content .top_right {
+  float: right;
+  margin-right: 10px;
+}
+.navbar .content .top_right .topbar_user {
+  margin-top: 5px;
+  line-height: 32px;
+  -ms-transition: none;
+  -webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
+  transition: none;
+}
+.navbar .content .top_right.this .topbar_user {
+  color: #555;
+  background: #fff;
+  border: 1px solid #ddd;
+  margin-top: 5px;
+}
+.navbar .content .top_right ul.dropmenu {
+  right: 10px;
+  height: 180px;
+}
 /* 颜色微调【同样颜色灰度值调节】 */
 ::-webkit-scrollbar-track-piece {
   background-color: #f5f5f5;
@@ -66,9 +215,8 @@ body {
 }
 .frame-main {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 0px;
+  top: 40px;
+  width: 100%;
   bottom: 0;
 }
 .frame-main .frame-left {
@@ -76,11 +224,13 @@ body {
   left: 0;
   top: 0;
   bottom: 0;
-  width: 199px;
-  border-right: 1px solid #ddd;
+  width: 200px;
   background: #f3f3f3;
   background-attachment: fixed;
   overflow: auto;
+}
+.frame-main .frame-left .ztree {
+  margin-top: 40px;
 }
 .frame-main .frame-left .ztree li {
   line-height: 20px;
@@ -91,6 +241,35 @@ body {
 }
 .frame-main .frame-left .ztree li.level0 {
   margin-bottom: 0;
+}
+.frame-main .frame-left .tools-left {
+  background: #f8f8f8 url(./images/bg.gif) 0 0px;
+  position: fixed;
+  line-height: 33px;
+  padding-left: 20px;
+  height: 33px;
+  border-bottom: 1px solid #ddd;
+  left: 0;
+  width: 100%;
+}
+.frame-main .frame-left .tools-left a {
+  font-size: 16px;
+  font-weight: 800;
+  text-decoration: none;
+  color: #999;
+  text-shadow: 0 0 3px;
+  display: inline-block;
+  padding: 2px 6px;
+  margin-top: 3px;
+}
+.frame-main .frame-left .tools-left a:hover {
+  background: url(./images/buttons_40.png) 0 0px repeat-x;
+  -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  -moz-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
 }
 .frame-main .frame-resize {
   width: 10px;
@@ -125,6 +304,7 @@ body {
 }
 .frame-main .frame-right .frame-right-main .frame {
   height: 100%;
+  border-left: 1px solid #ddd;
 }
 .ztree {
   padding: 0;
@@ -146,7 +326,7 @@ body {
   padding: 0;
 }
 .ztree li.level0 {
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 }
 .ztree li span {
   line-height: 20px;
@@ -186,10 +366,7 @@ body {
 .ztree li span.button.noline_close_hover.switch_hover {
   background-position: -32px -353px !important;
 }
-.ztree li span.button .ico_loading {
-  margin-right: 2px;
-  vertical-align: top;
-  *vertical-align: middle;
+.ztree li span.button.ico_loading {
   background: url(./images/loading.gif) no-repeat scroll 0 0 transparent;
 }
 .ztree li a {
@@ -212,19 +389,19 @@ body {
   -moz-transition: background 0.3s;
   -o-transition: background 0.3s;
   transition: background 0.3s;
-  background: #efefef;
+  background: #cccccc;
   height: 20px;
-  border: 1px solid #c9c9c9;
-  box-shadow: 0 0 1px #c9c9c9;
+  border: 1px solid #b8b8b8;
+  box-shadow: 0 0 1px #b8b8b8;
   padding: 0px;
   padding-left: 9px;
 }
 .ztree li a.curSelectedNode {
-  background: #dddddd;
-  border: 1px solid #b7b7b7;
+  background: #cccccc;
+  border: 1px solid #999999;
   line-height: 20px;
   border-radius: 3px;
-  box-shadow: 0 0 1px #b7b7b7;
+  box-shadow: 0 0 1px #999999;
   height: 20px;
   padding: 0px;
   padding-left: 9px;
@@ -305,8 +482,8 @@ body {
   z-index: 88;
   background: #000;
   color: #fff;
-  opacity: 0.5;
-  filter: alpha(opacity=50);
+  opacity: 0.7;
+  filter: alpha(opacity=70);
   -webkit-border-radius: 1px;
   -moz-border-radius: 1px;
   border-radius: 1px;
@@ -392,6 +569,8 @@ table.aui_dialog {
 }
 .aui_content {
   text-align: left;
+  font-size: 14px;
+  color: #666;
   border: none 0;
   display: block;
   width: 100%;
@@ -541,22 +720,6 @@ button.aui_state_highlight:active {
   filter: alpha(opacity=50);
 }
 /*所有边框颜色*/
-.dialogMax .aui_nw,
-.dialogMax .aui_ne,
-.dialogMax .aui_sw,
-.dialogMax .aui_se,
-.dialogMax .aui_w,
-.dialogMax .aui_e {
-  width: 0px;
-}
-.dialogMax .aui_sw,
-.dialogMax .aui_n,
-.dialogMax .aui_se {
-  height: 0px;
-}
-.dialogMax .aui_outer {
-  border: none;
-}
 .aui_state_focus .aui_mask {
   display: none;
 }
@@ -613,13 +776,16 @@ button.aui_state_highlight:active {
 }
 .aui_min {
   right: 65px;
-  font-size: 16px;
   line-height: 22px;
 }
 .aui_max {
   right: 35px;
-  font-size: 16px;
   line-height: 14px;
+}
+.aui_max,
+.aui_min {
+  display: none;
+  font-size: 16px;
 }
 .aui_close {
   right: 5px;
@@ -638,14 +804,15 @@ button.aui_state_highlight:active {
 }
 .aui_state_noTitle .aui_outer {
   box-shadow: none;
+  border: none;
 }
 .aui_state_noTitle .aui_inner {
-  border: 1px solid #aaa;
+  border: 1px solid #ddd;
+  background: none;
 }
 .aui_state_noTitle .tips {
   font-size: 14px;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 15px;
   padding-left: 10px;
 }
 .aui_state_noTitle .aui_nw,
@@ -660,11 +827,31 @@ button.aui_state_highlight:active {
   background: #000000 \9 !important;
   filter: alpha(opacity=10)!important;
 }
+.aui_state_noTitle .aui_content {
+  line-height: 50px;
+}
 .aui_state_noTitle .aui_close,
 .aui_state_noTitle .aui_max,
 .aui_state_noTitle .aui_min {
   display: none;
   font-size: 13px;
+}
+/*------------最大化最小化，窗口大小调整-----------*/
+.dialogMax .aui_nw,
+.dialogMax .aui_ne,
+.dialogMax .aui_sw,
+.dialogMax .aui_se,
+.dialogMax .aui_w,
+.dialogMax .aui_e {
+  width: 0px;
+}
+.dialogMax .aui_sw,
+.dialogMax .aui_n,
+.dialogMax .aui_se {
+  height: 0px;
+}
+.dialogMax .aui_outer {
+  border: none;
 }
 .dialog-can-resize .resize-handle {
   position: absolute;
@@ -732,6 +919,10 @@ button.aui_state_highlight:active {
   height: 15px;
   right: -5px;
   top: -5px;
+}
+.dialog-can-resize .aui_min,
+.dialog-can-resize .aui_max {
+  display: block;
 }
 /*----------------------- dialog ------------------------------*/
 /* 文件属性样式*/

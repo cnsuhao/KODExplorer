@@ -195,7 +195,7 @@
 				_pathAllow(filename);
 				if(_fileExist(filename)){
 					$("#makefile").remove();
-					Main.UI.tips.tips('已存在该文件','warning');
+					Main.Common.tips.tips('已存在该文件','warning');
 				}
 				else{
 					filename=this_path+filename;
@@ -204,7 +204,7 @@
 					  url: '?explorer/mkfile&path='+filename,
 					  success: function(data) {
 						  Main.UI.f5();
-						  Main.UI.tips.tips(data);
+						  Main.Common.tips.tips(data);
 						  _setSelectByFilename(selectname,'file');
 					  }
 					});
@@ -218,7 +218,7 @@
 			_pathAllow(filename);
 			if(_fileExist(filename)){
 				$("#makefile").remove();
-				Main.UI.tips.tips('已存在该文件','warning');
+				Main.Common.tips.tips('已存在该文件','warning');
 				_newFile();
 			}
 			else{			
@@ -227,7 +227,7 @@
 				$.ajax({
 				  url: '?explorer/mkfile&path='+filename,
 				  success: function(data) {
-				  	Main.UI.tips.tips(data);
+				  	Main.Common.tips.tips(data);
 					Main.UI.f5();
 				  }
 				});		
@@ -264,7 +264,7 @@
 				_pathAllow(filename);
 				if(_fileExist(filename)){
 					$("#makefile").remove();
-					Main.UI.tips.tips('已存在该文件','warning');
+					Main.Common.tips.tips('已存在该文件','warning');
 				}
 				else{
 					filename=this_path+filename;
@@ -273,7 +273,7 @@
 					  url: '?explorer/mkdir&path='+filename,
 					  success: function(data) {
 					  	Main.UI.f5();
-					  	Main.UI.tips.tips(data);
+					  	Main.Common.tips.tips(data);
 					  	_setSelectByFilename(selectname,'folder');
 					  }
 					});				
@@ -285,7 +285,7 @@
 			_pathAllow(filename);
 			if(_fileExist(filename)){
 				$("#makefile").remove();
-				Main.UI.tips.tips('已存在该文件夹','warning');
+				Main.Common.tips.tips('已存在该文件夹','warning');
 				_newFolder();
 			}
 			else{
@@ -295,7 +295,7 @@
 				  url: '?explorer/mkdir&path='+filename,
 				  success: function(data) {
 				  	Main.UI.f5();
-				  	Main.UI.tips.tips(data);
+				  	Main.Common.tips.tips(data);
 				  }
 				});		
 			}
@@ -331,15 +331,14 @@
 		$.ajax({
 			url:'?explorer/pathInfo&type='+thistype+'&path='+urlEncode(path),		
 			beforeSend: function(){
-				Main.UI.tips.loading('获取中!  ');
+				Main.Common.tips.loading('获取中!  ');
 			},
 			success:function(data){
-				Main.UI.tips.close('获取成功！');
+				Main.Common.tips.close('获取成功！');
 		  		$.dialog({
 		  			padding:5,
 		  			fixed: true,//不跟随页面滚动
 				    drag: true,//拖曳
-				    resize:false,
 		  			title:filename+'  属性',
 				    content:data,
 				    ok: function(){//ok按钮提交表单，修改文件夹名
@@ -358,7 +357,7 @@
 								data: 'path='+path+'&rname_to='+rname_to,				  
 								success: function(data) {
 									Main.UI.f5();
-									Main.UI.tips.tips(data);
+									Main.Common.tips.tips(data);
 								}
 							});						
 						}
@@ -376,15 +375,13 @@
 			type:'POST',
 			data:_getSelectJson('info_list'),
 			beforeSend: function(){
-				Main.UI.tips.loading('获取中!  ');
+				Main.Common.tips.loading('获取中!  ');
 			},			
 			success:function(data){
-				Main.UI.tips.close('获取成功');
+				Main.Common.tips.close('获取成功');
 				$.dialog({
 		  			padding:5,
 		  			fixed: true,//不跟随页面滚动
-				    resize: false,//调整大小
-				    drag: true,//拖曳
 		  			title:' 属性',
 				    content:data,
 				    cancel: true
@@ -440,7 +437,6 @@
 		Main.SetSelect.clear();
 		$.dialog({
 			fixed: true,//不跟随页面滚动
-			resize: false,//调整大小
 			icon:'question',
 			drag: true,//拖曳
 			title:'确认删除？',
@@ -451,11 +447,11 @@
 					type:'POST',
 					data:delSelect,
 					beforeSend: function(){
-						Main.UI.tips.loading('删除中...');
+						Main.Common.tips.loading('删除中...');
 					},
 					success: function(data) {
 						Main.UI.f5();
-						Main.UI.tips.close(data);
+						Main.Common.tips.close(data);
 					}
 				});
 			}
@@ -471,7 +467,7 @@
 			data:_getSelectJson('copy_list'),
 			success:function(data){
 				Main.Global.canPast = true;
-				Main.UI.tips.tips(data);
+				Main.Common.tips.tips(data);
 			}
 		});
 	};
@@ -485,7 +481,7 @@
 			data:_getSelectJson('cute_list'),
 			success:function(data){
 				Main.Global.canPast = true;
-				Main.UI.tips.tips(data);
+				Main.Common.tips.tips(data);
 			}
 		});
 	};
@@ -498,10 +494,10 @@
 			url:url,
 			dataType:'json',
 			beforeSend: function(){
-				Main.UI.tips.loading("粘贴操作中...");
+				Main.Common.tips.loading("粘贴操作中...");
 			},
 			success:function(jsonback){
-				Main.UI.tips.close(jsonback['msg']);
+				Main.Common.tips.close(jsonback['msg']);
 				Main.UI.f5();
 				Main.Global.canPast = jsonback['has_clipboard'];
 				$.each(jsonback['select'],function(index,val){
@@ -519,10 +515,10 @@
 			type:'POST',
 			data:_getSelectJson('cute_list')+'&path='+dragTo,
 			beforeSend: function(){
-				Main.UI.tips.loading("移动操作中...");
+				Main.Common.tips.loading("移动操作中...");
 			},
 			success:function(data){
-				Main.UI.tips.close(data);
+				Main.Common.tips.close(data);
 				Main.UI.f5();
 			}
 		});
@@ -588,11 +584,11 @@
 						url: '?explorer/pathRname',
 						data: 'path='+path+'&rname_to='+rname_to,
 						beforeSend:function(){
-							Main.UI.tips.loading();
+							Main.Common.tips.loading();
 						},
 						success: function(data) {
 							Main.UI.f5();
-							Main.UI.tips.close(data);
+							Main.Common.tips.close(data);
 							_setSelectByFilename(selectname,selecttype);
 						}
 					});	
@@ -616,11 +612,11 @@
 					url: '?explorer/pathRname',
 					data: 'path='+path+'&rname_to='+rname_to,	
 					beforeSend:function(){
-						Main.UI.tips.loading();
+						Main.Common.tips.loading();
 					},			  
 					success: function(data) {
 						Main.UI.f5();
-						Main.UI.tips.close(data);
+						Main.Common.tips.close(data);
 					}
 				});	
 			}
@@ -635,10 +631,8 @@
 			id:'id_upload_file',
 			title:'多文件上传',
 			width:380,
-			resize: false,//调整大小
 			padding:0,
 			height:310,
-			resize:false,
 			ok:function(){
 				Main.UI.f5();
 			}
@@ -652,10 +646,10 @@
 			type:'POST',
 			data:_getSelectJson('zip_list'),
 			beforeSend: function(){
-				Main.UI.tips.loading('正在压缩...');
+				Main.Common.tips.loading('正在压缩...');
 			},
 			success:function(data){
-				Main.UI.tips.close(data,2000);
+				Main.Common.tips.close(data,2000);
 				Main.UI.f5();
 			}
 		});
@@ -667,10 +661,10 @@
 		$.ajax({
 			url:url,
 			beforeSend: function(){
-				Main.UI.tips.loading('正在解压...');
+				Main.Common.tips.loading('正在解压...');
 			},
 			success:function(data){
-				Main.UI.tips.close(data,2000);
+				Main.Common.tips.close(data,2000);
 				Main.UI.f5();
 			}
 		});
@@ -704,7 +698,7 @@
 	                    	if (inState == false){
 	                    		inState = true;
 	                    		maskView.css('display','block');
-	                    		Main.UI.tips.loading('松开即可上传  ');
+	                    		Main.Common.tips.loading('松开即可上传  ');
 	                    	}
 	                    }
 	                }
@@ -720,7 +714,7 @@
 	            	if(isFile){
 		            	inState = false;
 		            	isFile  = true;
-		            	Main.UI.tips.close();
+		            	Main.Common.tips.close();
 		            	maskView.css('display','none');
 	            	}
 	            },100);
@@ -730,8 +724,8 @@
 	        	if (inState && isFile) {
 	        		inState = false;
 	        		isFile = true;
-	        		//Main.UI.tips.close('上传中');
-					Main.UI.tips.loading('正在上传中  ');
+	        		//Main.Common.tips.close('上传中');
+					Main.Common.tips.loading('正在上传中  ');
 	        		maskView.css('display','none');
 	        		var fileList  = e.originalEvent.dataTransfer.files;				
 					if(fileList.length === 0) return;		
@@ -752,16 +746,13 @@
 						dialog = $.dialog({
 							id:'file_drag_upload',
 							title:'拖拽上传',
-							resize: false,//调整大小
 							width:box_width,
 							height:box_height,
 							content:$('.file_list').html(),
 							left:'99%',
 							padding:0,
 							top:'100%',
-							fixed: true,
-						    //drag: false,
-						    //resize: false
+							fixed: true
 						});
 					}
 
@@ -775,19 +766,19 @@
 						xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
 						xhr.upload.addEventListener("progress", function(e){					
 							this_file_upload++;
-							//Main.UI.tips.loading('正在上传中  ');
+							//Main.Common.tips.loading('正在上传中  ');
 						}, false);
 						xhr.addEventListener("load", function(e){
 							this_file ++;
 							var info = '上传成功';					
 							var result = jQuery.parseJSON(e.target.responseText);
 							if (result['success'] == '0') {
-								Main.UI.tips.close('上传失败'+result['info']);
+								Main.Common.tips.close('上传失败'+result['info']);
 							}
 							$('.file_list #file_id'+this_file+' .status').html(info);
 							dialog.content($('.file_list').get(0));	
 							if(this_file == fileList.length-1){
-								Main.UI.tips.close('上传完成',500);
+								Main.Common.tips.close('上传完成',500);
 								Main.UI.f5();
 								$('.file_drag_upload')
 								.delay(700)
@@ -832,73 +823,17 @@
 				}
 			});
 		},
-		player:{
-			create:function(){
-				var url="?explorer/fileOpen&type=mp3";
-				$.ajax({
-					url:url,
-					dataType:'json',
-					success:function(data){
-						$.dialog({
-							title:data.title,
-							width:data.width,
-							fixed:true,
-							height:data.height,
-							content:data.content,
-							padding:data.padding
-						});
-					}
-				});		
-			},
-			add:function(file_name){
-				var cmpo = CMP.get("cmp_media");//检测播放器是否存在,存在则加入列表
-				var cmp_url=web_path+encodeURIComponent(file_name);
-				if(Main.Global.isIE){
-					cmp_url=web_path+encodeURI(file_name);
+		play:function(type){
+			var list = [];
+			Main.Global.fileListSelect.each(function(index){
+				var pathtype = Main.SetSelect.getObjType($(this));
+				if (inArray(Main.Common.filetype['music'],pathtype)
+					|| inArray(Main.Common.filetype['movie'],pathtype)) {
+					var file_name = Main.SetSelect.getObjName($(this));
+					list.push(file_name);
 				}
-				cmp_url=cmp_url.replace(/%3A/g,':');
-				cmp_url=cmp_url.replace(/%2F/g,'/');
-				cmp_url=cmp_url.replace(/\+/g,' ');
-				cmp_url=web_host+cmp_url;
-				xml='<list><m type="" src="'+cmp_url+'" label="'+file_name+'"/></list>';
-				var xml_temp = cmpo.list_xml();//获取原有列表
-				cmpo.config('play_mode', 'normal');//写入配置,播放模式改为自动跳到next
-				cmpo.list_xml(xml,false);//覆盖方式填充列表
-				cmpo.list_xml(xml_temp,true);//追加方式填充			
-			},
-			play:function(){
-				var cmpo = CMP.get("cmp_media");//检测播放器是否存在,存在则加入列表
-				cmpo.sendEvent('view_play');//js发送播放消息给flash api接口
-			},
-		},
-		media:{
-			init:function(){//音乐加入到播放列表
-				if ($('.icon-playmedia').css('display') == 'block') return;
-				Main.Global.fileListSelect.each(function(index){
-					var pathtype=Main.SetSelect.getObjType($(this));
-					if (inArray(Main.Config.filetype['music'],pathtype)
-						|| inArray(Main.Config.filetype['movie'],pathtype)
-						) {
-						$('.icon-playmedia').css('display','block');
-						return;
-					}
-				});
-			},
-			insert:function(type){
-				var list = [];
-				Main.Global.fileListSelect.each(function(index){
-					var pathtype = Main.SetSelect.getObjType($(this));
-					if (inArray(Main.Config.filetype['music'],pathtype)
-						|| inArray(Main.Config.filetype['movie'],pathtype)) {
-						var file_name = Main.SetSelect.getObjName($(this));
-						list.push(file_name);
-					}
-				});
-				Main.Player.play(list,type);
-			},
-			clear:function(){
-				$('.icon-playmedia').css('display','none');
-			}
+			});
+			CMPlayer.play(list,type);
 		}
 	}
 })();
@@ -920,7 +855,9 @@ Main.PathOpen = (function() {
 
 	//窗口打开我的电脑
 	var _openComputer = function(url,title){
-		art.dialog.open(url,{
+		var dialog = $.dialog.open(url,{
+			fixed:true,
+			resize:true,
 			title:title,
 			width:950,
 			height:540
@@ -937,13 +874,16 @@ Main.PathOpen = (function() {
 			var url,system = Main.SetSelect.getObjSystem(selectObj);
 			if (system == 'computer') {
 				url = '?explorer';
+				thisfile = '我的电脑';
 			}else if(system == 'recycle'){
 				url = '?explorer';
+				thisfile = '回收站';
 			}else if(system == 'setting'){
-				Main.UI.setting();
+				Main.Common.setting();
 				return;
 			}else if(system == 'internet'){
 				url = 'http://www.baidu.com';
+				thisfile = '浏览器';
 			}
 			_openComputer(url,thisfile);
 			return;
@@ -953,24 +893,24 @@ Main.PathOpen = (function() {
 			_openComputer(url,thisfile);
 			return;
 		}
-		if (inArray(Main.Config.filetype['bindary'],thistype)) {//二进制文件，则下载
+		if (inArray(Main.Common.filetype['bindary'],thistype)) {//二进制文件，则下载
 			_download();
 			return;
 		}
-		if (inArray(Main.Config.filetype['image'],thistype)) {
+		if (inArray(Main.Common.filetype['image'],thistype)) {
 			if (hotKey != 13) return; //双击操作打开
 			$(selectObj).find('.ico').dblclick();
 			return;
 		}
 		if ((thistype!='html' && thistype !='htm' && thistype !='oexe')
-			&& (inArray(Main.Config.filetype['code'],thistype) 
-			|| inArray(Main.Config.filetype['text'],thistype)) ) {
+			&& (inArray(Main.Common.filetype['code'],thistype) 
+			|| inArray(Main.Common.filetype['text'],thistype)) ) {
 			_openText();//代码文件，编辑
 			return;
 		}
-		if (inArray(Main.Config.filetype['music'],thistype) 
-			|| inArray(Main.Config.filetype['movie'],thistype) ) {
-			Main.PathOperate.media.insert(thistype);
+		if (inArray(Main.Common.filetype['music'],thistype) 
+			|| inArray(Main.Common.filetype['movie'],thistype) ) {
+			Main.PathOperate.play(thistype);
 			return;
 		}
 		var url="?explorer/fileOpen&type="+thistype+"&path="
@@ -979,9 +919,10 @@ Main.PathOpen = (function() {
 			url:url,
 			dataType:'json',
 			success:function(data){
-				art.dialog.through({
+				$.dialog({
 					title:data.title,
 					width:data.width,
+					resize:true,
 					fixed:true,
 					height:data.height,
 					content:data.content,
@@ -994,33 +935,8 @@ Main.PathOpen = (function() {
 		if(!_hasSelect()) return;
 		var filename=this_path+urlEncode(Main.SetSelect.getObjName(selectObj));
 		var url='?explorer/fileDownload&path='+filename;
-		Main.UI.tips.tips("即将开始下载");
+		Main.Common.tips.tips("即将开始下载");
 		art.dialog.open(url,{title:false,time:0.1,width:0,height:0,});	
-	};
-	var _addMusic = function(){
-		cmpo = CMP.get("cmp_media");//检测播放器是否存在,存在则加入列表
-		if (cmpo) {
-			file_list = json_data['filelist'];		
-			for (var i=0; i<file_list.length; i++) {
-				if (inArray(Main.Config.filetype['music'],file_list[i]['ext'])) {
-					var cmp_url=web_path+encodeURIComponent(file_list[i]['name']);
-					if(Main.Global.isIE){
-						cmp_url=web_path+encodeURI(file_list[i]['name']);
-					}
-					cmp_url=cmp_url.replace(/%3A/g,':');
-					cmp_url=cmp_url.replace(/%2F/g,'/');
-					cmp_url=cmp_url.replace(/\+/g,' ');
-					cmp_url=web_host+cmp_url;
-					xml='<list><m type="" src="'+cmp_url+'" label="'+file_list[i]['name']+'"/></list>';
-					//alert(cmp_url);
-					var xml_temp = cmpo.list_xml();//获取原有列表
-					cmpo.config('play_mode', 'normal');//写入配置,播放模式改为自动跳到next
-					cmpo.list_xml(xml,false);//覆盖方式填充列表
-					cmpo.list_xml(xml_temp,true);//追加方式填充				
-				}	
-			}
-			cmpo.sendEvent('view_play');//js发送播放消息给flash api接口	
-		}		
 	};
 
 	//新的页面作为地址打开。鼠标右键，IE下打开
@@ -1065,7 +981,7 @@ Main.PathOpen = (function() {
 			name = 'openWindow'+Math.floor(Math.random()*1000);
 		}
 		//id 会在dialog控件中加入iframe的name
-		art.dialog.open(url,{id:name,title:title,width:'80%',height:'75%'});
+		var dialog = art.dialog.open(url,{id:name,title:title,width:'80%',height:'75%',resize:true});
 	};
 
 
@@ -1086,10 +1002,10 @@ Main.PathOpen = (function() {
 		var title=file+'   编辑';
 		var path = this_path+urlEncode(file);
 
-		if (inArray(Main.Config.filetype['bindary'],thistype) ||
-			inArray(Main.Config.filetype['music'],thistype) ||
-			inArray(Main.Config.filetype['image'],thistype) ||
-			inArray(Main.Config.filetype['movie'],thistype) ){
+		if (inArray(Main.Common.filetype['bindary'],thistype) ||
+			inArray(Main.Common.filetype['music'],thistype) ||
+			inArray(Main.Common.filetype['image'],thistype) ||
+			inArray(Main.Common.filetype['movie'],thistype) ){
 			$.dialog({title:false,content:'不是文本文件!',icon:'warning',time:1});
 			return;
 		}
@@ -1106,7 +1022,6 @@ Main.PathOpen = (function() {
 			$.dialog({
 				title:'警告!',
 				icon: 'question',
-				resize:false,
 				content:'文件大小超过1M,是否继续打开？',
 				okVal:'继续打开',
 				cancel:'取消',

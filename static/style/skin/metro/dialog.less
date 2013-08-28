@@ -5,7 +5,7 @@
     position: absolute;
     top: 15%;left: 0px;z-index:88;
     background:@file_select_color;color:#fff;
-    .opacity(85);
+    .opacity(70);
     .border-radius(1px);
     .box-shadow(0 10px 80px rgba(0,0,0,0.6));
     display:none;
@@ -86,8 +86,9 @@ table.aui_border, table.aui_dialog { width: 100%;border:0; margin:0; border-coll
     }
     &:active{color:fff;background: #f00;}
 }
-.aui_min{right: 77px;font-size: 18px;}
+.aui_min{right: 77px;line-height: 18px;}
 .aui_max{right: 41px;line-height: 18px;}
+.aui_max,.aui_min{display: none;font-size: 16px;}
 .aui_close{right: 5px;}
 
 .aui_state_noTitle{
@@ -102,6 +103,14 @@ table.aui_border, table.aui_dialog { width: 100%;border:0; margin:0; border-coll
     }
     .aui_close,.aui_max,.aui_min{display: none;font-size:13px; }
 }
+
+
+/*------------最大化最小化，窗口大小调整-----------*/
+.dialogMax{
+    .aui_nw, .aui_ne,.aui_sw, .aui_se,.aui_w, .aui_e{width:0px;}
+    .aui_sw, .aui_n,.aui_se {height:0px;}
+    .aui_outer { border:none;}
+}
 .dialog-can-resize{
     .resize-handle{position: absolute;font-size: 0.1px;z-index: 9999; display: block; }
     .resize-top{z-index:0; cursor: n-resize; top: -3px; left: 0px; height: 7px; width: 100%;  }
@@ -113,7 +122,8 @@ table.aui_border, table.aui_dialog { width: 100%;border:0; margin:0; border-coll
         background:url('./images/resize_corner.png') no-repeat;}
     .resize-bottom-left {cursor: sw-resize; width: 15px; height: 15px; left: -7px; bottom: -7px; }
     .resize-top-left{cursor: nw-resize; width: 15px; height: 15px; left: -7px; top: -7px; }
-    .resize-top-right{cursor: ne-resize; width: 15px; height: 15px; right: -5px; top: -7px;}    
+    .resize-top-right{cursor: ne-resize; width: 15px; height: 15px; right: -5px; top: -7px;}  
+    .aui_min,.aui_max{display:block;}   
 }
 
 /*----------------------- dialog ------------------------------*/

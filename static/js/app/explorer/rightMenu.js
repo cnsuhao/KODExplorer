@@ -86,7 +86,7 @@ Main.RightMenu = (function(){
 			callback: function(key, options) {_menuFolder(key);},
 			items: {
 				"open":{name:"打开(O)",icon:"folder-open-alt",accesskey: "o"},
-				"open_ie":{name:"浏览器中打开(B)",icon:"internet",accesskey: "b"},
+				"open_ie":{name:"浏览器中打开(B)",icon:"globe",accesskey: "b"},
 				"copy":{name:"复制(C)",icon:"copy",accesskey: "c"},
 				"past":{name:"剪切(T)",icon:"cut",accesskey: "t"},				
 				"delete":{name:"删除(D)",icon:"trash",accesskey: "d"},
@@ -108,7 +108,7 @@ Main.RightMenu = (function(){
 			items: {
 				"open":{name:"打开(O)",icon:"external-link",accesskey: "o"},
 				"open_text":{name:"编辑(E)",icon:"edit",accesskey: "e"},
-				"open_ie":{name:"浏览器中打开(B)",icon:"internet",accesskey: "b"},
+				"open_ie":{name:"浏览器中打开(B)",icon:"globe",accesskey: "b"},
 				"newfileOther":{					
 					name:"打开方式(H)",
 					accesskey:'h',
@@ -274,7 +274,7 @@ Main.RightMenu = (function(){
 				}
 				var fileName = Main.SetSelect.getObjName(selectObj);
 				var pram='&name='+fileName+'&path='+this_path+fileName+'/';
-					Main.UI.setting('fav'+pram);
+					Main.Common.setting('fav'+pram);
 				break;
 			case 'zip'://zip压缩
 				Main.PathOperate.pathZip();break;
@@ -290,7 +290,7 @@ Main.RightMenu = (function(){
 			case 'copy':Main.PathOperate.pathCopy();break;
 			case 'cute':Main.PathOperate.pathCute();break;
 			case 'delete':Main.PathOperate.pathDelete();break;
-			case 'playmedia':Main.PathOperate.media.insert();break;
+			case 'playmedia':Main.PathOperate.play();break;
 			case 'zip':Main.PathOperate.pathZip();break;
 			case 'info':Main.PathOperate.pathInfo();break;
 			default:break;

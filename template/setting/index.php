@@ -4,15 +4,17 @@ http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<!-- 	// <script src="http://libs.baidu.com/jquery/1.8.0/jquery.min.js"></script> -->
-		<script src="<?=STATIC_PATH;?>js/jquery-1.8.0.min.js"></script>	
+	<script src="<?=STATIC_PATH;?>js/jquery-1.8.0.min.js"></script>	
 	<script src="<?=STATIC_PATH;?>js/artDialog/jquery.artDialog.js"></script>
 	<script src="<?=STATIC_PATH;?>js/frameCall.js"></script> <!-- 跨窗口函数调用 -->
-
 	<link   href="<?=STATIC_PATH;?>style/font-awesome/style.css" rel="stylesheet"/>
-	<!-- <link  href="<?=STATIC_PATH;?>style/skin/<?=$value['config']['theme'];?>/app_setting.css" rel="stylesheet" id='link_css_list'/>
-	!-->
+
+	<?php if(USE_NO_LESS){?>
+	<link  href="<?=STATIC_PATH;?>style/skin/<?=$value['config']['theme'];?>/app_setting.css" rel="stylesheet" id='link_css_list'/>
+	<?php }else{?>	
 	<link rel="stylesheet/less" type="text/css" href="<?=STATIC_PATH;?>style/skin/<?=$value['config']['theme'];?>/app_setting.less">
 	<script src="<?=STATIC_PATH;?>js/less-1.3.3.min.js"></script>
+	<?php }?>
 
 </head>
 

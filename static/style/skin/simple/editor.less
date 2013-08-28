@@ -12,17 +12,25 @@ body{.user-select(none);}
 .frame-main{
     position: absolute;top:@navbar_height;width:100%;bottom: 0;    
     .frame-left{
-        position: absolute;left: 0;top: 0;bottom: 0;width: 199px;border-right:1px solid #ddd;
+        position: absolute;left: 0;top: 0;bottom: 0;width: 200px;
         background:@tree_background;background-attachment: fixed;overflow: auto;
+        .ztree{margin-top: 40px;}
         .ztree li{
             line-height:20px;
             a{line-height: 20px;height: 20px;}
             &.level0{margin-bottom: 0;}            
         }
         .tools-left{
-            background:url(./images/buttons_40.png) 0 5px repeat-x;
-            padding-left:10px;height:28px;border-bottom:1px solid #bbb;
-            .font-icon{padding-right: 10px;}      
+            background:#f8f8f8 url(./images/bg.gif) 0 0px ;
+            position: fixed;line-height: 33px;padding-left: 20px;
+            height:33px;border-bottom:1px solid #ddd;left: 0;width:100%;
+            a{font-size: 16px;font-weight: 800;text-decoration: none;color: #999;text-shadow:0 0 3px;
+            display: inline-block;padding: 2px 6px;margin-top: 3px;}
+            a:hover{
+                background:url(./images/buttons_40.png) 0 0px repeat-x;
+                .box-shadow(0 2px 8px rgba(0, 0, 0, 0.8));
+                .border-radius(3px);
+            }
         }
     };
     .frame-resize{
@@ -34,7 +42,7 @@ body{.user-select(none);}
         left: 200px;right: 0;position: absolute;top: 0;bottom: 0;overflow: auto;
         .frame-right-main{
            .resizeMask{z-index:999;position:absolute;left:0;top:0;bottom:0;right:0;display: none;}
-	   .frame{height: 100%;}
+	       .frame{height: 100%;border-left: 1px solid #ddd;}
         }
     }
 }

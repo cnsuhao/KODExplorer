@@ -14,8 +14,26 @@
 //------------------------------------------------
 // 对话框模块
 //------------------------------------------------
-;(function ($, window, undefined) {
+var dialogResize = {
+	add:function(id,title){
+		try{
+			TaskTap.add(id,title);
+		} catch(e) {};
+	},
+	focus:function(id){
+		try{
+			TaskTap.focus(id);
+		} catch(e) {};
+	},
+	close:function(id){
+		try{
+			TaskTap.close(id);
+		} catch(e) {};
+	}
+};
 
+
+;(function ($, window, undefined) {
 $.noop = $.noop || function () {}; // jQuery 1.3.2
 var _box, _thisScript,_path,
 	_count = 0,
@@ -30,7 +48,6 @@ var _box, _thisScript,_path,
 
 var artDialog = function (config, ok, cancel) {
 	config = config || {};
-	
 	if (typeof config === 'string' || config.nodeType === 1) {
 		config = {content: config, fixed: !_isMobile};
 	};
@@ -52,6 +69,8 @@ var artDialog = function (config, ok, cancel) {
 	if (typeof elem === 'string') elem = $(elem)[0];
 	config.id = elem && elem[_expando + 'follow'] || config.id || _expando + _count;
 	api = artDialog.list[config.id];
+
+
 	if (elem && api) return api.follow(elem).zIndex().focus();
 	if (api) return api.zIndex().focus();
 	
@@ -77,7 +96,9 @@ var artDialog = function (config, ok, cancel) {
 	// zIndex全局配置
 	artDialog.defaults.zIndex = config.zIndex;	
 	_count ++;
-	
+	//if (config.resize) 
+	if (_count>1) dialogResize.add(config.id,config.title);
+
 	return artDialog.list[config.id] = _box ?
 		_box._init(config) : new artDialog.fn._init(config);
 };
@@ -94,9 +115,11 @@ artDialog.fn = artDialog.prototype = {
 		that.DOM = DOM = that.DOM || that._getDOM();
 
 		//是否可以调节大小 对应样式处理
+		//可以调节窗口大小——那么对应可以最大最小化
 		if (config.resize && config.title != false) {
 			DOM.wrap.addClass('dialog-can-resize');
 		}
+
 		DOM.wrap.addClass(config.id);
 		DOM.close[config.cancel === false ? 'hide' : 'show']();
 		DOM.icon[0].style.display = icon ? '' : 'none';
@@ -458,7 +481,6 @@ artDialog.fn = artDialog.prototype = {
 	close: function () {
 		if (this.closed) return this;
 
-		
 		var that = this,
 			DOM = that.DOM,
 			wrap = DOM.wrap,
@@ -482,6 +504,9 @@ artDialog.fn = artDialog.prototype = {
 
 		if (artDialog.focus === that) artDialog.focus = null;
 		if (follow) follow.removeAttribute(_expando + 'follow');
+		//if (that.config.resize) 
+		dialogResize.close(that.config.id);
+
 		delete list[that.config.id];
 		that._removeEvent();
 		that.hide(true)._setAbsolute();
@@ -510,6 +535,7 @@ artDialog.fn = artDialog.prototype = {
 		if (dialog_this !='') {
 			dialog_this.zIndex();
 		}
+
 		return that;
 	},
 	
@@ -551,6 +577,8 @@ artDialog.fn = artDialog.prototype = {
 			wrap = DOM.wrap,
 			top = artDialog.focus,
 			index = artDialog.defaults.zIndex ++;
+		//if (that.config.resize) 
+		dialogResize.focus(that.config.id);
 		
 		// 设置叠加高度
 		wrap.css('zIndex', index);
@@ -757,7 +785,11 @@ artDialog.fn = artDialog.prototype = {
 			this.DOM.main[0].style.height = (_$window.height()-_titleBarHeight)  + 'px';
 		}
 	},
-	
+	_clickMin:function(){
+		if (TaskTap!=undefined){
+			this.DOM.wrap.css('visibility','hidden');
+		}		
+	},	
 	// 重置位置与尺寸
 	_reset: function (test) {
 		//最大化时，窗口调整保持
@@ -814,11 +846,8 @@ artDialog.fn = artDialog.prototype = {
 			var clickClass = $(target).attr('class');
 			//最大化 最小化 关闭
 			switch(clickClass){
-				case 'aui_min':
-					break;
-				case 'aui_max':
-					that._clickMax();
-					break;
+				case 'aui_min':that._clickMin();break;
+				case 'aui_max':that._clickMax();break;
 				case 'aui_close':
 					that._click(config.cancelVal);
 					return false;
@@ -1008,10 +1037,11 @@ artDialog.defaults = {
 	left: '50%',				// X轴坐标
 	top: '38.2%',				// Y轴坐标
 	zIndex: 300,				// 对话框叠加高度值(重要：此值不能超过浏览器最大限制)
-	resize: true,				// 是否允许用户调节尺寸
-	dialogMaxFlag:'dialogMax',	// 最大化状态标记class
-	drag: true					// 是否允许用户拖动位置
 	
+	resize: false,				// 是否允许用户调节尺寸
+	dialogMaxFlag:'dialogMax',	// 最大化状态标记class
+	dialogMinFlag:'dialogMin',	// 最小化状态标记class	
+	drag: true					// 是否允许用户拖动位置	
 };
 
 window.artDialog = $.dialog = $.artDialog = artDialog;
