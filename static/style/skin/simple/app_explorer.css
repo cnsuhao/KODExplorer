@@ -145,6 +145,9 @@ body {
   float: right;
   margin-right: 10px;
 }
+.navbar .content .top_right a {
+  border: none;
+}
 .navbar .content .top_right .topbar_user {
   margin-top: 5px;
   line-height: 32px;

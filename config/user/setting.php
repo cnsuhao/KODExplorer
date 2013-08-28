@@ -11,10 +11,10 @@ $config['list_sort_order']="up";	// up||down
 
 //文件列表主题
 $config['themeall']="default=淡蓝(默认)/simple=简洁白/metro=metro风格";
-$config['theme']="metro";		// 文件列表主题(规则，前面为css目录，后面为显示描述)
+$config['theme']="default";		// 文件列表主题(规则，前面为css目录，后面为显示描述)
 
 $config['codethemeall']="default/eclipse/github/monokai/solarized/ambiance/cobalt/dark";
-$config['codetheme']="github";	//代码编辑器主题
+$config['codetheme']="eclipse";	//代码编辑器主题
 
 $config['wallall']="1=宇宙/2=炫彩紫/3=麦田/4=梦幻/5=简约绿/6=生如夏花/7=夕阳草地/8=如梦如幻/9=草原/10=紫光/11=荒野/12=旧时光/13=夜色/14=远方/15=清晨麦田/16=神秘/17=眩光紫/18=苹果/19=青草绿/20=梦幻落叶";
 $config['wall']="1";//音乐播放主题

@@ -63,13 +63,13 @@ body {
   height: 40px;
   color: #ddd;
   z-index: 100;
-  background: #47a1ca url(../../../images/topBanner.jpg) repeat-x;
+  background: #41bbec;
   position: fixed;
   box-shadow: 0 -20px 50px #000000;
 }
 .navbar .content {
   padding: 0px;
-  line-height: 38px;
+  line-height: 40px;
 }
 .navbar .content i {
   display: inline-block;
@@ -81,12 +81,15 @@ body {
   display: block;
   text-decoration: none;
   color: #fff;
+  border: 1px solid #6fccf1;
   -webkit-transition: all 0.2s;
   -moz-transition: all 0.2s;
   -o-transition: all 0.2s;
   -ms-transition: all 0.2s;
   transition: all 0.2s;
   padding: 0px 1.5em;
+  border-top: none;
+  border-bottom: none;
 }
 .navbar .content ul.dropmenu {
   list-style: none;
@@ -122,14 +125,11 @@ body {
 }
 .navbar .content .top_left a {
   float: left;
-  border-right: 1px solid;
   margin-left: -1px;
-  border-left: 1px solid;
-  border-color: #60a8ca;
 }
 .navbar .content .top_left a:hover,
 .navbar .content .top_left a.this {
-  background: #307fa4;
+  background: #80dbff;
 }
 .navbar .content .top_left a.title {
   font-size: 18px;
@@ -144,6 +144,9 @@ body {
 .navbar .content .top_right {
   float: right;
   margin-right: 10px;
+}
+.navbar .content .top_right a {
+  border: none;
 }
 .navbar .content .top_right .topbar_user {
   margin-top: 5px;
