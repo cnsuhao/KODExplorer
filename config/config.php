@@ -1,12 +1,11 @@
 <?php
 
-function D($path){return str_replace('\\','/',$path);}
-define('HOST','http://'.$_SERVER['HTTP_HOST'].'/');
+function P($path){return str_replace('\\','/',$path);}
 // 调整此参数，以适应linux link的方式，目前适用于windows，linux，虚拟机
-define('WEB_ROOT',str_replace(D($_SERVER['PHP_SELF']),'',D(dirname(dirname(__FILE__))).'/index.php').'/');
-//define('WEB_ROOT',str_replace('\\','/',str_replace($_SERVER["PHP_SELF"],'',$_SERVER["SCRIPT_FILENAME"]).'/'));
-define('BASIC_PATH',str_replace('\\','/',dirname(dirname(__FILE__))).'/');
-define('APPHOST',HOST.str_replace(WEB_ROOT,'',BASIC_PATH));//程序根目录
+define('WEB_ROOT',      str_replace(P($_SERVER['PHP_SELF']),'',P(dirname(dirname(__FILE__))).'/index.php').'/');
+define('HOST',          'http://'.$_SERVER['HTTP_HOST'].'/');
+define('BASIC_PATH',    P(dirname(dirname(__FILE__))).'/');
+define('APPHOST',       HOST.str_replace(WEB_ROOT,'',BASIC_PATH));//程序根目录
 define('TEMPLATE',		BASIC_PATH .'template/');	//模版文件路径
 define('LOG_PATH',		BASIC_PATH .'data/log/');	//日志目录
 define('CONTROLLER_DIR',BASIC_PATH .'controller/'); //控制器目录
