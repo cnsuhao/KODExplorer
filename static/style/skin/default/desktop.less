@@ -1,7 +1,6 @@
 textarea,input,pre{.user-select(auto);}
-.navbar{height:38px;}
 .desktop{
-	position: absolute;
+	position: absolute;.user-select(none);
 	overflow: hidden;right: 0px;bottom: 0px;top: 0px;left: 0px;
 	.background-size(100% 100%);
     .transition(background 0.3s);
@@ -10,9 +9,9 @@ textarea,input,pre{.user-select(auto);}
 	.fileList_icon{
 	    overflow: hidden;
 		position:absolute;width:100%;height:95%;top:@navbar_height;
-	    -webkit-column-width:90px;
-	    -moz-column-width:90px;
+	    -webkit-column-width:90px;	    
 	    -webkit-column-gap:0px;
+	    -moz-column-width:90px;
 	    -moz-column-gap:0px;
 		.file{
 		 	float: none;color:#fff;
@@ -30,8 +29,6 @@ textarea,input,pre{.user-select(auto);}
 		}
 	}
 }
-
-
 
 #taskbar{ 
 	height: 32px;position:fixed;bottom:0;left:0;width:100%;

@@ -556,4 +556,3 @@ class http
 		$this->cookie = &$ptr;
 	}
 }
-?>

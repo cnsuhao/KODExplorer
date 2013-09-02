@@ -87,14 +87,6 @@ class user extends Controller
     }
 
 	/**
-     * md5
-     */
-    public function md5()
-    {
-        echo md5($this->in['str']);
-    }
-
-	/**
      * 修改密码
      */
     public function changeUserPassword()
@@ -105,15 +97,12 @@ class user extends Controller
             $now_pass=get_config($this->config['seting_file'],"config['user_password']");
             if ($now_pass==md5($upassword_now)){
                 update_config($this->config['seting_file'],"config['user_password']",
-                    md5($upassword_new)
-                );
+                    md5($upassword_new));
                 echo '{state:"succeed",msg:"修改成功!"}';
-            }
-            else {
+            }else {
                 echo '{state:"error",msg:"原密码错误!"}';
             }           
-        }
-        else {
+        }else {
             echo '{state:"warning",msg:"不能为空!"}';
         }  
     }

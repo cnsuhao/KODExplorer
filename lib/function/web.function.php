@@ -288,5 +288,3 @@ function send_http_status($i_status, $s_message = '')
 		exit();
 	} 
 } 
-
-?>

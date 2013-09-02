@@ -755,10 +755,13 @@ Main.UI = (function() {
 			//地址栏enter或者 点击go按钮，main更换地址
 			gotoPath:function(){
 				var url=$("input.path").val();//保持文件夹最后有一个/
+				url = url.replace(/\\/g,'/');
+				$("input.path").val(url);
 				if (url.substr(url.length-1,1)!='/'){
 					url+='/';
 				}
 				Main.PathOpen.pathList(url);
+				Main.UI.header.addressSet(urlDecode(this_path));
 			},
 
 			// 更改前进后退状态

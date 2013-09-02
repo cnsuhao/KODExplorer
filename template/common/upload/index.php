@@ -2,19 +2,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link rel="stylesheet" type="text/css" href="<?=STATIC_PATH;?>js/swfUpload/style.css">
-<script src="<?=STATIC_PATH;?>js/jquery-1.8.0.min.js"></script>	
-<script src="<?=STATIC_PATH;?>js/frameCall.js"></script>	
-<script src="<?=STATIC_PATH;?>js/swfUpload/swfupload.js"></script>
-<script src="<?=STATIC_PATH;?>js/swfUpload/swfupload.queue.js"></script>
-<script src="<?=STATIC_PATH;?>js/swfUpload/fileprogress.js"></script>
-<script src="<?=STATIC_PATH;?>js/swfUpload/handlers.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo STATIC_PATH;?>js/swfUpload/style.css">
+<script src="<?php echo STATIC_PATH;?>js/jquery-1.8.0.min.js"></script>	
+<script src="<?php echo STATIC_PATH;?>js/common.js"></script>	
+<script src="<?php echo STATIC_PATH;?>js/swfUpload/swfupload.js"></script>
+<script src="<?php echo STATIC_PATH;?>js/swfUpload/swfupload.queue.js"></script>
+<script src="<?php echo STATIC_PATH;?>js/swfUpload/fileprogress.js"></script>
+<script src="<?php echo STATIC_PATH;?>js/swfUpload/handlers.js"></script>
 <script type="text/javascript">
 	var upload;
 	window.onload = function() {
 		upload = new SWFUpload({
 			// Backend Settings
-			upload_url: '?upload/swfUpload&session_id=<?=session_id();?>&save_path=<?=$value["save_path"];?>',
+			upload_url: '?upload/swfUpload&session_id=<?php echo session_id();?>&save_path=<?php echo $value["save_path"];?>',
 			post_params: {"sid" : ""},
 			// File Upload Settings
 			file_size_limit : "100000000",	// 1000MB

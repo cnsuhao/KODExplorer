@@ -1,5 +1,4 @@
 <?php
-
 function P($path){return str_replace('\\','/',$path);}
 // 调整此参数，以适应linux link的方式，目前适用于windows，linux，虚拟机
 define('WEB_ROOT',      str_replace(P($_SERVER['PHP_SELF']),'',P(dirname(dirname(__FILE__))).'/index.php').'/');
@@ -15,12 +14,12 @@ define('FUNCTION_DIR',	LIB_DIR .'function/');		//函数库目录
 define('CLASS_DIR',		LIB_DIR .'class/');			//内目录
 define('CORER_DIR',		LIB_DIR .'core/');			//核心目录
 
-define('HOME',WEB_ROOT);							//当前下的0000目录
-define('USER',BASIC_PATH.'data/User/');				//当前下的0000目录
-define('DESKTOP',BASIC_PATH.'data/User/desktop/');	//当前下的0000目录
+define('HOME',WEB_ROOT);							//
+define('USER',BASIC_PATH.'data/User/');				//
+define('DESKTOP',BASIC_PATH.'data/User/desktop/');	//
 define('STATIC_PATH','./static/');					//静态文件目录
 //define('STATIC_PATH','http://static.kalcaddle.com/static/');
-define('USE_NO_LESS',true);							//是否使用less
+define('STATIC_LESS','css');	
 
 include(CORER_DIR.'Application.class.php');
 include(CORER_DIR.'Controller.class.php');
@@ -59,5 +58,3 @@ $in = parse_incoming();//所有过滤处理。
 $config['autorun'] = array(
 	array('controller'=>'user','function'=>'loginCheck')
 );
-
-?>

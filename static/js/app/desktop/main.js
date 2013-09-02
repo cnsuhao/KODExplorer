@@ -178,7 +178,8 @@ Main.UI = (function() {
 	};
 
 	var _ieCss = function(){
-		if (!Main.Global.isIE) return;
+		if (!Main.Global.isIE 
+			&& navigator.userAgent.indexOf("Firefox")<0) return;
 		var top 	= 10;
 		var left 	= 10;
 		var width 	= 80;

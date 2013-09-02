@@ -683,5 +683,3 @@ function write_log($log, $type = 'default', $level = 'log'){
 	clearstatcache();
 	return error_log("$now_time $log\n", 3, $target);
 }
-
-?>

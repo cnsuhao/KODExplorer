@@ -3,33 +3,30 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>在线编辑器</title>
-	<link rel="Shortcut Icon" href="<?=STATIC_PATH;?>images/favicon.ico">
-<!-- 	// <script src="http://libs.baidu.com/jquery/1.8.0/jquery.min.js"></script> -->
-	<script src="<?=STATIC_PATH;?>js/jquery-1.8.0.min.js"></script>	
-	<script src="<?=STATIC_PATH;?>js/artDialog/jquery.artDialog.js"></script>
-	<script src="<?=STATIC_PATH;?>js/artDialog/iframeTools.js"></script>
-	<script src="<?=STATIC_PATH;?>js/contextMenu/jquery.ui.position.js"></script>
-	<script src="<?=STATIC_PATH;?>js/contextMenu/jquery.contextMenu.js"></script>
-	<script src="<?=STATIC_PATH;?>js/common.js"></script>
-	<script src="<?=STATIC_PATH;?>js/frameCall.js"></script> <!-- 跨窗口函数调用 -->
-	<script src="<?=STATIC_PATH;?>js/ztree/js/jquery.ztree.all-3.5.min.js"></script>
-	<link   href="<?=STATIC_PATH;?>style/font-awesome/style.css" rel="stylesheet"/>
-
-	<?php if(USE_NO_LESS){?>
-	<link   href="<?=STATIC_PATH;?>style/skin/<?=$value['config']['theme'];?>/app_editor.css" rel="stylesheet" id='link_css_list'/>
-	<?php }else{?>	
-	<link rel="stylesheet/less" type="text/css" href="<?=STATIC_PATH;?>style/skin/<?=$value['config']['theme'];?>/app_editor.less">
-	<script src="<?=STATIC_PATH;?>js/less-1.3.3.min.js"></script>
-	<?php }?>
+	<link rel="Shortcut Icon" href="<?php echo STATIC_PATH;?>images/favicon.ico">	
+	<script src="<?php echo STATIC_PATH;?>js/jquery-1.8.0.min.js"></script>
+	<script src="<?php echo STATIC_PATH;?>js/common.js"></script>
+	<script src="<?php echo STATIC_PATH;?>js/artDialog/jquery.artDialog.js"></script>
+	<script src="<?php echo STATIC_PATH;?>js/contextMenu/jquery.ui.position.js"></script>
+	<script src="<?php echo STATIC_PATH;?>js/contextMenu/jquery.contextMenu.js"></script>
 	
+	<script src="<?php echo STATIC_PATH;?>js/ztree/js/jquery.ztree.all-3.5.min.js"></script>
+	<link   href="<?php echo STATIC_PATH;?>style/font-awesome/style.css" rel="stylesheet"/>
+
+	<?php if(STATIC_LESS == 'css'){ ?>
+	<link href="<?php echo STATIC_PATH;?>style/skin/<?php echo $value['config']['theme'];?>/app_editor.css" rel="stylesheet" id='link_css_list'/>
+	<?php }else{//less_compare_online ?>
+	<link rel="stylesheet/less" type="text/css" href="<?php echo STATIC_PATH;?>style/skin/<?php echo $value['config']['theme'];?>/app_editor.css"/>
+	<script src="<?php echo STATIC_PATH;?>js/less-1.4.2.min.js"></script>	
+	<?php } ?>
 </head>
 
 <script>
-var web_host	= '<?=HOST;?>';// localhost 访问根目录
-var app_path	= '<?=urlencode(APPHOST);?>';	///www/explorer/
-var rootPath	= '<?=WEB_ROOT;?>';
+var web_host	= '<?php echo HOST;?>';// localhost 访问根目录
+var app_path	= '<?php echo urlencode(APPHOST);?>';	///www/explorer/
+var rootPath	= '<?php echo WEB_ROOT;?>';
 var editPath	= app_path+'./';//ajax请求文件路径
-var static_path = "<?=STATIC_PATH;?>";
+var static_path = "<?php echo STATIC_PATH;?>";
 </script>
 
 <body onselectstart="return false" style="overflow:hidden;">
@@ -61,7 +58,7 @@ var static_path = "<?=STATIC_PATH;?>";
 			</div>
 		</div><!-- / frame-right end-->
 	</div><!-- / frame-main end-->
-<script src="<?=STATIC_PATH;?>js/app/common/common.js"></script>
-<script src="<?=STATIC_PATH;?>js/app/edit/editor.js"></script>
+<script src="<?php echo STATIC_PATH;?>js/app/common/common.js"></script>
+<script src="<?php echo STATIC_PATH;?>js/app/edit/editor.js"></script>
 </body>
 </html>

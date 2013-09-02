@@ -152,4 +152,3 @@ class history{
 //$ss->add('asdfasdf');
 //$ss->goback();
 //pr($ss->getHistory());
-?>

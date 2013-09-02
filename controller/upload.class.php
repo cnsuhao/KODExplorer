@@ -34,7 +34,6 @@ class upload extends Controller{
                 $this->config['system_charset'],
                 urldecode($this->in['save_path'])
             );
-			write_log($save_path);
             upload('xfile',$save_path);
         }
     }  

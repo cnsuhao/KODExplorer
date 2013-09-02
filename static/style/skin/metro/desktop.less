@@ -2,7 +2,7 @@
 textarea,input,pre{.user-select(auto);}
 body{.user-select(none);}
 .desktop{
-	position: absolute;
+	position: absolute;.user-select(none);
 	overflow: hidden;right: 0px;bottom: 0px;top: 0px;left: 0px;
 	.background-size(100% 100%);
     .transition(background 0.3s);
@@ -14,9 +14,9 @@ body{.user-select(none);}
 	    -webkit-column-width:90px;
 	    -moz-column-width:90px;
 	    -webkit-column-gap:0px;
-	    -moz-column-gap:0px;
-	    writing-mode: lr-tb;/*ie8 竖直排列*/
+	    -moz-column-gap:0px;	    
 		.file{
+			writing-mode: lr-tb;/*ie8 竖直排列*/
 		 	float: none;color:#fff;
 		    display:inline-block;  
 		    text-shadow:0 0 2px #000;

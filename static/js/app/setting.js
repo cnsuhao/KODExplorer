@@ -12,7 +12,6 @@ function tips(msg,icon){
 
 //保存等处理，不同dom下都掉用tools，自动判断所在pageid，
 function setTheme(){
-	//window.top.location.reload();
 	var thistheme=$('.theme .this .ico').attr('theme');
 	$('#link_css_list').attr('href',static_path+'style/skin/'+thistheme+'/app_setting.css');
 	FrameCall.fatherFunction('Main.UI.setTheme','"'+thistheme+'"');
@@ -34,10 +33,10 @@ function tools(action){
 					}
 				});	
 			}else if(action=='password'){
-				var upassword_now=$('#upassword_now').val();
-				var upassword_new=$('#upassword_new').val();
+				var password_now=$('#password_now').val();
+				var password_new=$('#password_new').val();
 				$.ajax({
-					url:'?user/changeUserPassword&password_now='+password_now+'&password_new='+upassword_new,
+					url:'?user/changeUserPassword&password_now='+password_now+'&password_new='+password_new,
 					success:function(data){
 						var result = eval('('+data+')');
 						tips(result['msg'],result['state']);
@@ -168,11 +167,7 @@ $(document).ready(function() {
 	});
 	$('ul.setting li#'+setting).addClass('selected');
 	//是否在框架中【dialog or not】
-	if (self != top) {
-		$('.navbar').remove();
-		$('#body').css('top','0').find('.menu_left').css('top','0');;
-	}
-
+	$('#body').css('top','0').find('.menu_left').css('top','0');;
 	$('ul.setting li').click(function(){
 		var slider=$(this).attr('id');
 		setGoto(slider);

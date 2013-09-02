@@ -277,7 +277,7 @@ Main.Editor = (function(){
 				$.dialog({
 					id:'id_fileget',
 					icon:'loading',
-					top:'50%',
+					//top:'50%',
 					left:'50%',
 					padding:10,
 					title:false,
@@ -335,7 +335,7 @@ Main.Editor = (function(){
 		    gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
 		    autoCloseBrackets: true,
 			extraKeys: {
-				"Ctrl-S": function() {
+				"Ctrl-S": function() {				
 					Main.Editor.save(editor_current_id);
 					return false;
 				}
@@ -399,10 +399,6 @@ Main.Editor = (function(){
 				editors[obj].editor.setOption('theme',codetheme);//codemirror主题设置
 			}
 		}
-	};
-
-	var refresh = function(){
-		//	
 	};
 
 	//检测是否修改

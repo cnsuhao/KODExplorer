@@ -15,4 +15,3 @@ $skin_media['qqplayer']	= array('path'=>'movie/qqplayer','width'=>600,'height'=>
 $skin_media['tvlive']	= array('path'=>'movie/tvlive','width'=>600,'height'=>400);
 $skin_media['youtube']	= array('path'=>'movie/youtube','width'=>600,'height'=>400);
 $skin_media['vplayer']	= array('path'=>'movie/vplayer','width'=>600,'height'=>400);
-?>

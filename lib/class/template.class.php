@@ -1213,5 +1213,3 @@ class Template {
 		return $string;
 	} 
 } 
-
-?>

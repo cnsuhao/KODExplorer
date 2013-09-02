@@ -3,46 +3,43 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>Cloud Explorer——云。在线资源管理</title>
-	<link rel="Shortcut Icon" href="<?=STATIC_PATH;?>/images/favicon.ico">
+	<link rel="Shortcut Icon" href="<?php echo STATIC_PATH;?>/images/favicon.ico">
 <!-- 	// <script src="http://libs.baidu.com/jquery/1.8.0/jquery.min.js"></script> -->
-	<script src="<?=STATIC_PATH;?>js/jquery-1.8.0.min.js"></script>	
-	<script src="<?=STATIC_PATH;?>js/artDialog/jquery.artDialog.js"></script>
-	<script src="<?=STATIC_PATH;?>js/artDialog/iframeTools.js"></script>
-	<script src="<?=STATIC_PATH;?>js/contextMenu/jquery.ui.position.js"></script>
-	<script src="<?=STATIC_PATH;?>js/contextMenu/jquery.contextMenu.js"></script>
+	<script src="<?php echo STATIC_PATH;?>js/jquery-1.8.0.min.js"></script>	
+	<script src="<?php echo STATIC_PATH;?>js/artDialog/jquery.artDialog.js"></script>
+	<script src="<?php echo STATIC_PATH;?>js/contextMenu/jquery.ui.position.js"></script>
+	<script src="<?php echo STATIC_PATH;?>js/contextMenu/jquery.contextMenu.js"></script>
 
-	<script src="<?=STATIC_PATH;?>js/common.js"></script>
-	<script src="<?=STATIC_PATH;?>js/frameCall.js"></script>
-	<script src="<?=STATIC_PATH;?>js/cmp4/cmp.js"></script>
-	<script src="<?=STATIC_PATH;?>js/ztree/js/jquery.ztree.all-3.5.min.js"></script>
+	<script src="<?php echo STATIC_PATH;?>js/common.js"></script>
+	<script src="<?php echo STATIC_PATH;?>js/cmp4/cmp.js"></script>
+	<script src="<?php echo STATIC_PATH;?>js/ztree/js/jquery.ztree.all-3.5.min.js"></script>
 
-	<script src="<?=STATIC_PATH;?>js/picasa/picasa.js"></script>
-	<link  href="<?=STATIC_PATH;?>js/picasa/style/style.css" rel="stylesheet"/>
-	<link   href="<?=STATIC_PATH;?>style/font-awesome/style.css" rel="stylesheet"/>
+	<script src="<?php echo STATIC_PATH;?>js/picasa/picasa.js"></script>
+	<link href="<?php echo STATIC_PATH;?>js/picasa/style/style.css" rel="stylesheet"/>
+	<link href="<?php echo STATIC_PATH;?>style/font-awesome/style.css" rel="stylesheet"/>
 
-	<?php if(USE_NO_LESS){?>
-	<link  href="<?=STATIC_PATH;?>style/skin/<?=$value['config']['theme'];?>/app_explorer.css" rel="stylesheet" id='link_css_list'/>
-	<?php }else{?>	
-	<link rel="stylesheet/less" type="text/css" href="<?=STATIC_PATH;?>style/skin/<?=$value['config']['theme'];?>/app_explorer.less">
-	<script src="<?=STATIC_PATH;?>js/less-1.3.3.min.js"></script>
-	<?php }?>
-	
+	<?php if(STATIC_LESS == 'css'){ ?>
+	<link href="<?php echo STATIC_PATH;?>style/skin/<?php echo $value['config']['theme'];?>/app_explorer.css" rel="stylesheet" id='link_css_list'/>
+	<?php }else{//less_compare_online ?>
+	<link rel="stylesheet/less" type="text/css" href="<?php echo STATIC_PATH;?>style/skin/<?php echo $value['config']['theme'];?>/app_explorer.css"/>
+	<script src="<?php echo STATIC_PATH;?>js/less-1.4.2.min.js"></script>	
+	<?php } ?>
 </head>
 
 <script>
-var HOME    = '<?=HOME;?>';//$dir为初次进入或者刷新浏览器后的当前目录。
-var web_host= '<?=HOST;?>';// localhost 访问根目录
-var this_path='<?=urlencode($value["dir"]);?>';//D:/wwwroot/www/explorer/0000/当前绝对路径
-var WEB_ROOT='<?=WEB_ROOT;?>';//D:/wwwroot/ 服务器路径 用于api更新列表情况下保证web_path的正确性.
-var web_path='<?=urlencode(str_replace(WEB_ROOT,'',$value["dir"]));?>';// 当前url目录,从根目录开始到当前 用于文件打开 
+var HOME    = '<?php echo HOME;?>';//$dir为初次进入或者刷新浏览器后的当前目录。
+var web_host= '<?php echo HOST;?>';// localhost 访问根目录
+var this_path='<?php echo urlencode($value["dir"]);?>';//D:/wwwroot/www/explorer/0000/当前绝对路径
+var WEB_ROOT='<?php echo WEB_ROOT;?>';//D:/wwwroot/ 服务器路径 用于api更新列表情况下保证web_path的正确性.
+var web_path='<?php echo urlencode(str_replace(WEB_ROOT,'',$value["dir"]));?>';// 当前url目录,从根目录开始到当前 用于文件打开 
 
 var json_data = '';			//用于存储每次获取列表后的json数据值。
-var app_path='<?=urlencode(APPHOST);?>';	///www/explorer/  程序路径，用于静态资源调用
-var list_type='<?=$value['config']['list'];?>';		//文件列表显示方式 list/icon
-var list_theme='<?=$value['config']['theme'];?>';	//文件列表主题
-var json_sort_field = '<?=$value['config']['list_sort_field'];?>'; //列表排序依照的字段  
-var json_sort_order = '<?=$value['config']['list_sort_order'];?>';	//列表排序升序or降序
-var static_path = "<?=STATIC_PATH;?>";
+var app_path='<?php echo urlencode(APPHOST);?>';	///www/explorer/  程序路径，用于静态资源调用
+var list_type='<?php echo $value['config']['list'];?>';		//文件列表显示方式 list/icon
+var list_theme='<?php echo $value['config']['theme'];?>';	//文件列表主题
+var json_sort_field = '<?php echo $value['config']['list_sort_field'];?>'; //列表排序依照的字段  
+var json_sort_order = '<?php echo $value['config']['list_sort_order'];?>';	//列表排序升序or降序
+var static_path = "<?php echo STATIC_PATH;?>";
 </script>
 
 <body onselectstart="return false" style="overflow:hidden;">
@@ -131,12 +128,13 @@ var static_path = "<?=STATIC_PATH;?>";
 			</div>
 		</div><!-- / frame-right end-->
 	</div><!-- / frame-main end-->
-<script src="<?=STATIC_PATH;?>js/app/common/taskTap.js"></script>
-<script src="<?=STATIC_PATH;?>js/app/common/CMPlayer.js"></script>
-<script src="<?=STATIC_PATH;?>js/app/common/common.js"></script>
-<script src="<?=STATIC_PATH;?>js/app/explorer/main.js"></script>
-<script src="<?=STATIC_PATH;?>js/app/explorer/rightMenu.js"></script>
-<script src="<?=STATIC_PATH;?>js/app/explorer/pathOperate.js"></script>
-<script src="<?=STATIC_PATH;?>js/app/explorer/fileSelect.js"></script>
+<script src="<?php echo STATIC_PATH;?>js/app/common/taskTap.js"></script>
+<script src="<?php echo STATIC_PATH;?>js/app/common/CMPlayer.js"></script>
+<script src="<?php echo STATIC_PATH;?>js/app/common/common.js"></script>
+
+<script src="<?php echo STATIC_PATH;?>js/app/explorer/main.js"></script>
+<script src="<?php echo STATIC_PATH;?>js/app/explorer/rightMenu.js"></script>
+<script src="<?php echo STATIC_PATH;?>js/app/explorer/pathOperate.js"></script>
+<script src="<?php echo STATIC_PATH;?>js/app/explorer/fileSelect.js"></script>
 </body>
 </html>

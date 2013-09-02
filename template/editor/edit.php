@@ -6,50 +6,34 @@ http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <meta name="description" content="webpage">
 <meta name="keywords" content="kalcaddle">
 <meta name="author" content="kalcaddle.">
-  <head>
-<!-- 	// <script src="http://libs.baidu.com/jquery/1.8.0/jquery.min.js"></script> -->
-	<script src="<?=STATIC_PATH;?>js/jquery-1.8.0.min.js"></script>	
-	<script src="<?=STATIC_PATH;?>js/artDialog/jquery.artDialog.js"></script>
-	<script src="<?=STATIC_PATH;?>js/artDialog/iframeTools.js"></script>
-	<script src="<?=STATIC_PATH;?>js/common.js"></script>
-	<script src="<?=STATIC_PATH;?>js/frameCall.js"></script> <!-- 跨窗口函数调用 -->
+  <head>  	
+	<script src="<?php echo STATIC_PATH;?>js/jquery-1.8.0.min.js"></script>
+	<script src="<?php echo STATIC_PATH;?>js/common.js"></script><!-- 跨窗口函数调用 -->
+	<script src="<?php echo STATIC_PATH;?>js/artDialog/jquery.artDialog.js"></script>	
 
-    <link href="<?=STATIC_PATH;?>js/codemirror/lib/codemirror.css" rel="stylesheet" >
-    <script src="<?=STATIC_PATH;?>js/codemirror/lib/codemirror.js"></script>
-    <script src="<?=STATIC_PATH;?>js/codemirror/self/zen_codemirror.min.js"></script><!--zendCoding-->
-    <script src="<?=STATIC_PATH;?>js/codemirror/addon/selection/active-line.js"></script>
-    <script src="<?=STATIC_PATH;?>js/codemirror/addon/edit/matchbrackets.js"></script>
-    <script src="<?=STATIC_PATH;?>js/codemirror/addon/edit/closebrackets.js"></script>
-    <script src="<?=STATIC_PATH;?>js/codemirror/addon/mode/loadmode.js"></script>
+    <link href="<?php echo STATIC_PATH;?>js/codemirror/lib/codemirror.css" rel="stylesheet" >
+    <script src="<?php echo STATIC_PATH;?>js/codemirror/lib/codemirror.js"></script>    
+    <script src="<?php echo STATIC_PATH;?>js/codemirror/self/addon.js"></script>
+	<script src="<?php echo STATIC_PATH;?>js/codemirror/self/zen_codemirror.min.js"></script>
+    <script src="<?php echo STATIC_PATH;?>js/codemirror/self/my_search.js"></script>
+	<link href="<?php echo STATIC_PATH;?>style/font-awesome/style.css" rel="stylesheet"/>
+	<link href="<?php echo STATIC_PATH;?>js/codemirror/theme/all.css" rel="stylesheet" >
 
-	<script src="<?=STATIC_PATH;?>js/codemirror/addon/fold/foldcode.js"></script>
-	<script src="<?=STATIC_PATH;?>js/codemirror/addon/fold/foldgutter.js"></script>
-	<script src="<?=STATIC_PATH;?>js/codemirror/addon/fold/brace-fold.js"></script>
-	<script src="<?=STATIC_PATH;?>js/codemirror/addon/fold/xml-fold.js"></script>
-	<script src="<?=STATIC_PATH;?>js/codemirror/addon/fold/comment-fold.js"></script>
-
-
-	<!-- 搜索 -->
-    <script src="<?=STATIC_PATH;?>js/codemirror/addon/search/searchcursor.js"></script>
-    <script src="<?=STATIC_PATH;?>js/codemirror/self/my_search.js"></script>
-	<link href="<?=STATIC_PATH;?>style/font-awesome/style.css" rel="stylesheet"/>
-	<link href="<?=STATIC_PATH;?>js/codemirror/theme/all.css" rel="stylesheet" >
-	
-	<?php if(USE_NO_LESS){?>
-	<link href="./static/style/skin/<?=$this->config['theme'];?>/app_code_edit.css" rel="stylesheet" id='link_css_list'/>	
-	<?php }else{?>	
-    <link href="<?=STATIC_PATH;?>style/skin/<?=$this->config['theme'];?>/app_code_edit.less" rel="stylesheet/less" type="text/css" >
-	<script src="<?=STATIC_PATH;?>js/less-1.3.3.min.js"></script>
-	<?php }?>
+	<?php if(STATIC_LESS == 'css'){ ?>
+	<link href="<?php echo STATIC_PATH;?>style/skin/<?php echo $value['config']['theme'];?>/app_code_edit.css" rel="stylesheet" id='link_css_list'/>
+	<?php }else{//less_compare_online ?>
+	<link rel="stylesheet/less" type="text/css" href="<?php echo STATIC_PATH;?>style/skin/<?php echo $value['config']['theme'];?>/app_code_edit.css"/>
+	<script src="<?php echo STATIC_PATH;?>js/less-1.4.2.min.js"></script>	
+	<?php } ?>
   </head>
   <script>
 	var app_path		= "<?php echo APPHOST;?>";
-	var frist_file		= "<?=$_GET['filename'];?>";
+	var frist_file		= "<?php echo $_GET['filename'];?>";
 	var codetheme 		= "<?php echo $this->config['codetheme'];?>";
-	CodeMirror.modeURL	= "<?=STATIC_PATH;?>js/codemirror/mode/%N/%N.js";
+	CodeMirror.modeURL	= "<?php echo STATIC_PATH;?>js/codemirror/mode/%N/%N.js";
   </script>
   <body>
-	<div class="edit_main">
+	<div class="edit_main" style="height: 100%;">
 		<div class="tools">
 			<div class="left">
 				<a class="save" href="#" title='保存'><i class="font-icon icon-save"></i></a>
@@ -118,7 +102,7 @@ http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 						<h1> <span>多种代码高亮</span> </h1>
 						<p>前端：html,JavaScript,css,less,sass,scss</p>
 						<p>web开发：php,perl,python,ruby,elang,go...</p>
-						<p>本地语言：java,c,c++,c#,actionScript,VBScript...</p>
+						<p>传统语言：java,c,c++,c#,actionScript,VBScript...</p>
 						<p>其他：markdown,shell,sql,lua,xml,yaml...</p>
 					</div>
 				</div>
@@ -144,6 +128,6 @@ http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 			<div class="tabs"></div>
 		</div>
 	</div>
-	<script src="<?=STATIC_PATH;?>js/app/edit/edit.js"></script>
+	<script src="<?php echo STATIC_PATH;?>js/app/edit/edit.js"></script>
 </body>
 </html>

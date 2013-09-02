@@ -77,4 +77,3 @@ class arraysql{
 		return $this->array;
 	}
 }
-?>

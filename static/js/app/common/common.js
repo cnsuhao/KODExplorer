@@ -26,6 +26,7 @@ Main.Common = {
 			});
 		}else{
 			FrameCall.doTopFunction('Opensetting_mode','setGoto','"'+setting+'"');
+			$('.setting_mode').css('visibility','visible');
 		}
 	},
 	//头部导航栏动作

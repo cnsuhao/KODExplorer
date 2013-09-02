@@ -1,1 +1,1 @@
-a:2:{i:0;a:2:{s:4:"name";s:5:"music";s:4:"path";s:23:"D:/wwwroot/0.000/music/";}i:1;a:2:{s:4:"name";s:6:"images";s:4:"path";s:24:"D:/wwwroot/0.000/images/";}}
+a:2:{i:0;a:2:{s:4:"name";s:5:"music";s:4:"path";s:1:"/";}i:1;a:2:{s:4:"name";s:6:"images";s:4:"path";s:1:"/";}}
