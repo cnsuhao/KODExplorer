@@ -22,7 +22,7 @@ http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	<?php if(STATIC_LESS == 'css'){ ?>
 	<link href="<?php echo STATIC_PATH;?>style/skin/<?php echo $value['config']['theme'];?>/app_code_edit.css" rel="stylesheet" id='link_css_list'/>
 	<?php }else{//less_compare_online ?>
-	<link rel="stylesheet/less" type="text/css" href="<?php echo STATIC_PATH;?>style/skin/<?php echo $value['config']['theme'];?>/app_code_edit.css"/>
+	<link rel="stylesheet/less" type="text/css" href="<?php echo STATIC_PATH;?>style/skin/<?php echo $value['config']['theme'];?>/app_code_edit.less"/>
 	<script src="<?php echo STATIC_PATH;?>js/less-1.4.2.min.js"></script>	
 	<?php } ?>
   </head>
@@ -56,7 +56,7 @@ http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 				<a class="wordbreak" href="#" title="自动换行"><i class="font-icon icon-level-down"></i></a>
 				<a class="tabbeautify" href="#" title="tab对齐"><i class="font-icon icon-indent-left"></i></a>
 				<span class="line"></span>
-				<a class="about" href="#" title="关于"><i class="font-icon icon-info"></i></a>
+				<a class="about" href="#" title="ZendCoding使用帮助"><i class="font-icon icon-info"></i></a>
 			</div>
 			<div class="right">
 				<a class="max" href="#" title="全屏"><i class="font-icon icon-fullscreen"></i></a>

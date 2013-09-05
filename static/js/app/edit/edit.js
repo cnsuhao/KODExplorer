@@ -683,8 +683,7 @@ Main.Toolbar=(function(){
 					break;
 				case 'tabbeautify':editor_current.indentSelection("smart");break;//table对齐
 				case 'about':
-					var url='?setting#help';
-					$.dialog.open(url,{id:'setting_mode',title:'系统设置',width:910,height:580,resize:true});
+					$.dialog.open('http://player.youku.com/player.php/sid/XMTM4NDQwNzgw/v.swf',{id:'setting_mode',title:'zendCoding 使用帮助',width:910,height:580,resize:true});
 					break;
 
 				case 'max':FrameCall.fatherFunction('Main.UI.editorFull',"''");break;

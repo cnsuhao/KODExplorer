@@ -18,7 +18,7 @@
 	<?php if(STATIC_LESS == 'css'){ ?>
 	<link href="<?php echo STATIC_PATH;?>style/skin/<?php echo $value['config']['theme'];?>/app_desktop.css" rel="stylesheet" id='link_css_list'/>
 	<?php }else{//less_compare_online ?>
-	<link rel="stylesheet/less" type="text/css" href="<?php echo STATIC_PATH;?>style/skin/<?php echo $value['config']['theme'];?>/app_desktop.css"/>
+	<link rel="stylesheet/less" type="text/css" href="<?php echo STATIC_PATH;?>style/skin/<?php echo $value['config']['theme'];?>/app_desktop.less"/>
 	<script src="<?php echo STATIC_PATH;?>js/less-1.4.2.min.js"></script>	
 	<?php } ?>
 </head>

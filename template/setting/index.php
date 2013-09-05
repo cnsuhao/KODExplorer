@@ -11,7 +11,7 @@ http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	<?php if(STATIC_LESS == 'css'){ ?>
 	<link href="<?php echo STATIC_PATH;?>style/skin/<?php echo $value['config']['theme'];?>/app_setting.css" rel="stylesheet" id='link_css_list'/>
 	<?php }else{//less_compare_online ?>
-	<link rel="stylesheet/less" type="text/css" href="<?php echo STATIC_PATH;?>style/skin/<?php echo $value['config']['theme'];?>/app_setting.css"/>
+	<link rel="stylesheet/less" type="text/css" href="<?php echo STATIC_PATH;?>style/skin/<?php echo $value['config']['theme'];?>/app_setting.less"/>
 	<script src="<?php echo STATIC_PATH;?>js/less-1.4.2.min.js"></script>	
 	<?php } ?>
 </head>

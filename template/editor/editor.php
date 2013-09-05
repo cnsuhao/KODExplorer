@@ -16,7 +16,7 @@
 	<?php if(STATIC_LESS == 'css'){ ?>
 	<link href="<?php echo STATIC_PATH;?>style/skin/<?php echo $value['config']['theme'];?>/app_editor.css" rel="stylesheet" id='link_css_list'/>
 	<?php }else{//less_compare_online ?>
-	<link rel="stylesheet/less" type="text/css" href="<?php echo STATIC_PATH;?>style/skin/<?php echo $value['config']['theme'];?>/app_editor.css"/>
+	<link rel="stylesheet/less" type="text/css" href="<?php echo STATIC_PATH;?>style/skin/<?php echo $value['config']['theme'];?>/app_editor.less"/>
 	<script src="<?php echo STATIC_PATH;?>js/less-1.4.2.min.js"></script>	
 	<?php } ?>
 </head>
@@ -58,6 +58,8 @@ var static_path = "<?php echo STATIC_PATH;?>";
 			</div>
 		</div><!-- / frame-right end-->
 	</div><!-- / frame-main end-->
+
+<script src="<?php echo STATIC_PATH;?>js/app/common/taskTap.js"></script>
 <script src="<?php echo STATIC_PATH;?>js/app/common/common.js"></script>
 <script src="<?php echo STATIC_PATH;?>js/app/edit/editor.js"></script>
 </body>
