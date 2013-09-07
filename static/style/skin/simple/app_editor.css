@@ -11,7 +11,7 @@ body { font-size: 13px; padding: 0px; margin: 0px; font-family: "微软雅黑"; 
 .navbar .content { padding: 0px; line-height: 40px;}
 .navbar .content i { display: inline-block; padding-right: 10px; text-shadow: 0 0 1px; font-size: 1.1em;}
 .navbar .content a { display: block; text-decoration: none; color: #fff; padding: 0px 1.5em; -webkit-transition: all 0.2s; -moz-transition: all 0.2s; -o-transition: all 0.2s; -ms-transition: all 0.2s; transition: all 0.2s;}
-.navbar .content ul.dropmenu { list-style: none; padding: 0; margin: 0; padding: 5px 0 0px; position: absolute; top: 38px; z-index: 9999; background: #fff; color: #666; display: none; border: 1px solid #ddd; box-shadow: 0 2px 5px #ccc; border-top: none;}
+.navbar .content ul.dropmenu { list-style: none; padding: 0; margin: 0; padding: 5px 0 10px; height: auto; position: absolute; top: 38px; z-index: 9999; background: #fff; color: #666; display: none; border: 1px solid #ddd; box-shadow: 0 2px 5px #ccc; border-top: none;}
 .navbar .content ul.dropmenu li { height: 30px; margin: 0; padding: 0; line-height: 30px;}
 .navbar .content ul.dropmenu li a { margin: 0; padding-left: 30px; width: 100px; border: none; color: #666;}
 .navbar .content ul.dropmenu li a:hover { background: #ddd; color: #000;}
@@ -23,7 +23,6 @@ body { font-size: 13px; padding: 0px; margin: 0px; font-family: "微软雅黑"; 
 .navbar .content .top_right a { border: none;}
 .navbar .content .top_right .topbar_user { margin-top: 5px; line-height: 32px; -webkit-transition: none; -moz-transition: none; -o-transition: none; -ms-transition: none; transition: none;}
 .navbar .content .top_right.this .topbar_user { color: #555; background: #fff; border: 1px solid #ddd; margin-top: 5px;}
-.navbar .content .top_right ul.dropmenu { right: 10px; height: 180px;}
 ::-webkit-scrollbar-track-piece { background-color: #f5f5f5; border-left: 1px solid #d2d2d2;}
 ::-webkit-scrollbar { width: 10px; height: 10px;}
 ::-webkit-scrollbar-thumb { background-color: #c2c2c2; background-clip: padding-box; border: 1px solid #979797; min-height: 28px;}
@@ -44,6 +43,12 @@ body { -khtml-user-select: none; -webkit-user-select: none; -moz-user-select: no
 .frame-main .frame-right { left: 200px; right: 0; position: absolute; top: 0; bottom: 0; overflow: auto;}
 .frame-main .frame-right .frame-right-main .resizeMask { z-index: 999; position: absolute; left: 0; top: 0; bottom: 0; right: 0; display: none;}
 .frame-main .frame-right .frame-right-main .frame { height: 100%; border-left: 1px solid #ddd;}
+.task_tab { position: fixed; bottom: 1px; left: 0; width: 100%; height: 30px; margin-left: 50px;}
+.task_tab .tabs { height: 100%; margin-right: 10px; margin-right: 60px;}
+.task_tab .tabs .tab { float: left; height: 100%; margin-right: 2px; width: 110px; line-height: 30px; border: 1px solid #aaa; box-shadow: 0 0 6px #aaa; padding-left: 10px; overflow: hidden; font-size: 13px; border-radius: 3px; cursor: default; color: #444; background: rgba(255,255,255,0); background-image: -webkit-linear-gradient(top,rgba(255,255,255,0.2),rgba(255,255,255,0)); background-image: -moz-linear-gradient(top,rgba(255,255,255,0.2),rgba(255,255,255,0)); background-image: -o-linear-gradient(top,rgba(255,255,255,0.2),rgba(255,255,255,0)); background-image: -ms-linear-gradient(top,rgba(255,255,255,0.2),rgba(255,255,255,0)); background-image: linear-gradient(top,rgba(255,255,255,0.2),rgba(255,255,255,0));}
+.task_tab .tabs .tab.hover { background: rgba(255,255,255,0); background-image: -webkit-linear-gradient(top,rgba(255,255,255,0.4),rgba(255,255,255,0)); background-image: -moz-linear-gradient(top,rgba(255,255,255,0.4),rgba(255,255,255,0)); background-image: -o-linear-gradient(top,rgba(255,255,255,0.4),rgba(255,255,255,0)); background-image: -ms-linear-gradient(top,rgba(255,255,255,0.4),rgba(255,255,255,0)); background-image: linear-gradient(top,rgba(255,255,255,0.4),rgba(255,255,255,0));}
+.task_tab .tabs .tab.this { background: rgba(255,255,255,0); background-image: -webkit-linear-gradient(top,rgba(255,255,255,0.6),rgba(255,255,255,0)); background-image: -moz-linear-gradient(top,rgba(255,255,255,0.6),rgba(255,255,255,0)); background-image: -o-linear-gradient(top,rgba(255,255,255,0.6),rgba(255,255,255,0)); background-image: -ms-linear-gradient(top,rgba(255,255,255,0.6),rgba(255,255,255,0)); background-image: linear-gradient(top,rgba(255,255,255,0.6),rgba(255,255,255,0));}
+.tasktab-dragging { position: absolute; z-index: 999; height: 30px; width: 110px; line-height: 30px; border: 1px solid #aaa; box-shadow: 0 0 6px #aaa; padding-left: 10px; overflow: hidden; font-size: 13px; border-radius: 3px; cursor: default; color: #444; background: rgba(255,255,255,0); background-image: -webkit-linear-gradient(top,rgba(255,255,255,0.6),rgba(255,255,255,0)); background-image: -moz-linear-gradient(top,rgba(255,255,255,0.6),rgba(255,255,255,0)); background-image: -o-linear-gradient(top,rgba(255,255,255,0.6),rgba(255,255,255,0)); background-image: -ms-linear-gradient(top,rgba(255,255,255,0.6),rgba(255,255,255,0)); background-image: linear-gradient(top,rgba(255,255,255,0.6),rgba(255,255,255,0));}
 .ztree { padding: 0; margin: 0px; margin-top: 10px; font-size: 12px;}
 .ztree li { padding: 0; margin: 0; list-style: none; text-align: left; white-space: nowrap; outline: 0; line-height: 23px;}
 .ztree li ul { margin: 0; padding: 0;}

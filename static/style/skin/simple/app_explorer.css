@@ -11,7 +11,7 @@ body { font-size: 13px; padding: 0px; margin: 0px; font-family: "微软雅黑"; 
 .navbar .content { padding: 0px; line-height: 40px;}
 .navbar .content i { display: inline-block; padding-right: 10px; text-shadow: 0 0 1px; font-size: 1.1em;}
 .navbar .content a { display: block; text-decoration: none; color: #fff; padding: 0px 1.5em; -webkit-transition: all 0.2s; -moz-transition: all 0.2s; -o-transition: all 0.2s; -ms-transition: all 0.2s; transition: all 0.2s;}
-.navbar .content ul.dropmenu { list-style: none; padding: 0; margin: 0; padding: 5px 0 0px; position: absolute; top: 38px; z-index: 9999; background: #fff; color: #666; display: none; border: 1px solid #ddd; box-shadow: 0 2px 5px #ccc; border-top: none;}
+.navbar .content ul.dropmenu { list-style: none; padding: 0; margin: 0; padding: 5px 0 10px; height: auto; position: absolute; top: 38px; z-index: 9999; background: #fff; color: #666; display: none; border: 1px solid #ddd; box-shadow: 0 2px 5px #ccc; border-top: none;}
 .navbar .content ul.dropmenu li { height: 30px; margin: 0; padding: 0; line-height: 30px;}
 .navbar .content ul.dropmenu li a { margin: 0; padding-left: 30px; width: 100px; border: none; color: #666;}
 .navbar .content ul.dropmenu li a:hover { background: #ddd; color: #000;}
@@ -23,7 +23,6 @@ body { font-size: 13px; padding: 0px; margin: 0px; font-family: "微软雅黑"; 
 .navbar .content .top_right a { border: none;}
 .navbar .content .top_right .topbar_user { margin-top: 5px; line-height: 32px; -webkit-transition: none; -moz-transition: none; -o-transition: none; -ms-transition: none; transition: none;}
 .navbar .content .top_right.this .topbar_user { color: #555; background: #fff; border: 1px solid #ddd; margin-top: 5px;}
-.navbar .content .top_right ul.dropmenu { right: 10px; height: 180px;}
 textarea,input,pre { -khtml-user-select: auto; -webkit-user-select: auto; -moz-user-select: auto; -ms-user-select: auto; -o-user-select: auto; user-select: auto;}
 body { -khtml-user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; -o-user-select: none; user-select: none;}
 .task_tab { position: fixed; bottom: 1px; left: 0; width: 100%; height: 30px; margin-left: 50px;}

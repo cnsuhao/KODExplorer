@@ -19,7 +19,7 @@ define('USER',BASIC_PATH.'data/User/');				//
 define('DESKTOP',BASIC_PATH.'data/User/desktop/');	//
 define('STATIC_PATH','./static/');					//静态文件目录
 //define('STATIC_PATH','http://static.kalcaddle.com/static/');
-//define('STATIC_LESS','less');	
+define('STATIC_LESS','css');	
 
 include(CORER_DIR.'Application.class.php');
 include(CORER_DIR.'Controller.class.php');

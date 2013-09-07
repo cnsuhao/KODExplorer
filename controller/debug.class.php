@@ -53,6 +53,7 @@ class debug extends Controller{
 		echo '<h1>开始导出！</h1><hr/><h3>开始复制文件</h3><hr/>';flush();
 		$this->_fileInit();
 		echo '复制成功！<br/><h3>开始编译less</h3><hr/>';flush();
+		$this->less(BASIC_PATH);//编译到skin目录
 		$this->less($this->path_to.'/');
 		echo '编译成功！<br/><h3>删除开发相关文件</h3><hr/>';flush();
 		$this->_remove();

@@ -14,7 +14,7 @@ $config['themeall']="default=淡蓝(默认)/simple=简洁白/metro=metro风格";
 $config['theme']="metro";		// 文件列表主题(规则，前面为css目录，后面为显示描述)
 
 $config['codethemeall']="default/eclipse/github/monokai/solarized/ambiance/cobalt/dark";
-$config['codetheme']="monokai";	//代码编辑器主题
+$config['codetheme']="eclipse";	//代码编辑器主题
 
 $config['wallall']="1=宇宙/2=炫彩紫/3=简约绿/4=生如夏花/5=夕阳草地/6=如梦如幻/7=草原/8=紫光/9=科技时代/10=旧时光/11=夕阳/12=科技方块/13=眩光紫/14=苹果/15=青草绿/16=梦幻落叶";
 $config['wall']="1";//音乐播放主题
