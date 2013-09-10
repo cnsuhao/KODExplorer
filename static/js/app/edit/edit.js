@@ -549,12 +549,17 @@ Main.Editor = (function(){
 			});
 		}
 	};
+	var setTheme = function(thistheme){
+		var url = static_path+'style/skin/'+thistheme+'/app_code_edit.css';
+		$("#link_css_list").attr("href",url);
+	};
 	//----------------------------------------
 	return {
 		select:select,
 		remove:removeSafe,
 		save:save,
 		saveall:saveall,
+		setTheme:setTheme,
 		resetTheme:resetTheme,
 		add:function(filename){
 			var id   = editorFind(filename,'filename');

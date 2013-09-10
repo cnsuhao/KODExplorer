@@ -10,5 +10,5 @@
 </div>
 
 <div class="savebox">
-<a onclick="tools();" href="javascript:void(0);" class="save button">保存</a>
+<a onclick="Setting.tools();" href="javascript:void(0);" class="save button">保存</a>
 </div>

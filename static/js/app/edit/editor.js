@@ -83,9 +83,9 @@ Main.UI = (function() {
 			});
 		},
 		setTheme:function(thistheme){
-			//window.top.location.reload();
 			var url = static_path+'style/skin/'+thistheme+'/app_editor.css';
 			$("#link_css_list").attr("href",url);
+			FrameCall.doFunction('OpenopenEditor','Main.Editor.setTheme','"'+thistheme+'"');
 		},
 		//编辑器全屏
 		editorFull:function(){

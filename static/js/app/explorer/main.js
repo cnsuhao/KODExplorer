@@ -536,6 +536,7 @@ Main.UI = (function() {
 			//window.top.location.reload();
 			var url = static_path+'style/skin/'+thistheme+'/app_explorer.css';
 			$("#link_css_list").attr("href",url);
+			FrameCall.doFunction('OpenopenEditor','Main.Editor.setTheme','"'+thistheme+'"');
 		},
 		clearWindows:function(){//清除右键菜单，修改重命名状态
 			Main.RightMenu.hidden();

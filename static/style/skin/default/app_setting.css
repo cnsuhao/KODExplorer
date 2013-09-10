@@ -11,7 +11,7 @@ body { font-size: 13px; padding: 0px; margin: 0px; font-family: "微软雅黑"; 
 .navbar .content { padding: 0px; line-height: 40px;}
 .navbar .content i { display: inline-block; padding-right: 10px; text-shadow: 0 0 1px; font-size: 1.1em;}
 .navbar .content a { display: block; text-decoration: none; color: #fff; border: 1px solid #6fccf1; -webkit-transition: all 0.2s; -moz-transition: all 0.2s; -o-transition: all 0.2s; -ms-transition: all 0.2s; transition: all 0.2s; padding: 0px 1.5em; border-top: none; border-bottom: none;}
-.navbar .content ul.dropmenu { list-style: none; padding: 0; margin: 0; padding: 5px 0 10px; height: auto; position: absolute; top: 38px; z-index: 9999; background: #fff; color: #666; display: none; border: 1px solid #ddd; box-shadow: 0 2px 5px #ccc; border-top: none;}
+.navbar .content ul.dropmenu { list-style: none; padding: 0; margin: 0; padding: 5px 0 10px; height: auto; position: absolute; top: 38px; z-index: 9999; background: #fff; color: #666; display: none; border: 1px solid #ddd; box-shadow: 0 2px 5px #ccc; border-top: none; right: 10px;}
 .navbar .content ul.dropmenu li { height: 30px; margin: 0; padding: 0; line-height: 30px;}
 .navbar .content ul.dropmenu li a { margin: 0; padding-left: 30px; width: 100px; border: none; color: #666;}
 .navbar .content ul.dropmenu li a:hover { background: #ddd; color: #000;}

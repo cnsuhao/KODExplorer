@@ -27,6 +27,7 @@ http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	<?php } ?>
   </head>
   <script>
+    var static_path		= "<?php echo STATIC_PATH;?>";
 	var app_path		= "<?php echo APPHOST;?>";
 	var frist_file		= "<?php echo $_GET['filename'];?>";
 	var codetheme 		= "<?php echo $this->config['codetheme'];?>";

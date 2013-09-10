@@ -15,9 +15,37 @@ class debug extends Controller{
 		debug_out(HOST,WEB_ROOT,BASIC_PATH,APPHOST,$config,$_COOKIE,$_SESSION,$_SERVER);
     }
 
-	function less($basic){
+	function less(){	
+		header("Content-type: text/html; charset=utf-8");
+		ob_end_clean();
+		echo str_pad('',1024);
+		echo '<h3>开始编译less</h3><hr/>';flush();
+		$this->_less();
+		echo '成功！<br/>';flush();
+	}
+
+	function export(){	
+		header("Content-type: text/html; charset=utf-8");
+		ob_end_clean();			//在循环输出前，要关闭输出缓冲区   
+		echo str_pad('',1024);  //浏览器在接受输出一定长度内容之前不会显示缓冲输出
+
+		echo '<h1>开始导出！</h1><hr/><h3>开始编译less</h3><hr/>';flush();
+		$this->_less();
+		echo '编译成功！<br/><h3>开始复制文件</h3><hr/>';flush();
+		$this->_fileInit();
+		echo '复制成功！<br/><h3>删除开发相关文件</h3><hr/>';flush();
+		$this->_remove();
+		echo '删除成功！<br/><h3>开始替换模板种less相关内容</h3><hr/>';flush();
+		$this->_fileReplace();
+		echo '替换成功！<br/><h3>初始化配置文件</h3><hr/>';flush();
+		$this->_initConfig();
+		echo '更新成功！<br/><h1>导出处理完成！^_^</h1>';flush();
+	}
+	
+	//----------------------------	
+	function _less(){
 		load_class('lessc.inc');
-		$path		= $basic.'static/style/skin/';
+		$path		= BASIC_PATH.'static/style/skin/';
 		$app_theme	= array('default','metro','simple');
 		$app_less	= array(
 			'app_code_edit',
@@ -45,26 +73,6 @@ class debug extends Controller{
 			}
 		}
 	}
-
-	function export(){	
-		header("Content-type: text/html; charset=utf-8");
-		ob_end_clean();			//在循环输出前，要关闭输出缓冲区   
-		echo str_pad('',1024);  //浏览器在接受输出一定长度内容之前不会显示缓冲输出
-		echo '<h1>开始导出！</h1><hr/><h3>开始复制文件</h3><hr/>';flush();
-		$this->_fileInit();
-		echo '复制成功！<br/><h3>开始编译less</h3><hr/>';flush();
-		$this->less(BASIC_PATH);//编译到skin目录
-		$this->less($this->path_to.'/');
-		echo '编译成功！<br/><h3>删除开发相关文件</h3><hr/>';flush();
-		$this->_remove();
-		echo '删除成功！<br/><h3>开始替换模板种less相关内容</h3><hr/>';flush();
-		$this->_fileReplace();
-		echo '替换成功！<br/><h3>初始化配置文件</h3><hr/>';flush();
-		$this->_initConfig();
-		echo '更新成功！<br/><h1>导出处理完成！^_^</h1>';flush();
-	}
-	
-	//----------------------------	
 	function _fileInit(){		
 		mk_dir($this->path_to);
 		echo '<br/>新建文件夹成功，开始复制文件';flush();
