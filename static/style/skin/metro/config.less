@@ -1,64 +1,39 @@
-@blue:#0072C6;@blue_light:#4488F6;@blue_deep:darken(@blue_light,10%);
-@green:#008A17;@green_light:#03B3B2;
-@black:#000;@grey:#666;
-@purple:#8C0095;@purple_deep:#4617B4;
-@red:#DC4FAD;@pink:#DC4FAD;
-@orange:#FF8F32;@orange_deep:#D24726;
+@import "../../base.less";
+/*  5579BA  metro  */ 
 
-@tree_background:#f3f3f3;
+@blue:#5db2ff;
+@leaf:#03B3B2;
+@green:#008a17;
+@grey:#555;
+@purple:#8D3CC4;
+@pink:#DC4FAD;
+@orange:#FF8F32;
+
+/*replace_start_color*/
+@main_color:@blue;
+@nav_color:darken(@main_color,8%);
+@top_back:@main_color;
+@top_back_this:darken(@main_color,12%);
+@file_select_color:@main_color;
+/*replace_end_color*/
+
+/*replace_start*/
+@main_color:#5579BA;
+@nav_color:darken(@main_color,8%);
+@top_back:@main_color;
+@top_back_this:darken(@main_color,12%);
+@file_select_color:@main_color;
+/*replace_end*/
+
+
 @dialog_color:@file_select_color;
-//@dialog_color:#6bacf5;
-
-
-
-//@nav_color:#2b579a;#444
-@nav_color:#2b579a;
 @file_hover_color:darken(#FFE6B0,8%);
 @file_background2:lighten(#FFE6B0,8%);
-@file_select_color:@blue_light;
 @file_select_border:darken(@file_select_color,35%);
 
-
-/* 颜色微调【同样颜色灰度值调节】 */
-::-webkit-scrollbar-track-piece{background-color:#f5f5f5;border-left:1px solid #d2d2d2}
-::-webkit-scrollbar{width:12px;height:10px}
-::-webkit-scrollbar-thumb{background-color:#c2c2c2;background-clip:padding-box;border:1px solid #979797;min-height:28px}
-::-webkit-scrollbar-thumb:hover{border:1px solid #636363;background-color:#929292}
-body{font-size:13px;padding:0px;margin:0px;font-family:"微软雅黑";.user-select(none);}
-
-
-@navbar_height:40px;
-.navbar{
-	@back:#5579BA;
-	width:100%;height:(@navbar_height);color:#ddd;z-index:100;height: 40px !important;
-	background:@back;
-	position:fixed;box-shadow:0 -20px 50px #000;
-	.content{		
-		padding:0px;line-height:40px;
-		i{display: inline-block;padding-right: 10px;text-shadow:0 0 1px;font-size: 1.1em;}
-		a{display:block;text-decoration:none;color:#fff;border:1px solid lighten(@back,5%);margin-left: -1px;border-top:none;border-bottom: none;
-			.transition();padding:0px 1.5em;
-		}		
-		ul.dropmenu{list-style: none;padding: 0;margin: 0;padding: 5px 0 10px;height:auto;
-			position: absolute;top:38px;right: 10px;z-index: 9999;background: #fff;color: #666;
-			display: none;border: 1px solid #ddd;box-shadow: 0 2px 5px #ccc;border-top: none;
-			li{height: 30px;margin: 0;padding: 0;line-height: 30px;}
-			li a{margin: 0; padding-left: 30px;width:100px;border: none;color: #666;	
-				&:hover{background:#ddd;color:#000;};
-			}
-		}
-		.top_left{			
-			a{	float:left;
-				&:hover,&.this{background:#75A1F0;}
-				&.title{font-size:18px;font-weight:800;width:151px;padding-left:49px;padding-right: 0;}
-				&.title:hover{background:none;}
-			}
-		}
-		.top_right{
-			a{border: none;}
-			.topbar_user{margin-top: 5px;line-height: 32px;.transition(none);}
-			&.this .topbar_user{color:#555;background: #fff;border: 1px solid #ddd;margin-top: 5px;}	
-			float:right;margin-right: 10px;
-		}		
-	}
-}
+@tree_background:#f3f3f3;
+.topback{};
+.topback_this{background:lighten(@top_back_this,18%);};
+@import "../common.less";
+@import "./button.less";
+@import "./dialog.less";

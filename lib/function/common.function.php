@@ -1,20 +1,15 @@
 <?php
-
-/**
- * 检查常量是否定义过,参数必须为包含常量名的字符串
- * @param string $name 
- * @return string value
- */
-function D($name)
-{
-	return defined($name) ? constant($name) : null ;
-} 
+/*
+* @link http://www.kalcaddle.com/
+* @author warlee | e-mail:kalcaddle@qq.com
+* @copyright warlee 2014.(Shanghai)Co.,Ltd
+* @license http://kalcaddle.com/tools/licenses/license.txt
+*/
 
 /**
  * 加载类，从class目录；controller；model目录中寻找class
  */
-function _autoload($className)
-{
+function _autoload($className){
 	if (file_exists(CLASS_DIR . strtolower($className) . '.class.php')) {
 		require_once(CLASS_DIR . strtolower($className) . '.class.php');
 	} else if (file_exists(CONTROLLER_DIR . strtolower($className) . '.class.php')) {
@@ -28,8 +23,7 @@ function _autoload($className)
 /**
  * 生产model对象
  */
-function init_model($model_name)
-{
+function init_model($model_name){
 	if (!class_exists($model_name.'Model')) {
 		$model_file = MODEL_DIR . strtolower($model_name) . 'Model.class.php';
 		require_once ($model_file);
@@ -46,8 +40,7 @@ function init_model($model_name)
 /**
  * 生产controller对象
  */
-function init_controller($controller_name)
-{
+function init_controller($controller_name){
 	if (!class_exists($controller_name)) {
 		$model_file = CONTROLLER_DIR . strtolower($controller_name) . '.class.php';
 		if(!is_file($model_file)){
@@ -83,29 +76,32 @@ function load_function($function){
 		pr($filename.' is not exist',1);
 	}
 }
-
-
 /**
  * 文本字符串转换
  */
-function mystr($str)
-{
+function mystr($str){
 	$from = array("\r\n", " ");
 	$to = array("<br/>", "&nbsp");
 	return str_replace($from, $to, $str);
 } 
 
 // 清除多余空格和回车字符
-function strip($str)
-{
+function strip($str){
 	return preg_replace('!\s+!', '', $str);
 } 
 
 /**
+ * 获取精确时间
+ */
+function mtime(){
+	$t= explode(' ',microtime());
+	$time = $t[0]+$t[1];
+	return $time;
+}
+/**
  * 过滤HTML
  */
-function clear_html($HTML, $br = true)
-{
+function clear_html($HTML, $br = true){
 	$HTML = htmlspecialchars(trim($HTML));
 	$HTML = str_replace("\t", ' ', $HTML);
 	if ($br) {
@@ -121,8 +117,7 @@ function clear_html($HTML, $br = true)
  * @param  $obj 要转换的数据 可能是数组 也可能是个对象 还可能是一般数据类型
  * @return array || 一般数据类型
  */
-function obj2array($obj)
-{
+function obj2array($obj){
 	if (is_array($obj)) {
 		foreach($obj as &$value) {
 			$value = obj2array($value);
@@ -142,8 +137,7 @@ function obj2array($obj)
  * @param char $pretime 
  * @return char 
  */
-function spend_time(&$pretime)
-{
+function spend_time(&$pretime){
 	$now = microtime(1);
 	$spend = round($now - $pretime, 5);
 	$pretime = $now;
@@ -155,8 +149,7 @@ function spend_time(&$pretime)
  * 
  * @return float 
  */
-function microtime_float()
-{
+function microtime_float(){
 	list($usec, $sec) = explode(' ', microtime());
 	return ((float)$usec + (float)$sec);
 }
@@ -165,8 +158,7 @@ function microtime_float()
  * @param  $num 
  * @param  $root 
  */
-function croot($num, $root = 3)
-{
+function croot($num, $root = 3){
 	$root = intval($root);
 	if (!$root) {
 		return $num;
@@ -174,50 +166,7 @@ function croot($num, $root = 3)
 	return exp(log($num) / $root);
 } 
 
-/**
- * 去掉魔术引用,格式化字符串
- */
-if (! function_exists('stripslashes_deep')) {
-	function stripslashes_deep($value)
-	{
-		return is_array($value) ? array_map('stripslashes_deep', $value) : stripslashes($value);
-	} 
-} 
-/**
- * 格式化字符串;
- */
-if (! function_exists('addslashes_deep')) {
-	function addslashes_deep($value)
-	{
-		return is_array($value) ? array_map('addslashes_deep', $value) : addslashes($value);
-	} 
-} 
-
-/**
- * 递归的给数组执行 htmlspecialchars()
- */
-if (!function_exists('htmlspecialchars_deep')) {
-	function htmlspecialchars_deep ($arr)
-	{
-		if (is_array($arr)) {
-			foreach ($arr as &$val) {
-				$val = htmlspecialchars_deep($val) ;
-			} 
-		} else {
-			$arr = htmlspecialchars($arr) ;
-		} 
-		return $arr ;
-	} 
-} 
-if (!function_exists("htmlspecialchars_decode")) {
-	function htmlspecialchars_decode($string, $quote_style = ENT_COMPAT)
-	{
-		return strtr($string, array_flip(get_html_translation_table(HTML_SPECIALCHARS, $quote_style)));
-	} 
-}
-
-function add_magic_quotes($array)
-{
+function add_magic_quotes($array){
 	foreach ((array) $array as $k => $v) {
 		if (is_array($v)) {
 			$array[$k] = add_magic_quotes($v);
@@ -228,8 +177,7 @@ function add_magic_quotes($array)
 	return $array;
 } 
 // 字符串加转义
-function add_slashes($string)
-{
+function add_slashes($string){
 	if (!$GLOBALS['magic_quotes_gpc']) {
 		if (is_array($string)) {
 			foreach($string as $key => $val) {
@@ -246,8 +194,7 @@ function add_slashes($string)
  * hex to binary
  */
 if (!function_exists('hex2bin')) {
-	function hex2bin($hexdata)
-	{
+	function hex2bin($hexdata)	{
 		return pack('H*', $hexdata);
 	}
 }
@@ -259,12 +206,10 @@ if (!function_exists('hex2bin')) {
  * @param  $type 升序降序
  * @return array $array = array(
  * array('name'=>'手机','brand'=>'诺基亚','price'=>1050),
- * array('name'=>'笔记本电脑','brand'=>'lenovo','price'=>4300),
  * array('name'=>'手表','brand'=>'卡西欧','price'=>960)
  * );$out = array_sort($array,'price');
  */
-function array_sort($arr, $keys, $type = 'asc')
-{
+function array_sort($arr, $keys, $type = 'asc'){
 	$keysvalue = $new_array = array();
 	foreach ($arr as $k => $v) {
 		$keysvalue[$k] = $v[$keys];
@@ -288,8 +233,7 @@ function array_sort($arr, $keys, $type = 'asc')
  * @param  $callback 
  * @return mixed 
  */
-function array_try($array, $callback)
-{
+function array_try($array, $callback){
 	if (!$array || !$callback) {
 		return false;
 	} 
@@ -310,8 +254,7 @@ function array_try($array, $callback)
 	return false;
 } 
 // 求多个数组的并集
-function array_union()
-{
+function array_union(){
 	$argsCount = func_num_args();
 	if ($argsCount < 2) {
 		return false;
@@ -336,21 +279,21 @@ function array_get($arr,$index){
    }
 }
 
-
 /**
  * 打包返回AJAX请求的数据
  * @params {int} 返回状态码， 通常0表示正常
  * @params {array} 返回的数据集合
  */
-function ajax_return($result, $data)
-{
-	@header('Content-Type: application/json');
-	if (is_array($data)) {
-		$data = json_encode($data, true);
-	} 
-	echo json_encode(array('result' => $result, 'data' => $data), true);
+function show_json($data,$code = true,$info=''){
+	$use_time = mtime() - $GLOBALS['config']['app_startTime'];
+	$result = array('code' => $code,'use_time'=>$use_time,'data' => $data);
+	if ($info != '') {
+		$result['info'] = $info;
+	}
+	header('Content-Type: application/json; charset=utf-8');
+	echo json_encode($result);
+	exit;
 } 
-
 
 /**
  * 简单模版转换，用于根据配置获取列表：
@@ -362,8 +305,7 @@ function ajax_return($result, $data)
  * $tpl="<li class='list {this}' theme='{0}'>{1}_{2}</li>\n";
  * echo getTplList('|','=',$arr,$tpl,'mac'),'<br/>';
  */
-function getTplList($cute1, $cute2, $arraylist, $tpl,$this,$this_str='')
-{
+function getTplList($cute1, $cute2, $arraylist, $tpl,$this,$this_str=''){
 	$list = explode($cute1, $arraylist);
 	if ($this_str == '') $this_str ="this";
 	$html = '';
@@ -384,13 +326,24 @@ function getTplList($cute1, $cute2, $arraylist, $tpl,$this,$this_str='')
 	} 
 	return $html;
 } 
+
+//获取当前url地址
+function get_url() {
+	$sys_protocal = isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] 
+					== '443' ? 'https://' : 'http://';
+	$php_self   = $_SERVER['PHP_SELF'] ? $_SERVER['PHP_SELF'] : $_SERVER['SCRIPT_NAME'];
+	$path_info  = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '';
+	$relate_url = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : 
+				$php_self.(isset($_SERVER['QUERY_STRING']) ? '?'.$_SERVER['QUERY_STRING'] : $path_info);
+	return $sys_protocal.(isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '').$relate_url;
+}
+
 /**
  * 去掉HTML代码中的HTML标签，返回纯文本
  * @param string $document 待处理的字符串
  * @return string 
  */
-function html2txt($document)
-{
+function html2txt($document){
 	$search = array ("'<script[^>]*?>.*?</script>'si", // 去掉 javascript
 		"'<[\/\!]*?[^<>]*?>'si", // 去掉 HTML 标记
 		"'([\r\n])[\s]+'", // 去掉空白字符
@@ -422,46 +375,16 @@ function html2txt($document)
 } 
 
 // 获取内容第一条
-function match($content, $preg)
-{
+function match($content, $preg){
 	$preg = "/" . $preg . "/isU";
 	preg_match($preg, $content, $result);
 	return $result[1];
 } 
 // 获取内容,获取一个页面若干信息.结果在 1,2,3……中
-function match_all($content, $preg)
-{
+function match_all($content, $preg){
 	$preg = "/" . $preg . "/isU";
 	preg_match_all($preg, $content, $result);
 	return $result;
-} 
-
-/**
- * 字符串截取，支持中文和其他编码
- * @param string $str 需要转换的字符串
- * @param string $start 开始位置
- * @param string $length 截取长度
- * @param string $charset 编码格式
- * @param string $suffix 截断显示字符
- * @return string 
- */
-function m_substr($str, $start = 0, $length, $charset = "utf-8", $suffix = true)
-{
-	if (function_exists("mb_substr"))
-		return mb_substr($str, $start, $length, $charset);
-	elseif (function_exists('iconv_substr')) {
-		return iconv_substr($str, $start, $length, $charset);
-	} 
-	$re['utf-8'] = "/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xff][\x80-\xbf]{3}/";
-	$re['gb2312'] = "/[\x01-\x7f]|[\xb0-\xf7][\xa0-\xfe]/";
-	$re['gbk'] = "/[\x01-\x7f]|[\x81-\xfe][\x40-\xfe]/";
-	$re['big5'] = "/[\x01-\x7f]|[\x81-\xfe]([\x40-\x7e]|\xa1-\xfe])/";
-	preg_match_all($re[$charset], $str, $match);
-	$slice = join("", array_slice($match[0], $start, $length));
-	if ($suffix) {
-		return $slice . "…";
-	} 
-	return $slice;
 } 
 
 /**
@@ -472,8 +395,7 @@ function m_substr($str, $start = 0, $length, $charset = "utf-8", $suffix = true)
  * @param string $dot 
  * @return string 
  */
-function get_utf8_str($string, $length, $dot = '...')
-{
+function get_utf8_str($string, $length, $dot = '...'){
 	if (strlen($string) <= $length) return $string;
 
 	$strcut = '';
@@ -531,8 +453,7 @@ function get_utf8_str($string, $length, $dot = '...')
  * @param string $suffix 截断显示字符
  * @return string 
  */
-function msubstr($str, $start = 0, $length, $charset = "utf-8", $suffix = true)
-{
+function msubstr($str, $start = 0, $length, $charset = "utf-8", $suffix = true){
 	if (function_exists("mb_substr")) {
 		$i_str_len = mb_strlen($str);
 		$s_sub_str = mb_substr($str, $start, $length, $charset);
@@ -552,19 +473,8 @@ function msubstr($str, $start = 0, $length, $charset = "utf-8", $suffix = true)
 	if ($suffix) return $slice . "…";
 	return $slice;
 } 
-// 高亮关键字
-function height_color($Content, $KeyWords, $Num = '')
-{
-	$HighLightKeyWords = '<b style="font-weight:800;color:f44;">' . $KeyWords . '</b>';
-	$Content = str_replace($KeyWords, $HighLightKeyWords, $Content);
-	if (!empty($Num)) {
-		$Content = msubstr($Content, $Num);
-	} 
-	return $Content;
-} 
 
-function web2wap(&$content)
-{
+function web2wap(&$content){
 	$search = array ("/<img[^>]+src=\"([^\">]+)\"[^>]+>/siU",
 		"/<a[^>]+href=\"([^\">]+)\"[^>]*>(.*)<\/a>/siU",
 		"'<br[^>]*>'si",
@@ -599,8 +509,7 @@ function web2wap(&$content)
  * 获取变量的名字
  * eg hello="123" 获取ss字符串
  */
-function get_var_name(&$aVar)
-{
+function get_var_name(&$aVar){
 	foreach($GLOBALS as $key => $var) {
 		if ($aVar == $GLOBALS[$key] && $key != "argc") {
 			return $key;
@@ -614,8 +523,7 @@ function get_var_name(&$aVar)
  * @param mixed $var 
  * @param boolean $exit 
  */
-function pr($var, $exit = false)
-{
+function pr($var, $exit = false){
 	ob_start();
 	$style = '<style>
 	pre#debug{margin:10px;font-size:14px;color:#222;font-family:Consolas ;line-height:1.2em;background:#f6f6f6;border-left:5px solid #444;padding:5px;width:95%;word-break:break-all;}
@@ -636,8 +544,7 @@ function pr($var, $exit = false)
 	} else {
 		echo var_dump($var);
 	} 
-	$out = ob_get_clean(); //缓冲输出给$out 变量
-	
+	$out = ob_get_clean(); //缓冲输出给$out 变量	
 	$out = preg_replace('/"(.*)"/', '<b id="debug_var_str">"' . '\\1' . '"</b>', $out); //高亮字符串变量
 	$out = preg_replace('/=\>(.*)/', '=>' . '<b id="debug_str">' . '\\1' . '</b>', $out); //高亮=>后面的值
 	$out = preg_replace('/\[(.*)\]/', '<b id="debug_tag1">[</b><b id="debug_var">' . '\\1' . '</b><b id="debug_tag1">]</b>', $out); //高亮变量
@@ -662,8 +569,7 @@ function pr($var, $exit = false)
  * 
  * @return echo 
  */
-function debug_out()
-{
+function debug_out(){
 	$avg_num = func_num_args();
 	$avg_list = func_get_args();
 	ob_start();
@@ -682,8 +588,7 @@ function debug_out()
  * @param  $to 上限
  * @return unknown_type 
  */
-function rand_from_to($from, $to)
-{
+function rand_from_to($from, $to){
 	$size = $from - $to; //数值区间
 	$max = 30000; //最大
 	if ($size < $max) {
@@ -706,25 +611,24 @@ function rand_from_to($from, $to)
  * @param string $addChars 额外字符
  * @return string 
  */
-function rand_string($len = 4, $type = '', $addChars = '')
-{
+function rand_string($len = 4, $type = ''){
 	$str = '';
 	switch ($type) {
 		case 0://大小写中英文
-			$chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' . $addChars;
+			$chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 			break;
 		case 1://数字
 			$chars = str_repeat('0123456789', 3);
 			break;
 		case 2://大写字母
-			$chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' . $addChars;
+			$chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 			break;
 		case 3://小写字母
-			$chars = 'abcdefghijklmnopqrstuvwxyz' . $addChars;
+			$chars = 'abcdefghijklmnopqrstuvwxyz';
 			break;
 		default: 
 			// 默认去掉了容易混淆的字符oOLl和数字01，要添加请使用addChars参数
-			$chars = 'ABCDEFGHIJKMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789' . $addChars;
+			$chars = 'ABCDEFGHIJKMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789';
 			break;
 	} 
 	if ($len > 10) { // 位数过长重复字符串一定次数
@@ -742,52 +646,18 @@ function rand_string($len = 4, $type = '', $addChars = '')
 	return $str;
 } 
 
-
-// -----------------加密解密-------------------
 /**
- * MD5加密密码
+ * 生成自动密码
  */
-function encrypt_md5($password)
-{
-	$encryptkeys = array('0' => '!',
-		'1' => '*',
-		'3' => '%',
-		'4' => '(',
-		'5' => '#',
-		'6' => ')',
-		'7' => '+',
-		'8' => '_',
-		'9' => '&',
-		'a' => '{',
-		'c' => '}',
-		'd' => 'D',
-		'e' => '`',
-		'g' => '"',
-		'i' => '-',
-		'k' => '=',
-		'm' => ':',
-		'n' => '<',
-		'o' => ';',
-		'p' => '>',
-		'q' => ',',
-		's' => '~',
-		't' => ' ',
-		'u' => 'U',
-		'v' => 'V',
-		'w' => ']',
-		'y' => '?',
-		'z' => '['
-		);
-	$encryptkeysFlip = array_flip($encryptkeys);
-	for($i = 0; $i < strlen($password); $i ++) {
-		if ($encryptkeys[$password{$i}]) {
-			$password{$i} = $encryptkeys[$password{$i}];
-		} elseif ($encryptkeysFlip[$password{$i}]) {
-			$password{$i} = $encryptkeysFlip[$password{$i}];
-		} 
-	} 
-	return md5($password);
-} 
+function make_password(){
+	$temp = '0123456789abcdefghijklmnopqrstuvwxyz'.
+			'ABCDEFGHIJKMNPQRSTUVWXYZ~!@#$^*)_+}{}[]|":;,.'.time();
+	for($i=0;$i<10;$i++){
+		$temp = str_shuffle($temp.substr($temp,-5));
+	}
+	return md5($temp);
+}
+
 
 /**
  * php DES解密函数
@@ -796,8 +666,7 @@ function encrypt_md5($password)
  * @param string $encrypted 加密字符串
  * @return string 
  */
-function des_decode($key, $encrypted)
-{
+function des_decode($key, $encrypted){
 	$encrypted = base64_decode($encrypted);
 	$td = mcrypt_module_open(MCRYPT_DES, '', MCRYPT_MODE_CBC, ''); //使用MCRYPT_DES算法,cbc模式
 	$iv = mcrypt_create_iv(mcrypt_enc_get_iv_size($td), MCRYPT_RAND);
@@ -817,8 +686,7 @@ function des_decode($key, $encrypted)
  * @param string $text 字符串
  * @return string 
  */
-function des_encode($key, $text)
-{
+function des_encode($key, $text){
 	$y = pkcs5_pad($text);
 	$td = mcrypt_module_open(MCRYPT_DES, '', MCRYPT_MODE_CBC, ''); //使用MCRYPT_DES算法,cbc模式
 	$ks = mcrypt_enc_get_key_size($td);
@@ -829,149 +697,13 @@ function des_encode($key, $text)
 	mcrypt_module_close($td);
 	return base64_encode($encrypted);
 } 
-function pkcs5_unpad($text)
-{
+function pkcs5_unpad($text){
 	$pad = ord($text{strlen($text)-1});
 	if ($pad > strlen($text)) return $text;
 	if (strspn($text, chr($pad), strlen($text) - $pad) != $pad) return $text;
 	return substr($text, 0, -1 * $pad);
 } 
-function pkcs5_pad($text, $block = 8)
-{
+function pkcs5_pad($text, $block = 8){
 	$pad = $block - (strlen($text) % $block);
 	return $text . str_repeat(chr($pad), $pad);
-} 
-
-
-// -----------------编码转换-------------------
-/**
- * 通过BOM判断  0xFF,0xFE。
-原理很简单，因为gb2312/gbk是中文两字节，这两个字节是有取值范围的，
-而utf-8中汉字是三字节，同样每个字节也有取值范围。
-而英文不 管在何种编码情况下，都是小于128，只占用一个字节（全角除外）。
-如果是文件形式的编码检查，还可以直接check utf-8的BOM信息。
-这个函数是用来对字符串进行检查和转码的。
- */
-function str_to_utf8($string, $outEncoding = 'UTF-8')
-{
-	$encoding = "UTF-8";
-	for($i = 0;$i < strlen($string);$i++) {
-		if (ord($string{$i}) < 128)
-			continue;
-		if ((ord($string{$i})&224) == 224) {
-			$char = $string{++$i}; //第一个字节判断通过      
-			if ((ord($char)&128) == 128) {
-				// 第二个字节判断通过
-				$char = $string{++$i};
-				if ((ord($char)&128) == 128) {
-					$encoding = "UTF-8";
-					break;
-				} 
-			} 
-		} 
-		if ((ord($string{$i})&192) == 192) {
-			// 第一个字节判断通过
-			$char = $string{++$i};
-			if ((ord($char)&128) == 128) {
-				// 第二个字节判断通过
-				$encoding = "GB2312";
-				break;
-			} 
-		} 
-	} 
-	if (strtoupper($encoding) == strtoupper($outEncoding))
-		return $string;
-	else
-		return iconv($encoding, $outEncoding, $string);
-} 
-
-/**
- * GBK到Unicode编码(character reference)转换函数
- * 
- * @param string $str 待转换的字符串
- * @return string 
- * @access public 
- */
-function gb_to_unicode($gb)
-{
-	if (!trim($gb))
-		return $gb;
-	$filename = INCLUDE_PATH . "lib/encoder/gb2312.txt";
-	$tmp = file($filename);
-	$codetable = array();
-	while (list($key, $value) = each($tmp))
-	$codetable[hexdec(substr($value, 0, 6))] = substr($value, 9, 4);
-	$utf = "";
-	while ($gb) {
-		if (ord(substr($gb, 0, 1)) > 127) {
-			$that = substr($gb, 0, 2);
-			$gb = substr($gb, 2, strlen($gb));
-			$utf .= "&#x" . $codetable[hexdec(bin2hex($that)) - 0x8080] . ";";
-		} else {
-			// $gb=substr($gb,1,strlen($gb));
-			// $utf.=substr($gb,0,1);
-			$utf .= substr($gb, 0, 1);
-			$gb = substr($gb, 1, strlen($gb));
-		} 
-	} 
-	return $utf;
-} 
-
-// 获取操作系统信息
-function getOS ()
-{
-	$agent = $_SERVER['HTTP_USER_AGENT'];
-	$os = false;
-	if (eregi('win', $agent) && strpos($agent, '95')) {
-		$os = 'Windows 95';
-	} else if (eregi('win 9x', $agent) && strpos($agent, '4.90')) {
-		$os = 'Windows ME';
-	} else if (eregi('win', $agent) && ereg('98', $agent)) {
-		$os = 'Windows 98';
-	} else if (eregi('win', $agent) && eregi('nt 5.1', $agent)) {
-		$os = 'Windows XP';
-	} else if (eregi('win', $agent) && eregi('nt 5', $agent)) {
-		$os = 'Windows 2000';
-	} else if (eregi('win', $agent) && eregi('nt', $agent)) {
-		$os = 'Windows NT';
-	} else if (eregi('win', $agent) && ereg('32', $agent)) {
-		$os = 'Windows 32';
-	} else if (eregi('linux', $agent)) {
-		$os = 'Linux';
-	} else if (eregi('unix', $agent)) {
-		$os = 'Unix';
-	} else if (eregi('sun', $agent) && eregi('os', $agent)) {
-		$os = 'SunOS';
-	} else if (eregi('ibm', $agent) && eregi('os', $agent)) {
-		$os = 'IBM OS/2';
-	} else if (eregi('Mac', $agent) && eregi('PC', $agent)) {
-		$os = 'Macintosh';
-	} else if (eregi('PowerPC', $agent)) {
-		$os = 'PowerPC';
-	} else if (eregi('AIX', $agent)) {
-		$os = 'AIX';
-	} else if (eregi('HPUX', $agent)) {
-		$os = 'HPUX';
-	} else if (eregi('NetBSD', $agent)) {
-		$os = 'NetBSD';
-	} else if (eregi('BSD', $agent)) {
-		$os = 'BSD';
-	} else if (ereg('OSF1', $agent)) {
-		$os = 'OSF1';
-	} else if (ereg('IRIX', $agent)) {
-		$os = 'IRIX';
-	} else if (eregi('FreeBSD', $agent)) {
-		$os = 'FreeBSD';
-	} else if (eregi('teleport', $agent)) {
-		$os = 'teleport';
-	} else if (eregi('flashget', $agent)) {
-		$os = 'flashget';
-	} else if (eregi('webzip', $agent)) {
-		$os = 'webzip';
-	} else if (eregi('offline', $agent)) {
-		$os = 'offline';
-	} else {
-		$os = 'Unknown';
-	} 
-	return $os;
 } 

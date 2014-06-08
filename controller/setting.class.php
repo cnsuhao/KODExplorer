@@ -1,10 +1,18 @@
 <?php 
+/*
+* @link http://www.kalcaddle.com/
+* @author warlee | e-mail:kalcaddle@qq.com
+* @copyright warlee 2014.(Shanghai)Co.,Ltd
+* @license http://kalcaddle.com/tools/licenses/license.txt
+*/
+
 class setting extends Controller{
     /**
      * 构造函数
      */
+    private $sql;
     function __construct() {
-        parent::__construct();	
+        parent::__construct();
     }
 
     /**
@@ -23,54 +31,26 @@ class setting extends Controller{
     	$this->display($this->in['slider'].'.php');
     }
 
+    /**
+     * 参数设置
+     * 可以同时修改多个：key=a,b,c&value=1,2,3
+     */
+    public function set(){
+        $key   = $this->in['k'];
+        $value = $this->in['v'];
+        if ($key !='' && $value != '') {
+            $conf = $this->config['user'];
+            $arr_k = explode(',', $key);
+            $arr_v = explode(',',$value);
+            $num = count($arr_k);
 
-    //图标显示
-    public function setIcon() {
-        update_config($this->config['seting_file'],"config['list']","icon");  
-    }
-    //列表显示
-    public function setList() {
-        update_config($this->config['seting_file'],"config['list']","list");  
-    }
-    //排序依靠字段，或升降方式
-    public function setListSort() {
-        update_config($this->config['seting_file'],
-            "config['list_sort_field']",$this->in['field']);
-        update_config($this->config['seting_file'],
-            "config['list_sort_order']",$this->in['order']);
-    }
-    //播放器设置
-    public function setPlayer() {
-        $musictheme=$this->in['musictheme'];
-        $movietheme=$this->in['movietheme'];
-        if ($musictheme!='' && $movietheme!=''){
-            update_config($this->config['seting_file'],"config['musictheme']",$musictheme);
-            update_config($this->config['seting_file'],"config['movietheme']",$movietheme);
-            echo '{state:"succeed",msg:"配置修改成功!"}';
-        }else {
-            echo '{state:"warning",msg:"不能为空!"}';
-        }   
-    }
-    //设置壁纸
-    public function setWall() {
-        update_config($this->config['seting_file'],"config['wall']",$this->in['wall']);
-        echo '{state:"warning",msg:"配置修改成功!"}';
-    }
-    //设置主题
-    public function setTheme() {
-        $theme = $this->in['theme'];
-        if ($theme!=''){
-            update_config($this->config['seting_file'],"config['theme']",$theme ); 
-        }
-    }
-    //设置代码高亮
-    public function setCodetheme() {
-        $theme = $this->in['theme'];
-        if ($theme!=''){
-            update_config($this->config['seting_file'],"config['codetheme']",$theme); 
-            echo '{state:"succeed",msg:"配置修改成功!"}';
-        }else {
-            echo '{state:"warning",msg:"不能为空!"}';
+            for ($i=0; $i < $num; $i++) { 
+                $conf[$arr_k[$i]] = $arr_v[$i];
+            }
+            fileCache::save($this->config['user_seting_file'],$conf);
+            show_json($this->L["setting_success"]);
+        }else{
+            show_json($this->L['error'],false);
         }
     }
 }

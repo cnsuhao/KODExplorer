@@ -2,17 +2,17 @@
     padding:0;margin:0px;margin-top:10px;font-size:12px;    
     li {
         padding:0; margin:0; list-style:none;text-align:left; 
-        white-space:nowrap; outline:0;line-height:23px;
+        white-space:nowrap; outline:0;line-height:20px;
         ul{margin:0; padding:0;}
         &.level0{margin-bottom:5px;}
         span{
-            line-height:20px;width:100%;
+            width:100%;
             &.button{
-                line-height:0; margin:0;display: inline-block; vertical-align:middle;
+                margin:0;display: inline-block; vertical-align:middle;
                 cursor: pointer;outline:none;background-color:transparent; background-repeat:no-repeat;
-                height:22px;width:18px;
-                background:url("./images/tree.png") no-repeat;margin-right:5px;
-                &.switch {width: 16px;height: 20px;}
+                height:20px;width:18px;margin-right:5px;
+                background:url("@{img_common}tree.png") no-repeat;				
+                &.switch {width: 16px;height: 26px;}
                 &.noline_open,&.noline_open_hover{
                     background-position:-16px -353px;
                     &.switch_hover{background-position:-48px -353px !important;}
@@ -21,24 +21,27 @@
                     background-position:0px -353px;
                     &.switch_hover{background-position:-32px -353px !important;}
                 }
-                &.ico_loading{background:url(./images/loading.gif) no-repeat scroll 0 0 transparent;}
+                &.ico_loading{background:url("@{img_common}loading_tree.gif") no-repeat scroll 0 2px transparent;}
             }
         }
 
         a{padding-top:1px;cursor:pointer;text-decoration:none;
             display:block;margin:0 4px 0 4px;border-radius:3px;color:#333; vertical-align:top;
-            height:20px;padding:1px;padding-left:10px;
-            &:hover{text-decoration:none;.transition(background 0.3s);
-                background:@file_hover_color;height:20px;
-                border:1px solid @file_hover_border;box-shadow:0 0 1px @file_hover_border;
-                padding:0px;padding-left:9px;   
-            }
-            &.curSelectedNode {
-                background:@file_select_color;border:1px solid @file_select_border;line-height:20px;
-                border-radius:3px;box-shadow:0 0 1px @file_select_border;height:20px;                
-                padding:0px;padding-left:9px;   
-            }
-            input.rename {height:20px;line-height:20px; width:100px; padding:0;margin:0;
+            height:22px;line-height:22px;padding:1px;padding-left:10px;
+			&:hover{
+				text-decoration:none;.transition(background 0.3s);
+				background:@file_hover_color;
+				border:1px solid @file_select_color;box-shadow:0 0 1px @file_hover_border;
+				.gradient(top,lighten(@file_hover_color,4%),@file_hover_color);
+				padding:0px;padding-left:9px;   
+			}
+			&.curSelectedNode {
+				background:@file_select_color;border:1px solid @file_select_border;
+				border-radius:3px;box-shadow:0 0 1px @file_select_border;
+				.gradient(top,lighten(@file_select_color,8%),@file_select_color);
+				padding:0px;padding-left:9px;   
+			}
+            input.rename {height:22px;line-height:22px;width:100px; padding:0;margin:0;
                border:none;outline:none;padding-left:5px;
             }
             span{
@@ -60,5 +63,58 @@
                 }
             }
         }
+    }
+}
+
+.frame-left .ztree{
+    @path:"./@{img_common}file_16/";
+    li{
+        .file{
+            line-height: 0;margin: 0;display: inline-block;
+            vertical-align: middle;cursor: pointer;
+            outline: none;background-color: transparent;
+            background-repeat: no-repeat;
+            height: 20px;width: 18px;
+            margin-right: 5px;
+            background:url("@{path}file.png") no-repeat;
+        }
+        .cpp,.h,.sql,.java,.cs,.py,.html,.htm,.shtml,.hta,.css,.js,.xml,.php,.jsp,.asp,.aspx,.vb,.vbs,.bat,.reg,.cmd,.pl,.pm,.cgi,.as
+        {background-image:url("@{path}code.png");}
+
+        .oexe{background-image:url("@{path}oexe.png");}        
+        .txt,.ini{background-image:url("@{path}txt.png");}
+        .html,.htm,.url{background-image:url("@{path}html.png");}
+        .css{background-image:url("@{path}css.png");}
+        .js{background-image:url("@{path}js.png");}
+        .xml,.config,.manifest,.xaml,.csproj,.vbproj
+        {background-image:url("@{path}xml.png");}
+        .php{background-image:url("@{path}php.png");}
+        .py{background-image:url("@{path}py.png");}
+        .h,.cpp,.c{background-image:url("@{path}cpp.png");}
+
+        .pdf{background-image:url("@{path}pdf.png");}
+        .psd{background-image:url("@{path}psd.png");}
+        .flv,.f4v{background-image:url("@{path}flv.png");}
+        .fla{background-image:url("@{path}fla.png");}
+        .swf{background-image:url("@{path}swf.png");}
+        .air{background-image:url("@{path}air.png");}
+
+        .zip,.tar,.gzip{background-image:url("@{path}zip.png");}
+        .rar{background-image:url("@{path}rar.gif");}
+        .dll{background-image:url("@{path}dll.png");}
+        .exe{background-image:url("@{path}exe.png");}
+        .ttf{background-image:url("@{path}ttf.png");}
+        .bat,.cmd{background-image:url("@{path}cmd.png");}
+        .ini{background-image:url("@{path}ini.png");}
+
+        .jpg,.png,.bmp,.gif,.ttf
+        {background-image:url("@{path}jpg.png");}
+        .mp3,.wma,.mp2,.mid,.aac
+        {background-image:url("@{path}mp3.png");}
+        .avi,.rm,.rmvb,.mpg,.mkv,.wmv,.mov,.mp4
+        {background-image:url("@{path}avi.png");}
+        .doc,.docx,.wps{background-image:url("@{path}doc.png");}
+        .xls,.xlsx{background-image:url("@{path}xls.png");}
+        .ppt,.pptx{background-image:url("@{path}ppt.png");}
     }
 }

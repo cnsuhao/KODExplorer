@@ -1,5 +1,6 @@
 .ztree{
-    @height:22px;font-size:12px;padding:0;margin:0px;margin-top:10px;
+    @height:22px;
+    font-size:12px;padding:0;margin:0px;margin-top:10px;
     li {
         padding:0; margin:0; list-style:none;text-align:left; 
         white-space:nowrap; outline:0;line-height:@height+2;
@@ -11,7 +12,7 @@
                 line-height:0; margin:0;display: inline-block; vertical-align:middle;
                 cursor: pointer;outline:none;background-color:transparent; background-repeat:no-repeat;
                 height:22px;width:18px;
-                background:url("./images/tree.png") no-repeat;margin-right:5px;
+                background:url("@{img_common}tree.png") no-repeat;margin-right:5px;
                 &.switch {width: 16px;height:22px;}
                 &.noline_open,&.noline_open_hover{
                     background-position:-16px -353px;
@@ -21,7 +22,7 @@
                     background-position:0px -353px;
                     &.switch_hover{background-position:-32px -353px !important;}
                 }
-                &.ico_loading{background:url(./images/loading.gif) no-repeat scroll 0 0 transparent;}
+                &.ico_loading{background:url("@{img_common}loading_tree.gif") no-repeat scroll 0 2px transparent;}
             }
         }
         a{ padding-top:1px;cursor:pointer;text-decoration:none;
@@ -79,4 +80,58 @@ span.tmpzTreeMove_arrow {display: inline-block;margin:4px 0 0 2px;position:absol
       border-color: transparent  transparent transparent #fff;
       border-style: solid;border-width: 7px 0px 7px 7px;width: 0;height: 0;
       _border-top-color: white;_border-bottom-color: white;_filter: chroma( color =white);
+}
+
+
+.frame-left .ztree{
+    @path:"./@{img_common}file_16/";
+    li{
+        .file{
+            line-height: 0;margin: 0;display: inline-block;
+            vertical-align: middle;cursor: pointer;
+            outline: none;background-color: transparent;
+            background-repeat: no-repeat;
+            height: 22px;width: 18px;
+            margin-right: 5px;
+            background:url("@{path}file.png") no-repeat;
+        }
+        .cpp,.h,.sql,.java,.cs,.py,.html,.htm,.shtml,.hta,.css,.js,.xml,.php,.jsp,.asp,.aspx,.vb,.vbs,.bat,.reg,.cmd,.pl,.pm,.cgi,.as
+        {background-image:url("@{path}code.png");}
+
+        .oexe{background-image:url("@{path}oexe.png");}  
+        .txt,.ini{background-image:url("@{path}txt.png");}
+        .html,.htm,.url{background-image:url("@{path}html.png");}
+        .css{background-image:url("@{path}css.png");}
+        .js{background-image:url("@{path}js.png");}
+        .xml,.config,.manifest,.xaml,.csproj,.vbproj
+        {background-image:url("@{path}xml.png");}
+        .php{background-image:url("@{path}php.png");}
+        .py{background-image:url("@{path}py.png");}
+        .h,.cpp,.c{background-image:url("@{path}cpp.png");}
+
+        .pdf{background-image:url("@{path}pdf.png");}
+        .psd{background-image:url("@{path}psd.png");}
+        .flv,.f4v{background-image:url("@{path}flv.png");}
+        .fla{background-image:url("@{path}fla.png");}
+        .swf{background-image:url("@{path}swf.png");}
+        .air{background-image:url("@{path}air.png");}
+
+        .zip,.tar,.gzip{background-image:url("@{path}zip.png");}
+        .rar{background-image:url("@{path}rar.gif");}
+        .dll{background-image:url("@{path}dll.png");}
+        .exe{background-image:url("@{path}exe.png");}
+        .ttf{background-image:url("@{path}ttf.png");}
+        .bat,.cmd{background-image:url("@{path}cmd.png");}
+        .ini{background-image:url("@{path}ini.png");}
+
+        .jpg,.png,.bmp,.gif,.ttf
+        {background-image:url("@{path}jpg.png");}
+        .mp3,.wma,.mp2,.mid,.aac
+        {background-image:url("@{path}mp3.png");}
+        .avi,.rm,.rmvb,.mpg,.mkv,.wmv,.mov,.mp4
+        {background-image:url("@{path}avi.png");}
+        .doc,.docx,.wps{background-image:url("@{path}doc.png");}
+        .xls,.xlsx{background-image:url("@{path}xls.png");}
+        .ppt,.pptx{background-image:url("@{path}ppt.png");}
+    }
 }

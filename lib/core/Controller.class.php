@@ -1,4 +1,11 @@
 <?php
+/*
+* @link http://www.kalcaddle.com/
+* @author warlee | e-mail:kalcaddle@qq.com
+* @copyright warlee 2014.(Shanghai)Co.,Ltd
+* @license http://kalcaddle.com/tools/licenses/license.txt
+*/
+
 /**
  * 控制器抽象类
  */
@@ -8,17 +15,20 @@ abstract class Controller {
 	public $config;	// 全局配置
 	public $tpl;	// 模板目录
 	public $values;	// 模板变量
+	public $L;
 
 	/**
 	 * 构造函数
 	 */
 	function __construct(){
-		global $in,$config,$db;
-		$this -> in = $in;		
-		$this -> config = $config;
+		global $in,$config,$db,$L;
+
 		$this -> db  = $db;
-		$this -> values['config'] = $config;
-		$this -> values['in'] = $in;
+		$this -> L 	 = $L;
+		$this -> config = &$config;
+		$this -> in = &$in;	
+		$this -> values['config'] = &$config;
+		$this -> values['in'] = &$in;
 	} 
 
 	/**
@@ -49,6 +59,8 @@ abstract class Controller {
 
 	/**
 	 * 显示模板
+	 * 
+	 * TODO smarty
 	 * @param
 	 */
 	protected function assign($key,$value){
@@ -59,7 +71,8 @@ abstract class Controller {
 	 * @param
 	 */
 	protected function display($tpl_file){
-		$value = $this->values;
+		global $L,$LNG;
+		extract($this->values);
 		require($this->tpl.$tpl_file);
 	} 
 } 

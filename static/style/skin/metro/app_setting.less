@@ -1,18 +1,19 @@
-@import "../../base.less";
 @import "config.less";
-@import "./dialog.less";
-//@nav_color:#2b579a;
 @hover_color:lighten(@nav_color,10%);
 @selected_color:lighten(@nav_color,8%);
-body{overflow-x:hidden;}
+body{.user-select(auto)}
 #body{
-    position:absolute;width:100%;top:@navbar_height;
+    position:absolute;width:100%;top:0;
     ul{margin: 0;padding: 0;}
     li{margin: 0;padding: 0;}
-    .font-icon{padding-right: 0.8em;}
+    a{text-decoration: none;color: #446;}
+    input,input:focus{outline: none;box-shadow:none;border: 1px solid #bbb;padding:5px;}
+    input:focus{border-color:#75A1F0 !important;outline:none;box-shadow:0 0 12px #75A1F0;.transition(all 0.218s);}
+    .font-icon{padding-right:0.8em;display: inline-block;}
     .menu_left{
-        position:fixed;z-index:999;top:38px;left: 0;height:100%;width:20%;background:@nav_color;
-        h1 {color: #fff;font-weight:400;padding: 15px 20px 20px 40px;font-size:30px;letter-spacing: 6px;margin: 0;}
+		min-width:170px;position:fixed;z-index:999;left: 0;height:100%;width:20%;background:@nav_color;
+        h1 {color: #fff;font-weight:400;padding: 15px 20px 20px 40px;
+            font-size:30px;margin:0;.font-family();}
         .setting li{
             line-height: 2.5em;color: #fff;font-size: 15px;
             box-sizing: border-box;text-indent: 10px;
@@ -23,6 +24,7 @@ body{overflow-x:hidden;}
         }
     }
     .main{
+        .h1 .font-icon{padding-right:16px;}
         position:absolute;left:20%;width:75%;margin:30px 0 0 20px;
         div.h1{font-weight:400;color:@hover_color;padding:0px 0 10px 10px;font-size:26px;}
         .section {
@@ -32,24 +34,27 @@ body{overflow-x:hidden;}
                 .login{border-bottom:1px dashed #dde;}
                 .login2{border-bottom:1px solid #dde;}
                 .upasswordinfo{position:absolute;top:275px;color:#bbb;}
-                .button{margin-left:60px;margin-top:5px;padding-left:15px;padding-right:15px;}
-                span{display:block;float:left;width:60px;line-height:25px;}
-                input{display:block;width:250px;border: 1px solid #AAA;padding: 4px;font-weight:800;color:#446;}
+                .button{margin-left:110px;margin-top:5px;}
+                span{display:block;float:left;width:110px;line-height:25px;}
+                input{display:block;width:250px;font-weight:800;color:#446;}
             }
             h3 {font-size:14px;font-weight: bold;width: 140px;float:left;}
             label {display:block;}
         }
         .savebox{
             border-top:1px solid #ddd;margin-bottom:10px;
-            a.save{margin-top:10px;padding:5px 20px;letter-spacing:2px;}
+            a.save{margin-top:10px;padding:5px 20px;}
         }
         .list{
-            float: left;width:120px;background:#fff;margin-right:10px;height:92px;
-            border:1px solid #ddd;margin-bottom:5px;cursor: pointer;
-            .ico{width:100px;height:65px;margin: 5px 14px 0 14px;}
-            .info{text-align:center;}
-            .ico img{width:90px;height:60px;}
-            &.this{background-color:lighten(@nav_color,40%);color:#fff;border-color:#888;}
+            float: left;width:120px;background:#fff;margin-right:15px;height:92px;
+            border:1px solid #ddd;margin-bottom:10px;cursor: pointer;
+            .ico{width:100px;height:65px;margin:10px;background-color: #fff;
+                box-shadow: 0 1px 15px rgba(0, 0, 0, 0.2);
+            }
+            .theme{margin:5px 10px;}
+            .info{text-align:center;margin-top: -3px;}
+            .ico img{width:100px;height:65px;}
+            &.this{background-color:#ddd;color:@nav_color;border-color:#888;}
             &.listhover{border-color:#888;}
         }
         .content{
@@ -72,7 +77,7 @@ body{overflow-x:hidden;}
         /*更新记录页面*/
         fieldset{
             margin-top:10px;border:solid 1px #ddd;padding:10px;color:#666;;
-            legend{padding:3px 20px;color:#FFF;background:#214FA3;font-size:15px;}
+            legend{padding:3px 20px;color:#FFF;background:@top_back;font-size:15px;}
             span{display:block;background:lighten(@hover_color,40%);width:100px;color:#224;padding:4px 15px;margin-top:10px;font-size:14px;border-left:5px solid lighten(@hover_color,10%);;}
             .line{margin:0px;height:1px;width:100%;border-bottom:1px solid #eee;margin-bottom:10px;margin-top:-1px;_margin-top:-21px;}
         }
@@ -80,14 +85,51 @@ body{overflow-x:hidden;}
             margin-left:10px;padding-left:25px;color:#666;word-break:break-all;            
             &:before{font-family: FontAwesome;content: "\f006";padding-right: 10px;text-shadow:0 0 1px;}
         }
+
+        /*用户管理页面*/
+        .nav{
+            a{display: block;float: left;padding: 4px 2em;background: #eee;border: 1px solid #ddd;
+                margin-bottom: -1px;margin-left: -1px;.transition(all 0.218s);}
+            a:hover,a.this{background: @hover_color;color: #444;border:1px solid @hover_color;border-left-color: #ddd;color: #fff;}
+        }
+        .member{
+            input{display: inline-block;width: 45px;margin-left:2px;}
+            span{padding-left:10px;}
+            select{padding: 3px 5px;font-family: "微软雅黑";color: #666;}
+            .info{background: #efe;padding: 6px 10px;color: #8a8;border: #ccc 1px dotted;margin-top: 10px;}
+            .edit_role{color: @selected_color;}
+            .edit_role:hover{border-bottom: 1px solid @selected_color;}
+        }
+        .together{
+            border:1px solid #dde;margin-top: -1px;padding: 5px 0 0 10px;
+            .title{float: left;width: 80px;height: 28px;margin: 5px;color: #333;}
+            .title i{padding-left: 5px;font-style: normal;}
+            span.text{color: #bbb;font-size: 12px;padding-left: 10px;}
+            &.input input{width: 40%;margin-left: 5px;}
+        }
+        .group_editor{
+            a.revert{float: right;margin: 10px;padding: 4px 2em;border: 1px solid #ddd;background: #eee;
+                &:hover{background:#ddd;border-color: #bbb;} 
+            }
+            .tag{height: 25px;line-height: 27px;margin: 2px 4px;padding: 0px 8px;
+                text-decoration: none;color: #666;.transition(all 0.218s);
+                display: block;float: left;color: #668;
+                border:1px solid lighten(@selected_color,40%);background:#fff;
+                input{border: none;vertical-align: initial;
+                    display: inline-block;min-height: 12px;margin-right: 6px;}
+                &:hover{color:@selected_color; background:lighten(@selected_color,50%);}
+                &.this{border-color: @selected_color;color: @selected_color; background:lighten(@selected_color,50%);}
+                span{cursor: pointer;}
+            }
+        }
     }
 
     /*收藏夹页面*/
     table {
         font-size:13px;color:#888;width:100%;margin:0px;border:1px solid #ccc;
-        tr{border-bottom:1px solid #ddd;
+        tr{border-bottom:1px solid #ddd;height:30px;
             .title{border-bottom: 1px solid #ddd;}
-            input{display:block;width:250px;border: 1px solid #aaa;width:90%;color:#888; padding:4px 10px;}
+            input{display:block;width:250px;width:90%;color:#888;}
             &.title{background:#eee;color:#224;
                 td{border-bottom:1px solid #ddd;font-weight:800;}
                 span{color:#999;font-size:13px;padding-left:4px;font-weight:400;}
@@ -99,20 +141,40 @@ body{overflow-x:hidden;}
                 &.action a{margin-right:5px;}
             }
         }
-
     }
     a{
-        &.add{display:block;text-align:center;text-decoration:none;background:#f6f6f6;line-height:2em;height:2em;border:1px solid #ccc;border-top:none;color:#555;}
+        &.add{display:block;text-align:center;text-decoration:none;background:#f6f6f6;
+            line-height:2em;height:2em;border:1px solid #ccc;color:#555;}
         &.add:hover{background:#eee;}
         &.button{
-            text-decoration: none;cursor: pointer; 
-            margin-top:5px;margin-bottom:5px;
-            padding: 5px;font-size:13px;letter-spacing: 1px;
+            text-decoration: none;cursor: pointer;
+            text-shadow: none;border:none;box-shadow: none;border-radius: 0;
+            margin:5px 10px 5px 0;font-weight: 400;
+            padding:0.5em 1.5em;font-size:13px;
             display: inline-block; 
-            text-align: center;
-            width:60px;background: @nav_color;color:#fff;
-            &:hover{background:darken(@nav_color,10%); }
-            &:active{background:darken(@nav_color,30%); }
+            text-align: center;.transition(all 0.218s);
+            background: @nav_color;color:#fff;
+            &:hover{background:darken(@nav_color,10%); text-shadow: none;border:none;box-shadow: none;border-radius: 0;}
+            &:active{background:darken(@nav_color,30%); text-shadow: none;border:none;box-shadow: none;border-radius: 0;}
+        }
+    }
+
+    a.create_app{margin: 0;display: block;position: absolute;right:21px;}
+    .app_menu_left {min-width:130px;width:130px;}
+    .app_menu_left .setting li.selected {padding-left: 12px;}
+    .app_list{position:absolute;left: 130px;width:initial;margin: 15px 0 20px 15px;right: 20px;
+        .app-list{margin-top: 10px;border: 1px solid #ddd;
+            li{list-style: none;border-bottom: 1px solid #eee;
+                a.icon{float: left;width:70px;padding: 5px;}
+                a.icon img{width: 64px;height:64px;}
+                p{float: left;width:340px;margin:0;padding:0;color:#666;height: 67px;overflow: hidden;}
+                p span{display: block;word-break: break-all;}
+                p span.title{font-size: 16px;font-weight: 800;line-height: 33px;height:33px;}
+                .right{width:160px;float: right;}
+            }
         }
     }
 }
+
+
+

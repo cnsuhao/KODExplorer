@@ -1,4 +1,11 @@
 <?php
+/*
+* @link http://www.kalcaddle.com/
+* @author warlee | e-mail:kalcaddle@qq.com
+* @copyright warlee 2014.(Shanghai)Co.,Ltd
+* @license http://kalcaddle.com/tools/licenses/license.txt
+*/
+
 /**
  * 程序路由处理类
  * 这里类判断外界参数调用内部方法
@@ -6,7 +13,8 @@
 class Application {
 	public $default_controller = null;	//默认的类名
 	public $default_do = null;			//默认的方法名
-	public $model = '';					//控制器对应模型  对象。
+	public $sub_dir ='';				//控制器子目录
+	public $model = '';				//控制器对应模型  对象。
 	
 	/**
 	 * 设置默认的类名
@@ -57,7 +65,7 @@ class Application {
 	/**
 	 * 运行自动加载的控制器
 	 */
-	public function autorun(){
+	private function autorun(){
 		global $config; 
 		if (count($config['autorun']) > 0) {
 			foreach ($config['autorun'] as $key => $var) {
@@ -69,13 +77,14 @@ class Application {
 	/**
 	 * 调用实际类和方式
 	 */
-	function run(){
-		global $in,$config;
-		$config['app_controller'] = ($in['URLremote'][0]!='')?$in['URLremote'][0]:$this->default_controller;
-		$config['app_action'] = ($in['URLremote'][1]!='')?$in['URLremote'][1]:$this->default_action;
-		
+	public function run(){
+		$URI = $GLOBALS['in']['URLremote'];
+		if (!isset($URI[0]) || $URI[0] == '') $URI[0] = $this->default_controller;
+		if (!isset($URI[1]) || $URI[1] == '') $URI[1] = $this->default_action;
+		define('ST',$URI[0]);
+		define('ACT',$URI[1]);
 		//自动加载运行类。
 		$this->autorun();
-		$this->appRun($config['app_controller'],$config['app_action']);
+		$this->appRun(ST,ACT);
 	}
 } 

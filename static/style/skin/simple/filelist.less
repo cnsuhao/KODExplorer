@@ -1,25 +1,18 @@
 @file_boxradius:3px;
-@file_translation:background 0.2s;
-.file_file(){color:#335;padding:1px;};
+@file_translation:border 0.2s;
+.file_file(){color:#335;border:1px solid transparent;box-shadow:0px 0px 2px rgba(255,255,255,0);};
 .file_hover(){
-	 border:1px solid @file_hover_border;
-	 .border-color(@file_hover_color, 0.6);
-	.background-color(@file_hover_color, 0.6);	
-
-	box-shadow:0px 0px 2px @file_hover_border;
+	border:1px solid @file_hover_border;
+	.gradient(top,lighten(@file_hover_color,5%),@file_hover_color);
 	border-radius:@file_boxradius;
-	padding:0px;
 }
 .file_select(){
 	 border:1px solid @file_select_border;
 	 .border-color(@file_select_border, 0.6);
-	.background-color(@file_select_color, 0.6);
-
-	box-shadow:0px 0px 2px @file_select_border;
+	.gradient(top,lighten(@file_select_color,10%),@file_select_color);
 	border-radius:@file_boxradius;
 	padding:0px;
 }
-
 
 //------------------------
 #selContainer{/*选择框*/
@@ -59,7 +52,6 @@
 
 /* --------------------------文件图标样式--------------------- */
 .fileList_icon{
-	@pathIcon:"./images/file";
 	padding:10px 10px 0px 10px;
 	.file{
 		.file_file;.transition(@file_translation);width:80px;overflow:hidden;height:100px;text-decoration:none;float:left;margin-right:10px;margin-bottom: 10px;
@@ -67,63 +59,67 @@
 		&.select,&.selectDragTemp{.file_select;}
 
 		.titleBox{width:80px;text-align:center;word-break:break-all;font-size:12px;margin:0 auto;line-height:1.4em;}
-		.titleBox .textarea{position:absolute;font-size:12px;text-align:center;}
-		.titleBox #pathRenameTextarea,.titleBox .newfile
-		{outline: none;width:74px;margin-top: -4px;overflow-y:hidden;border:1px solid #888;font-size:12px;text-align:center;}
-		.titleBox .title{cursor:text;}	
+		.titleBox .textarea{position:absolute;font-size:12px;text-align:center;margin-left: -1px;}
+		.titleBox #pathRenameTextarea,.titleBox .newfile{
+            width:76px;margin-top: -4px;overflow-y:hidden;
+            border:1px solid #888;font-size:12px;text-align:center;
+            &:focus{outline:none;.transition(all .1s);}
+        }	
+		.titleBox .title{cursor:text;}
 
-		.ico{width:64px;height:64px;margin:4px;margin-bottom: 0;
-			background-position: 5px 0px;background-repeat: no-repeat;
-			background-image: url("@{pathIcon}/file.png");}
-		.folder{width:70px;background: url("@{pathIcon}/folder.png") 4px 0px no-repeat;}
-		
-		.oexe{background-image: url("@{pathIcon}/oexe.png");}
-		.picture{width:64px;height:64px;margin:4px;margin-bottom: 0;}
-		.picture img{width:64px;height:64px;border:none;}
-		.cpp,.h,.sql,.java,.cs,.py,.html,.htm,.shtml,.hta,.css,.js,.xml,.php,.jsp,.asp,.aspx,.vb,.vbs,.bat,.reg,.cmd,.pl,.pm,.cgi,.as
-		{background:url("@{pathIcon}/code.png");}
+        .ico{width:60px;height:60px;background-image: url("@{img_files_icon}file.png");
+        background-repeat: no-repeat;background-position:center center;margin: 0 auto;
+        margin-top:4px;margin-bottom: 3px;display: block !important;}
+		.folder{width:70px;background-image: url("@{img_files_icon}folder.png");}
+        .picture{width:64px;height:66px;background:none;margin:0;position:relative;top:3px;left: 8px;
+            display:table-cell;vertical-align:middle;text-align:center;
+            *display: block;*font-size: 64px;*font-family:Arial;
+        }
+        .picture img{vertical-align:middle;max-width:64px;max-height:64px;}
+        .cpp,.h,.sql,.java,.cs,.py,.html,.htm,.shtml,.hta,.css,.js,.xml,.php,.jsp,.asp,.aspx,.vb,.vbs,.bat,.reg,.cmd,.pl,.pm,.cgi,.as,.asm,.clj,.cbl,.cfm,.d,.diff,.dot,.ejs,.erl,.ftl,.go,.hs,.hbs,.haml,.erb,.jade,.json,.jq,.jsx,.ji,.tex,.lisp,.ls,.lsl,.lua,.lp,.matlab,.mel,.r,.yaml
+        {background-image:url("@{img_files_icon}code.png");}        
 
-		.txt,.ini{background-image:url("@{pathIcon}/txt.png");}
-		.html,.htm,.url{background: url("@{pathIcon}/html.png") 5px -2px no-repeat;}
-		.css{background-image: url("@{pathIcon}/css.png");}
-		.js{background-image: url("@{pathIcon}/js.png");}
+		.txt,.ini,.md,.markdown,.log{background-image:url("@{img_files_icon}txt.png");}
+		.html,.htm,.url,.tpl,.lnk,.haml,.shtml{width:66px;background-image: url("@{img_files_icon}html.png");}
+		.css,.less,.sass{background-image: url("@{img_files_icon}css.png");}
+		.js,.coffee{background-image: url("@{img_files_icon}js.png");}
 		.xml,.config,.manifest,.xaml,.fileList_list .csproj,.fileList_list .vbproj
-		{background-image: url("@{pathIcon}/xml.png");}
-		.php{background: url("@{pathIcon}/php.png") 3px 0 no-repeat;}
-		.py{background-image: url("@{pathIcon}/py.png");}
-		.h,.cpp,.c{background-image: url("@{pathIcon}/cpp.png");}
+		{background-image: url("@{img_files_icon}xml.png");}
+		.php{background-image: url("@{img_files_icon}php.png");}
+		.py{background-image: url("@{img_files_icon}py.png");}
+        .rb{background-image: url("@{img_files_icon}rb.png");}        
+		.h,.cpp,.c,.m{background-image: url("@{img_files_icon}cpp.png");}
 
-		.pdf{background-image: url("@{pathIcon}/pdf.png");}
-		.psd{background-image: url("@{pathIcon}/psd.png");}
-		.flv,.f4v{background-image: url("@{pathIcon}/flv.png");}
-		.fla{background-image: url("@{pathIcon}/fla.png");}
-		.swf{background-image: url("@{pathIcon}/swf.png");}
-		.air{background-image: url("@{pathIcon}/air.png");}
-
-		.zip,.tar,.gzip{background-image: url("@{pathIcon}/zip.png");}
-		.rar{background-image: url("@{pathIcon}/rar.png");}
-		.dll{background-image: url("@{pathIcon}/dll.png");}
-		.exe{background: url("@{pathIcon}/exe.png") 3px -2px no-repeat;}
-		.ttf{background: url("@{pathIcon}/ttf.png") 3px -2px no-repeat;}
-		.bat,.cmd{background-image: url("@{pathIcon}/cmd.png");}
-		.ini{background-image: url("@{pathIcon}/ini.png");}
-
-		.jpg,.png,.bmp,.gif,.ttf{background-image: url("@{pathIcon}/jpg.png");}
-		.mp3,.wma,.mp2,.mid,.aac{background-image: url("@{pathIcon}/mp3.png");}
-		.avi,.rm,.rmvb,.mpg,.mkv,.wmv,.mov,.mp4{background-image: url("@{pathIcon}/avi.png");}
-		.doc,.docx,.wps{background: url("@{pathIcon}/doc.png") 2px no-repeat;}
-		.xls,.xlsx{background: url("@{pathIcon}/xls.png") 2px no-repeat;}
-		.ppt,.pptx{background: url("@{pathIcon}/ppt.png") 2px no-repeat;}
-	}	
+		.pdf{background-image: url("@{img_files_icon}pdf.png");}
+		.psd{background-image: url("@{img_files_icon}psd.png");}
+		.flv,.f4v{background-image: url("@{img_files_icon}flv.png");}
+		.fla{background-image: url("@{img_files_icon}fla.png");}
+		.swf{background-image: url("@{img_files_icon}swf.png");}
+		.air{background-image: url("@{img_files_icon}air.png");}
+        .svg{background-image: url("@{img_files_icon}svg.png");}
+        
+		.zip,.tar,.gzip{background-image: url("@{img_files_icon}zip.png");}
+		.rar{background-image: url("@{img_files_icon}rar.png");}
+		.dll{background-image: url("@{img_files_icon}dll.png");}
+		.exe{background-image: url("@{img_files_icon}exe.png");}
+		.ttf,.otf,.eot,.woff{background-image: url("@{img_files_icon}ttf.png");}
+		.bat,.cmd,.sh{background-image: url("@{img_files_icon}cmd.png");}
+		.ini,.conf{background-image: url("@{img_files_icon}ini.png");}
+		.mp3,.wma,.mp2,.mid,.aac{background-image: url("@{img_files_icon}mp3.png");}
+		.avi,.rm,.rmvb,.mpg,.mkv,.wmv,.mov,.mp4{background-image: url("@{img_files_icon}avi.png");}
+		.doc,.docx,.wps{background: url("@{img_files_icon}doc.png");}
+		.xls,.xlsx{background-image: url("@{img_files_icon}xls.png");}
+		.ppt,.pptx{background-image: url("@{img_files_icon}ppt.png");}
+	}
+    .fileApp .ico{border-radius: 10px;}   
 }
 
 /* --------------------------文件列表样式--------------------- */
 #list_type_list{z-index: 10;position: absolute;width: 100%;}
 #main_title{
-    background:#fff;
-    border-bottom:1px solid #f6f6f6;
+    height:25px;background:#fff;border-bottom:1px solid #e3e3e3;overflow: hidden;
     .box-shadow(1px 2px 15px #dde)
-    div{cursor:pointer;}
+    div{cursor:pointer;overflow:hidden;}
     div span{float:right;margin-right:8px;margin-top:4px;}
     .filename,.filesize,.filetype,.filetime{
         float:left;
@@ -138,14 +134,13 @@
     .filename{width:250px;padding-left:20px;}
     .filetype{width:85px;padding-left:15px;}
     .filesize{width:85px;padding-left:15px;}
-    .filetime{width:280px;padding-left:15px;}
-    .this{font-weight:800;background:#eee;}
+    .filetime{width:220px;padding-left:15px;}
+    .this{font-weight:800;background:#eee;.gradient(top,#fff,#ddd);}
 }
 
 .fileList_list{
-	@pathList:"./images/file_16";
     padding-top: 30px;width: 100%;z-index: 0;    
-    .file{.file_file;margin-left:10px;width: 750px;.transition(background 0.2s);}
+    .file{.file_file;margin-left:10px;width: 696px;.transition(background 0.2s);}
     .file2{background: @file_background2;}/*偶数列表文件背景*/
     .hover{.file_hover}
     .select,.selectDragTemp{.file_select;}
@@ -156,51 +151,54 @@
         
         .titleBox{width:240px;word-break:break-all;}
         .titleBox .textarea{position:absolute;height:auto;font-size:12px;}
-        .titleBox #pathRenameTextarea,.titleBox .newfile{width:200px;height:22px;z-index:999;overflow-y:hidden;border:1px solid #888;font-size:12px;padding-top:1px;} 
+        .titleBox #pathRenameTextarea,.titleBox .newfile{
+            width:200px;height:20px;z-index:999;overflow-y:hidden;border:1px solid #888;
+            font-size:12px;padding-top:2px;
+            &:focus{outline:none;.transition(all .1s);}
+        } 
         .titleBox .title{cursor:text;width:250px;word-break:break-all;}
 
-        .ico,.titleBox,.filetype,.filesize,.filetime {float:left;line-height:22px;height:22px;font-size:12px;cursor:default;overflow:hidden;}
-        .ico{width:22px;height:22px;padding:0px;margin:0;
-        	background-position:  4px 3px;background-repeat: no-repeat;
-        	background-image:url("@{pathList}/file.png");}
-        .folder{background-image:url("@{pathList}/folder.png");}
+        .ico,.titleBox,.filetype,.filesize,.filetime {float:left;line-height:24px;height:24px;font-size:12px;cursor:default;overflow:hidden;}
+        .ico{width:25px;height:24px;padding:0px;margin:0;
+            background-position:2px 3px;background-repeat: no-repeat;
+        	background-image:url("@{img_files_list}file.png");display: inline-block !important;}
+        .folder{background-image:url("@{img_files_list}folder.png");}
+        
+        .cpp,.h,.sql,.java,.cs,.py,.html,.htm,.shtml,.hta,.css,.js,.xml,.php,.jsp,.asp,.aspx,.vb,.vbs,.bat,.reg,.cmd,.pl,.pm,.cgi,.as,.asm,.clj,.cbl,.cfm,.d,.diff,.dot,.ejs,.erl,.ftl,.go,.hs,.hbs,.haml,.erb,.jade,.json,.jq,.jsx,.ji,.tex,.lisp,.ls,.lsl,.lua,.lp,.md,.matlab,.mel,.m,.r,.yaml
+        {background-image:url("@{img_files_list}code.png");}
 
-        .cpp,.h,.sql,.java,.cs,.py,.html,.htm,.shtml,.hta,.css,.js,.xml,.php,.jsp,.asp,.aspx,.vb,.vbs,.bat,.reg,.cmd,.pl,.pm,.cgi,.as
-        {background-image:url("@{pathList}/code.png");}
-
-        .txt,.ini{background-image:url("@{pathList}/txt.png");}
-        .html,.htm,.url{background-image:url("@{pathList}/html.png");}
-        .css{background-image:url("@{pathList}/css.png");}
-        .js{background-image:url("@{pathList}/js.png");}
+        .txt,.ini{background-image:url("@{img_files_list}txt.png");}
+        .html,.htm,.url{background-image:url("@{img_files_list}html.png");}
+        .css{background-image:url("@{img_files_list}css.png");}
+        .js{background-image:url("@{img_files_list}js.png");}
         .xml,.config,.manifest,.xaml,.csproj,.vbproj
-        {background-image:url("@{pathList}/xml.png");}
-        .php{background-image:url("@{pathList}/php.png");}
-        .py{background-image:url("@{pathList}/py.png");}
-        .h,.cpp,.c{background-image:url("@{pathList}/cpp.png");}
+        {background-image:url("@{img_files_list}xml.png");}
+        .php{background-image:url("@{img_files_list}php.png");}
+        .py{background-image:url("@{img_files_list}py.png");}
+        .h,.cpp,.c{background-image:url("@{img_files_list}cpp.png");}        
+        .pdf{background-image:url("@{img_files_list}pdf.png");}
+        .psd{background-image:url("@{img_files_list}psd.png");}
+        .flv,.f4v{background-image:url("@{img_files_list}flv.png");}
+        .fla{background-image:url("@{img_files_list}fla.png");}
+        .swf{background-image:url("@{img_files_list}swf.png");}
+        .air{background-image:url("@{img_files_list}air.png");}
 
-        .pdf{background-image:url("@{pathList}/pdf.png");}
-        .psd{background-image:url("@{pathList}/psd.png");}
-        .flv,.f4v{background-image:url("@{pathList}/flv.png");}
-        .fla{background-image:url("@{pathList}/fla.png");}
-        .swf{background-image:url("@{pathList}/swf.png");}
-        .air{background-image:url("@{pathList}/air.png");}
-
-        .zip,.tar,.gzip{background-image:url("@{pathList}/zip.png");}
-        .rar{background-image:url("@{pathList}/rar.gif");}
-        .dll{background-image:url("@{pathList}/dll.png");}
-        .exe{background-image:url("@{pathList}/exe.png");}
-        .ttf{background-image:url("@{pathList}/ttf.png");}
-        .bat,.cmd{background-image:url("@{pathList}/cmd.png");}
-        .ini{background-image:url("@{pathList}/ini.png");}
+        .zip,.tar,.gzip{background-image:url("@{img_files_list}zip.png");}
+        .rar{background-image:url("@{img_files_list}rar.gif");}
+        .dll{background-image:url("@{img_files_list}dll.png");}
+        .exe{background-image:url("@{img_files_list}exe.png");}
+        .ttf{background-image:url("@{img_files_list}ttf.png");}
+        .bat,.cmd{background-image:url("@{img_files_list}cmd.png");}
+        .ini{background-image:url("@{img_files_list}ini.png");}
 
         .jpg,.png,.bmp,.gif,.ttf
-        {background-image:url("@{pathList}/jpg.png");}
+        {background-image:url("@{img_files_list}jpg.png");}
         .mp3,.wma,.mp2,.mid,.aac
-        {background-image:url("@{pathList}/mp3.png");}
+        {background-image:url("@{img_files_list}mp3.png");}
         .avi,.rm,.rmvb,.mpg,.mkv,.wmv,.mov,.mp4
-        {background-image:url("@{pathList}/avi.png");}
-        .doc,.docx,.wps{background-image:url("@{pathList}/doc.png");}
-        .xls,.xlsx{background-image:url("@{pathList}/xls.png");}
-        .ppt,.pptx{background-image:url("@{pathList}/ppt.png");}
+        {background-image:url("@{img_files_list}avi.png");}
+        .doc,.docx,.wps{background-image:url("@{img_files_list}doc.png");}
+        .xls,.xlsx{background-image:url("@{img_files_list}xls.png");}
+        .ppt,.pptx{background-image:url("@{img_files_list}ppt.png");}
     }
 }

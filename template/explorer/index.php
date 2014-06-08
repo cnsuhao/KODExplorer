@@ -2,139 +2,178 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Cloud Explorer——云。在线资源管理</title>
+	<title><?php echo $L['title'];?></title>
 	<link rel="Shortcut Icon" href="<?php echo STATIC_PATH;?>/images/favicon.ico">
-<!-- 	// <script src="http://libs.baidu.com/jquery/1.8.0/jquery.min.js"></script> -->
-	<script src="<?php echo STATIC_PATH;?>js/jquery-1.8.0.min.js"></script>	
-	<script src="<?php echo STATIC_PATH;?>js/artDialog/jquery.artDialog.js"></script>
-	<script src="<?php echo STATIC_PATH;?>js/contextMenu/jquery.ui.position.js"></script>
-	<script src="<?php echo STATIC_PATH;?>js/contextMenu/jquery.contextMenu.js"></script>
-
-	<script src="<?php echo STATIC_PATH;?>js/common.js"></script>
-	<script src="<?php echo STATIC_PATH;?>js/cmp4/cmp.js"></script>
-	<script src="<?php echo STATIC_PATH;?>js/ztree/js/jquery.ztree.all-3.5.min.js"></script>
-
-	<script src="<?php echo STATIC_PATH;?>js/picasa/picasa.js"></script>
-	<link href="<?php echo STATIC_PATH;?>js/picasa/style/style.css" rel="stylesheet"/>
+	<link href="<?php echo STATIC_PATH;?>js/lib/picasa/style/style.css" rel="stylesheet"/>
+	<link href="<?php echo STATIC_PATH;?>js/lib/webuploader/webuploader.css" rel="stylesheet"/>
+	<link href="<?php echo STATIC_PATH;?>style/bootstrap.css" rel="stylesheet"/>	    
 	<link href="<?php echo STATIC_PATH;?>style/font-awesome/style.css" rel="stylesheet"/>
-
 	<?php if(STATIC_LESS == 'css'){ ?>
-	<link href="<?php echo STATIC_PATH;?>style/skin/<?php echo $value['config']['theme'];?>/app_explorer.css" rel="stylesheet" id='link_css_list'/>
+	<link href="<?php echo STATIC_PATH;?>style/skin/<?php echo $config['user']['theme'];?>app_explorer.css" rel="stylesheet" id='link_css_list'/>
 	<?php }else{//less_compare_online ?>
-	<link rel="stylesheet/less" type="text/css" href="<?php echo STATIC_PATH;?>style/skin/<?php echo $value['config']['theme'];?>/app_explorer.less"/>
-	<script src="<?php echo STATIC_PATH;?>js/less-1.4.2.min.js"></script>	
+	<link rel="stylesheet/less" type="text/css" href="<?php echo STATIC_PATH;?>style/skin/<?php echo $config['user']['theme'];?>app_explorer.less"/>
+	<script src="<?php echo STATIC_PATH;?>js/lib/less-1.4.2.min.js"></script>	
 	<?php } ?>
 </head>
 
-<script>
-var HOME    = '<?php echo HOME;?>';//$dir为初次进入或者刷新浏览器后的当前目录。
-var web_host= '<?php echo HOST;?>';// localhost 访问根目录
-var this_path='<?php echo urlencode($value["dir"]);?>';//D:/wwwroot/www/explorer/0000/当前绝对路径
-var WEB_ROOT='<?php echo WEB_ROOT;?>';//D:/wwwroot/ 服务器路径 用于api更新列表情况下保证web_path的正确性.
-var web_path='<?php echo urlencode(str_replace(WEB_ROOT,'',$value["dir"]));?>';// 当前url目录,从根目录开始到当前 用于文件打开 
+<?php if($is_frame){?>
+<style>.topbar{display: none;}.frame-header{top:0;}.frame-main{top:50px;}</style>
+<?php } ?>
 
-var json_data = '';			//用于存储每次获取列表后的json数据值。
-var app_path='<?php echo urlencode(APPHOST);?>';	///www/explorer/  程序路径，用于静态资源调用
-var list_type='<?php echo $value['config']['list'];?>';		//文件列表显示方式 list/icon
-var list_theme='<?php echo $value['config']['theme'];?>';	//文件列表主题
-var json_sort_field = '<?php echo $value['config']['list_sort_field'];?>'; //列表排序依照的字段  
-var json_sort_order = '<?php echo $value['config']['list_sort_order'];?>';	//列表排序升序or降序
-var static_path = "<?php echo STATIC_PATH;?>";
-</script>
-
-<body onselectstart="return false" style="overflow:hidden;">
-	<?php include(TEMPLATE.'common/navbar/index.html');?>
+<body style="overflow:hidden;" oncontextmenu="return core.contextmenu();">
+	<?php include(TEMPLATE.'common/navbar.html');?>
 	<div class="frame-header">
 		<div class="header-content">
 			<div class="header-left">
-				<a href="#" class="nouse button left" id='history_back' title='后退'>
-					<i class="font-icon icon-arrow-left"></i>
-				</a>
-				<a href="#" class="button middle" id='history_next' title='前进'>
-					<i class="font-icon icon-arrow-right"></i>
-				</a>
-				<a href="#" class="button right" id='refresh' title='强刷数据'>
-					<i class="font-icon icon-refresh"></i>
-				</a>
+				<div class="btn-group btn-group-sm">
+					<button class="btn btn-default" id='history_back' title='<?php echo $L['history_back'];?>' type="button">
+						<i class="font-icon icon-arrow-left"></i>
+					</button>
+					<button class="btn btn-default" id='history_next' title='<?php echo $L['history_next'];?>' type="button">
+						<i class="font-icon icon-arrow-right"></i>
+					</button>
+					<button class="btn btn-default" id='refresh' title='<?php echo $L['refresh_all'];?>' type="button">
+						<i class="font-icon icon-refresh"></i>
+					</button>
+				</div>
 			</div><!-- /header left -->
 			
 			<div class='header-middle'>
-				<a href="#" id='home' class="home button left"  title='根目录'>
+				<a href="javascript:void(0);" id='home' class="home button left"  title='<?php echo $L['root_path'];?>'>
 					<i class="font-icon icon-home"></i>
-				</a>				
-				<div id='yarnball' title="点击进入编辑状态"></div>
-				<div id='yarnball_input'><input type="text" name="path" value="" class="path" onkeydown="Main.UI.header.keydown(event);" id="path"/></div>
-				<a href="#" id='go' class="left button menuTree"  title='走着!'>
-					<i class="font-icon icon-circle-arrow-right"></i>
 				</a>
-				<a href="#" id='up' class="right button"  title='上一层'>
+				<div id='yarnball' title="<?php echo $L['address_in_edit'];?>"></div>
+				<div id='yarnball_input'><input type="text" name="path" value="" class="path" id="path"/></div>
+				<a href="javascript:void(0);" id='fav' class="middle button" title='<?php echo $L['add_to_fav'];?>'>
+					<i class="font-icon icon-star"></i>
+				</a>				
+				<a href="javascript:void(0);" id='up' class="right button" title='<?php echo $L['go_up'];?>'>
 					<i class="font-icon icon-circle-arrow-up"></i>
 				</a>
-			</div><!-- /header-middle end-->
-
-			<!-- 			
+			</div><!-- /header-middle end-->		
 			<div class='header-right'>
-				<a href="#" id='setting' class="setting left button" title='设置'>
-					<i class="font-icon icon-cog"></i>
-				</a>		
-				<a href="#" id='logout' class="logout right button" title='退出'>
-					<i class="font-icon icon-off"></i>
+				<input type="text" name="seach"/>
+				<a href="javascript:void(0);" id='search' class="right button" title='<?php echo $L['search'];?>'>
+					<i class="font-icon icon-search"></i>
 				</a>
 			</div>
-			-->
-
 		</div>
 	</div><!-- / header end -->
 
-
 	<div class="frame-main">
 		<div class='frame-left'>
-			<ul id="folderList" class="ztree">
-				<div class="loading " style="text-align:center;padding:20px;"><img src="./static/images/loading_content.gif"/></div>
-			</ul>
+			<ul id="folderList" class="ztree"></ul>
 		</div><!-- / frame-left end-->
 		<div class='frame-resize'></div>
 		<div class='frame-right'>
 			<div class="frame-right-main">
-				<div class="messageBox"><div class="content"></div></div>				
 				<div class="tools">
 					<div class="tools-left">
-				        <a id='newfolder' href="#" class="button left"><i class="font-icon icon-folder-close-alt"></i>新建文件夹</a>
-				        <a id='newfile' href="#" class="button middle"><i class="font-icon icon-file-alt"></i>新建文件</a>
-				        <a id='upload' href="#" class="button right"><i class="font-icon icon-cloud-upload"></i>上传</a>
-						<span class='msg'>载入中...</span>
+						<div class="btn-group btn-group-sm">
+					        <button id='newfolder' class="btn btn-default" type="button">
+					        	<i class="font-icon icon-folder-close-alt"></i><?php echo $L['newfolder'];?>
+					        </button>
+					        <button id='newfile' class="btn btn-default" type="button">
+					        	<i class="font-icon icon-file-alt"></i><?php echo $L['newfile'];?>
+					        </button>
+					        <button id='upload' class="btn btn-default" type="button">
+					        	<i class="font-icon icon-cloud-upload"></i><?php echo $L['upload'];?>
+					        </button>
+
+					        <div class="btn-group btn-group-sm">
+						    <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+						      <i class="font-icon icon-tasks"></i>more&nbsp;<span class="caret"></span>	      
+						    </button>
+						    <ul class="dropdown-menu pull-right drop-menu-action">
+						    	<li id="open"><a href='javascript:;'>
+						    	<i class="font-icon icon-folder-open-alt"></i><?php echo $L['open'];?></a></li>
+
+							    <li id="copy"><a href='javascript:;'>
+							    <i class="font-icon icon-copy"></i><?php echo $L['copy'];?></a></li>
+
+							    <li id="rname"><a href='javascript:;'>
+							    <i class="font-icon icon-pencil"></i><?php echo $L['rename'];?></a></li>
+
+							    <li id="cute"><a href='javascript:;'>
+							    <i class="font-icon icon-cut"></i><?php echo $L['cute'];?></a></li>
+							    <li id="past"><a href='javascript:;'>
+							    <i class="font-icon icon-paste"></i><?php echo $L['past'];?></a></li>
+							    <li id="remove"><a href='javascript:;'>
+							    <i class="font-icon icon-trash"></i><?php echo $L['remove'];?></a></li>
+
+							    <li class="divider"></li>
+							    <li id="zip"><a href='javascript:;'>
+							    <i class="font-icon icon-folder-close"></i><?php echo $L['zip'];?></a></li>
+							    <li id="download"><a href='javascript:;'>
+							    <i class="font-icon icon-download"></i><?php echo $L['download'];?></a></li>
+							    <li class="divider"></li>
+							    <li id="info"><a href='javascript:;'>			    
+							    <i class="font-icon icon-info"></i><?php echo $L['info'];?></a></li>
+						    </ul>
+						  </div>
+						</div>
+						<span class='msg'><?php echo $L['path_loading'];?></span>
 					</div>
 					<div class="tools-right">
-						<a id='set_icon' href="#" class="button left" title="显示图标模式"><i class="font-icon icon-th"></i></a>
-						<a id='set_list' href="#" class="button middle" title="显示列表模式"><i class="font-icon icon-list"></i></a>
-						<a id="set_theme" href="#" class="button right" title="更换主题"><i class="font-icon icon-dashboard"></i></a>
+						<div class="btn-group btn-group-sm">
+						  <button id='set_icon' title="<?php echo $L['list_icon'];?>" type="button" class="btn btn-default">
+						  	<i class="font-icon icon-th"></i>
+						  </button>
+						  <button id='set_list' title="<?php echo $L['list_list'];?>" type="button" class="btn btn-default">
+						  	<i class="font-icon icon-list"></i>
+						  </button>
+						  <div class="btn-group btn-group-sm">
+						    <button id="set_theme" title="<?php echo $L['setting_theme'];?>" type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+						      <i class="font-icon icon-dashboard"></i>&nbsp;&nbsp;<span class="caret"></span>
+						    </button>
+						    <ul class="dropdown-menu pull-right dropdown-menu-theme">
+							    <?php 
+									$tpl="<li class='list {this}' theme='{0}'><a href='javascript:void(0);'>{1}</a></li>\n";
+									echo getTplList(',',':',$config['setting_all']['themeall'],$tpl,$config['user']['theme'],'this');
+								?>
+						    </ul>
+						  </div>
+						</div>
 					</div>
 					<div style="clear:both"></div>
 				</div><!-- end tools -->
-
-				<ul id="theme_list" class="theme_list">
-					<?php 
-						$tpl="<li class='list {this}' theme='{0}'>{1}</li>\n";
-						echo getTplList('/','=',$value['config']['themeall'],$tpl,$value['config']['theme'],'this');
-					?>
-				</ul>
-
 				<div id='list_type_list'></div><!-- list type 列表排序方式 -->
 				<div class='bodymain html5_drag_upload_box'>
-					<div class="fileContiner">
-						<div class="loading " style="text-align:center;padding:20px;"><img src="./static/images/loading_content.gif"/></div>
-					</div>
+					<div class="fileContiner"></div>
 				</div><!-- html5拖拽上传list -->
 			</div>
 		</div><!-- / frame-right end-->
 	</div><!-- / frame-main end-->
-<script src="<?php echo STATIC_PATH;?>js/app/common/taskTap.js"></script>
-<script src="<?php echo STATIC_PATH;?>js/app/common/CMPlayer.js"></script>
-<script src="<?php echo STATIC_PATH;?>js/app/common/common.js"></script>
+<script src="<?php echo STATIC_PATH;?>js/lib/seajs/sea.js"></script>
+<script type="text/javascript">
+    var LNG = <?php echo json_encode($L);?>;
+    var AUTH = <?php echo json_encode($GLOBALS['auth']);?>;
+	var G = {
+		is_root 	: <?php echo  $GLOBALS['is_root'];?>,
+		web_root 	: "<?php echo $GLOBALS['web_root'];?>",
+		web_host 	: "<?php echo HOST;?>",
+		static_path : "<?php echo STATIC_PATH;?>",
+		basic_path  : "<?php echo BASIC_PATH;?>",
+		public_path  : "<?php echo PUBLIC_PATH;?>",
+		upload_max  : "<?php echo $upload_max;?>",
+		version 	: "<?php echo KOD_VERSION;?>",
+		app_host 	: "<?php echo APPHOST;?>",
 
-<script src="<?php echo STATIC_PATH;?>js/app/explorer/main.js"></script>
-<script src="<?php echo STATIC_PATH;?>js/app/explorer/rightMenu.js"></script>
-<script src="<?php echo STATIC_PATH;?>js/app/explorer/pathOperate.js"></script>
-<script src="<?php echo STATIC_PATH;?>js/app/explorer/fileSelect.js"></script>
+		this_path	: "<?php echo $dir;?>",//当前绝对路径
+		myhome   	: "<?php echo MYHOME;?>",//当前绝对路径	
+
+		json_data	: "",//用于存储每次获取列表后的json数据值。
+		list_type	: "<?php echo $config['user']['list_type'];?>",		//文件列表显示方式 list/icon
+		sort_field 	: "<?php echo $config['user']['list_sort_field'];?>", //列表排序依照的字段  
+		sort_order 	: "<?php echo $config['user']['list_sort_order'];?>",	//列表排序升序or降序
+		musictheme	: "<?php echo $config['user']['musictheme'];?>",
+		movietheme	: "<?php echo $config['user']['movietheme'];?>"	
+	};
+	seajs.config({
+		base: "<?php echo STATIC_PATH;?>js/",
+		preload: ["lib/jquery-1.8.0.min"]
+	});
+	seajs.use("<?php echo STATIC_JS;?>/src/explorer/main");
+</script>
 </body>
 </html>

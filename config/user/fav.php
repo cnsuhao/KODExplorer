@@ -1,1 +1,0 @@
-a:2:{i:0;a:2:{s:4:"name";s:5:"music";s:4:"path";s:1:"/";}i:1;a:2:{s:4:"name";s:6:"images";s:4:"path";s:1:"/";}}

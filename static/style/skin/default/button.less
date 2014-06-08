@@ -18,7 +18,7 @@ a.button {
 	border-radius: 2px;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
-	background:url(./images/buttons_40.png) 0 0px repeat-x;
+	background:url("@{img_common}buttons_40.png") 0 0px repeat-x;
 	margin: 0 0 0 -6px;
 }
 a.left {
@@ -47,7 +47,7 @@ a.right {
 	border-left: solid 1px #ddd;
 }
 a.button:hover {
-	background:#eee url(./images/buttons_40.png) 0 -12px repeat-x;
+	background:#eee url("@{img_common}buttons_40.png") 0 -12px repeat-x;
 	color: #333;
 	border-color: #999;
 	-moz-box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
@@ -56,3 +56,4 @@ a.button:hover {
 }
 a.left:hover,a.middle:hover{margin-right:1px;padding-right:9px;}
 a.button:active {color: #000;border-color: #444;}
+a.button:focus{outline: none;}

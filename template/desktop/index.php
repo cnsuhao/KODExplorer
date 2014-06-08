@@ -2,101 +2,105 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Cloud Explorer——云。在线资源管理</title>
-	<link rel="Shortcut Icon" href="<?php echo STATIC_PATH;?>images/favicon.ico">    
-	<script src="<?php echo STATIC_PATH;?>js/jquery-1.8.0.min.js"></script>	
-    <script src="<?php echo STATIC_PATH;?>js/common.js"></script>
-	<script src="<?php echo STATIC_PATH;?>js/artDialog/jquery.artDialog.js"></script>
-	<script src="<?php echo STATIC_PATH;?>js/contextMenu/jquery.ui.position.js"></script>
-	<script src="<?php echo STATIC_PATH;?>js/contextMenu/jquery.contextMenu.js"></script>
-	<script src="<?php echo STATIC_PATH;?>js/cmp4/cmp.js"></script>
-	<script src="<?php echo STATIC_PATH;?>js/picasa/picasa.js"></script>	
-
-	<link   href="<?php echo STATIC_PATH;?>style/font-awesome/style.css" rel="stylesheet"/>
-	<link   href="<?php echo STATIC_PATH;?>js/picasa/style/style.css" rel="stylesheet"/>
-
+	<title><?php echo $L['title'];?></title>
+	<link rel="Shortcut Icon" href="<?php echo STATIC_PATH;?>images/favicon.ico">
+	<link href="<?php echo STATIC_PATH;?>style/bootstrap.css" rel="stylesheet"/>	
+	<link href="<?php echo STATIC_PATH;?>style/font-awesome/style.css" rel="stylesheet"/>
+	<link href="<?php echo STATIC_PATH;?>js/lib/webuploader/webuploader.css" rel="stylesheet"/>    
+	<link href="<?php echo STATIC_PATH;?>js/lib/picasa/style/style.css" rel="stylesheet"/>
 	<?php if(STATIC_LESS == 'css'){ ?>
-	<link href="<?php echo STATIC_PATH;?>style/skin/<?php echo $value['config']['theme'];?>/app_desktop.css" rel="stylesheet" id='link_css_list'/>
+	<link href="<?php echo STATIC_PATH;?>style/skin/<?php echo $config['user']['theme'];?>app_desktop.css" rel="stylesheet" id='link_css_list'/>
 	<?php }else{//less_compare_online ?>
-	<link rel="stylesheet/less" type="text/css" href="<?php echo STATIC_PATH;?>style/skin/<?php echo $value['config']['theme'];?>/app_desktop.less"/>
-	<script src="<?php echo STATIC_PATH;?>js/less-1.4.2.min.js"></script>	
+	<link rel="stylesheet/less" type="text/css" href="<?php echo STATIC_PATH;?>style/skin/<?php echo $config['user']['theme'];?>app_desktop.less"/>
+	<script src="<?php echo STATIC_PATH;?>js/lib/less-1.4.2.min.js"></script>   
 	<?php } ?>
+	<style type="text/css" media="screen">
+	.desktop{
+		background:#222 url('<?php echo $wall;?>');
+		-moz-background-size: 100% 100%;
+		-o-background-size: 100% 100%;
+		-webkit-background-size: 100% 100%;
+		background-size: 100% 100%;
+	}
+	</style>
 </head>
 
-
-<script>
-var web_host	= '<?php echo HOST;?>';// localhost 访问根目录
-var this_path	= '<?php echo DESKTOP;?>';
-var WEB_ROOT	= '<?php echo WEB_ROOT;?>';//D:/wwwroot/ 服务器路径 用于api更新列表情况下保证web_path的正确性.
-var web_path	= '<?php echo urlencode(str_replace(WEB_ROOT,'', DESKTOP));?>';
-var app_path	= '<?php echo urlencode(APPHOST);?>';	///www/explorer/  程序路径，用于静态资源调用
-var json_data	= '';			//用于存储每次获取列表后的json数据值。
-var json_sort_field = '<?php echo $value['config']['list_sort_field'];?>'; //列表排序依照的字段  
-var json_sort_order = '<?php echo $value['config']['list_sort_order'];?>'; //列表排序升序or降序
-var static_path		= '<?php echo STATIC_PATH;?>';
-</script>
-
-<style type="text/css" media="screen">
-.desktop{
-    background:#222 url('<?php echo STATIC_PATH;?>images/wall_page/<?php echo $value['config']['wall'];?>.jpg');
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    -webkit-background-size: 100% 100%;
-    background-size: 100% 100%;
-}
-</style>
-
-<body onselectstart="return false" style="overflow: hidden;">
-    <?php include(TEMPLATE.'common/navbar/index.html');?>
+<body style="overflow: hidden;" oncontextmenu="return core.contextmenu();">
+	<?php include(TEMPLATE.'common/navbar.html');?>
+	<img class="wallbackground" src="" style='overflow:hidden'/>
 	<div class='bodymain html5_drag_upload_box desktop'>
-        <div class="messageBox"><div class="content"></div></div>
-		<div class="fileContiner">
-            <div class="loading " style="
-            text-align:center;padding:20px;position:absolute;left:50%;top:40%;
-            "><img src="./static/images/loading_content.gif"/></div>
-        </div>
+		<div class="fileContiner fileList_icon">
+			<div class="file systemBox menuDefault" data-app='{"name":"","resize":1,"type":"app","width":"800","height":"500","content":"core.explorer();"}'>
+				<div class="ico" filetype="oexe" style="background-image:url(<?php echo STATIC_PATH;?>images/app/computer.png)"></div>
+				<div class="titleBox"><span><?php echo $L['my_cumputer'];?></span></div>
+			</div>
+			<div class="file systemBox menuDefault" title="<?php echo $L['setting'];?>"
+			data-app='{"type":"app","width":"","height":"","content":"core.setting();"}'>
+				<div class="ico" filetype="oexe" style="background-image:url(<?php echo STATIC_PATH;?>images/app/setting.png)"></div>
+				<div class="titleBox" ><span><?php echo $L['setting'];?></span></div>
+			</div>
+			<div class="file systemBox menuDefault" title="<?php echo $L['app_store'];?>"
+			data-app='{"type":"app","width":"","height":"","content":"core.appStore();"}'>
+				<div class="ico" filetype="oexe" style="background-image:url(<?php echo STATIC_PATH;?>images/app/market.png)"></div>
+				<div class="titleBox"><span><?php echo $L['app_store'];?></span></div>
+			</div>
+		</div>
 	</div><!-- html5拖拽上传list -->
+	
+	<a href="#" class="start"></a>
+	<div id="taskbar" style="display:block;"><div id="desktop"></div></div>
+	<div id="menuwin">
+		<div id="startmenu"></div>
+		<ul id="programs">
+			<li><a href="#" onclick="ui.pathOpen.openIE('http://www.kalcaddle.com','<?php echo $L['my_document'];?>');">kodexplorer-home</a></li>
+			<li><div id="leftspliter"></div></li>
+			<li><a href="#" onclick="core.setting('help');">kodexplorer-<?php echo $L['setting_help'];?></a></li>
+			<li><a href="#" onclick="core.setting('about');">kodexplorer-<?php echo $L['setting_about'];?></a></li>
+			<li><a href="#" onclick="core.setting('user');">kodexplorer-<?php echo $L['setting'];?></a></li>
+			<li class="search"></li>
+		</ul>
+		<ul id="links">
+			<li class="icon"></li>
+			<li><a href="#" onclick="core.explorer('<?php echo MYHOME;?>/document','<?php echo $L['my_document'];?>');"><span><?php echo $L['my_document'];?></span></a></li>
+			<li><a href="#" onclick="core.explorer('<?php echo MYHOME;?>/picture','<?php echo $L['my_picture'];?>');"><span><?php echo $L['my_picture'];?></span></a></li>
+			<li><a href="#" onclick="core.explorer('<?php echo MYHOME;?>/music','<?php echo $L['my_music'];?>');"><span><?php echo $L['my_music'];?></span></a></li>
+			<li><a href="#" onclick="core.explorer('<?php echo MYHOME;?>/download','<?php echo $L['download'];?>');"><span><?php echo $L['download'];?></span></a></li>
+			<li><div id="rightspliter"></div></li>
+			<li><a href="#" onclick="core.setting('wall');"><span><?php echo $L['setting_wall'];?></span></a></li>
+			<li><a href="#" onclick="core.setting('fav');"><span><?php echo $L['setting_fav'];?></span></a></li>
+			<li><a href="#" onclick="core.setting('theme');"><span><?php echo $L['setting_theme'];?></span></a></li>
+			<li><a href="?user/logout" style="margin-top:70px;"><span><?php echo $L['ui_logout'];?>></span></a></li>            
+		</ul>
+	</div>
 
-
-   <div id="taskbar">
-        <a href="#" class="start"></a>
-        <div id="desktop"></div>
-    </div>
-    <div id="menuwin">
-        <div id="startmenu"></div>
-        <ul id="programs">
-            <li><a href="#">Internet Explorer</a></li>
-            <li><a href="#">Microsoft Media Center</a></li>
-            <li><div id="leftspliter"></div></li>
-            <li><a href="#">Microsoft Word 2010</a></li>
-            <li><a href="#">Microsoft Excel 2010</a></li>
-            <li><a href="#">Microsoft PowerPoint 2010</a></li>
-            <li><a href="#">Microsoft Access 2010</a></li>
-            <li><a href="#">Windows Update</a></li>
-            <li><div id="leftspliter"></div></li>
-            <li><a href="#">All Programs</a></li>
-            <li class="search"></li>
-        </ul>
-        <ul id="links">
-            <li class="icon"></li>
-            <li><a href="#" onclick="Main.PathOpen.openComputer('?explorer','我的文档');"><span>我的文档</span></a></li>
-            <li><a href="#" onclick="Main.PathOpen.openComputer('?explorer','我的图片');"><span>我的图片</span></a></li>
-            <li><a href="#" onclick="Main.PathOpen.openComputer('?explorer','我的音乐');"><span>我的音乐</span></a></li>
-            <li><a href="#" onclick="Main.PathOpen.openComputer('?explorer','下载');"><span>下载</span></a></li>
-            <li><div id="rightspliter"></div></li>
-            <li><a href="#" onclick="Main.Common.setting('wall');"><span>设置壁纸</span></a></li>
-            <li><a href="#" onclick="Main.Common.setting('fav');"><span>收藏夹管理</span></a></li>
-            <li><a href="#" onclick="Main.Common.setting('theme');"><span>设置主题</span></a></li>
-            <li><a href="?user/logout" style="margin-top:70px;"><span>退出></span></a></li>            
-        </ul>
-    </div>
-<script src="<?php echo STATIC_PATH;?>js/app/common/taskTap.js"></script>
-<script src="<?php echo STATIC_PATH;?>js/app/common/CMPlayer.js"></script>
-<script src="<?php echo STATIC_PATH;?>js/app/common/common.js"></script>
-
-<script src="<?php echo STATIC_PATH;?>js/app/desktop/main.js"></script>
-<script src="<?php echo STATIC_PATH;?>js/app/desktop/rightMenu.js"></script>
-<script src="<?php echo STATIC_PATH;?>js/app/desktop/pathOperate.js"></script>
-<script src="<?php echo STATIC_PATH;?>js/app/desktop/fileSelect.js"></script>
+<script src="<?php echo STATIC_PATH;?>js/lib/seajs/sea.js"></script>
+<script type="text/javascript">
+	var LNG = <?php echo json_encode($L);?>;
+	var AUTH = <?php echo json_encode($GLOBALS['auth']);?>;
+	var G = {
+		is_root 	: <?php echo $GLOBALS['is_root'];?>,
+		web_root 	: "<?php echo $GLOBALS['web_root'];?>",
+		web_host 	: "<?php echo HOST;?>",
+		static_path : "<?php echo STATIC_PATH;?>",
+		basic_path  : "<?php echo BASIC_PATH;?>",
+		public_path  : "<?php echo PUBLIC_PATH;?>",
+		upload_max  : "<?php echo $upload_max;?>",
+		version 	: "<?php echo KOD_VERSION;?>",
+		app_host 	: "<?php echo APPHOST;?>",
+		this_path   : "<?php echo MYHOME.'desktop/';?>",//当前绝对路径
+		web_path    : "<?php echo str_replace(WEB_ROOT,'', USER.'home/desktop/');?>",// 当前url目录
+		
+		json_data   : "",//用于存储每次获取列表后的json数据值。
+		sort_field  : "<?php echo $config['user']['list_sort_field'];?>", //列表排序依照的字段  
+		sort_order  : "<?php echo $config['user']['list_sort_order'];?>",   //列表排序升序or降序
+		musictheme  : "<?php echo $config['user']['musictheme'];?>",
+		movietheme  : "<?php echo $config['user']['movietheme'];?>" 
+	};
+	seajs.config({
+		base: "<?php echo STATIC_PATH;?>js/",
+		preload: ["lib/jquery-1.8.0.min"]
+	});
+	seajs.use("<?php echo STATIC_JS;?>/src/desktop/main");
+</script>
 </body>
 </html>

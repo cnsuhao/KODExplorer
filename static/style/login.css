@@ -1,57 +1,41 @@
-body{background:#f0f0f0;color:#666;font-size:14px;font-family:"微软雅黑";}
-.loginbox{ position:absolute; left:50%; top:50%; height:292px; width:682px; margin:-146px 0 0 -341px; overflow:hidden; background:url(../images/box.png) no-repeat;  }
-.loginbox .content{position:absolute;left:280px; width:330px;margin-top:30px;}
-.loginbox .content .title{color:#888;padding:5px;padding-right:0px;font-size:15px;border-bottom:1px dashed #ddd;margin-left:20px;}
+body {background:#e6e5ea;font-size: 13px; padding: 0px; margin: 0px; font-family: "微软雅黑", "Microsoft Yahei", "STXihei", arial, sans-serif;color:#666;}
+input,button { font-family: "微软雅黑", "Microsoft Yahei", "STXihei", arial, sans-serif;}
+.loginbox{box-shadow: 0px 10px 150px #666;width:350px;border-radius:3px;padding-bottom: 30px;
+    background: #fff;position:absolute;top:50%;left:50%;margin-top:-240px;margin-left:-175px;}
 
-.loginbox .inputs {margin-top:20px;}
-.loginbox .inputs div {width:400px;margin-left:20px;}
-.loginbox .inputs div span
-{display:block;float:left;width:60px;line-height:30px;text-align:right;font-size:13px;}
 
-.loginbox .inputs div input{
-	background:rgba(255, 255, 255, .6);
-	color:#666;
-	font-weight:800;
-	letter-spacing:1px;
-	background: #f1f1f1\9;
-	padding: 6px;
-	margin: 0 0 15px 5px;
-	width: 180px;
-	border: 1px solid #ccc;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
+.title{width:100%;background:#6699cc;color:#fff;height: 80px;
+	border-top-left-radius: 3px;border-top-right-radius: 3px;padding-top: 30px;}
+.title .logo{text-align: center;font-size: 30px;width: 100%;
+	-webkit-box-reflect: below -10px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(255, 255, 255, 0.3)));
 }
-.loginbox .actions{margin-top: 0px;margin-left:85px;}
-.loginbox #submit{
-	margin-right:20px;
-	height: 30px;
-	padding: 0;
-	width: 80px;
-	cursor: pointer;
-	font-size:15px;
-	color: #eee; 
-	text-transform: uppercase; 
-	margin-top: 10px;
-	background-color: #18a5cc;
-	border: none;		
-	-webkit-transition: -webkit-box-shadow 0.3s linear;
-	-moz-border-radius: 4px; 
-	-webkit-border-radius: 4px;
-	border-radius: 4px; 
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#18a5cc), to(#0a85a8)); 
-	background: -moz-linear-gradient(25% 75% 90deg,#0a85a8, #18a5cc);
-}
-.loginbox #submit:hover,#submit:focus{
-	background:#6cf;
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#18a5cc), to(#0a85a8)); 
-	background: -moz-linear-gradient(25% 75% 90deg,#0a85a8, #18a5cc);
-	box-shadow:1px 1px 20px #aaa;
-	font-weight:800;
-}
-.loginbox #submit:active{
-	outline: none;   
-	 -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
-	 -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
-	 box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;		
-}
+.title .logo b{color:#99ccff;font-weight: 400;}
+.title .info{text-align: right;font-size: 12px;color:#99ccff;padding-right: 13px;padding-top: 15px;}	
+
+.w80{width: 80px;}
+.inputs{padding:30px;padding-bottom:0px;}
+.inputs div{margin-bottom: 15px;}
+.inputs div span{display: block;float: left;width:80px;line-height:30px;height:30px;}
+.inputs div input{height: 25px;width: 190px;}
+.inputs .check_code{margin-bottom: 0;}
+.inputs .check_code input{width:110px;display: block;float: left;}
+.inputs .check_code img{display: block;float: left;padding-left: 10px;width: 70px;height: 32px;}	
+
+input,input:focus {outline: none; box-shadow: none; border: 1px solid #bbb;padding:3px 5px;}
+input:focus {border-color: #75A1F0; outline: none; box-shadow: 0 0 12px #75A1F0; 
+	-webkit-transition: all 0.218s; -moz-transition: all 0.218s; -o-transition: all 0.218s; -ms-transition: all 0.218s; transition: all 0.218s;}
+
+.actions{padding-left:90px;}
+.checkbox{border:none;padding-right: 10px;}
+.actions #submit{border:none;outline: none;background: #6699cc;color:#fff;
+	padding: 5px 30px;margin-left: 20px;padding: 2px 15px\9;}
+.actions #submit:hover{background: #369;}
+.actions #submit:active{background: #444;}
+.msg{color: #f96;text-align: center;margin-bottom: -10px;padding-top: 10px;}
+.footer{color: #999;position: absolute;bottom: 15px;text-align: center;width: 100%;}
+
+
+.guest{text-align:center;margin: 0 auto;margin-top:30px;}
+.guest a{color:#69C;text-decoration:none;border-bottom: 2px solid #f6f6f6;border:2px solid #e6e6e6;border-radius:20px;padding:5px 10px;display: inline-block;}
+.guest a i{padding-left: 8px;}
+.guest a:hover{color:#f60;border-color:#f60;}

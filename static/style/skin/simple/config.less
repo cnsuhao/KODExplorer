@@ -1,48 +1,15 @@
+@import "../../base.less";
 @file_select_color:#ccc;
-@file_select_border:darken(@file_select_color,20%);
-
+@file_select_border:darken(@file_select_color,30%);
 @file_background2:lighten(@file_select_color,15%);
-@file_hover_color:@file_select_color;
-@file_hover_border:darken(@file_select_color,8%);
+@file_hover_color:lighten(@file_select_color,8%);
+@file_hover_border:@file_select_color;
+@top_back:#333;
+@top_back_select:lighten(@top_back,15%);
 
-/* 颜色微调【同样颜色灰度值调节】 */
-::-webkit-scrollbar-track-piece{background-color:#f5f5f5;border-left:1px solid #d2d2d2}
-::-webkit-scrollbar{width:12px;height:10px}
-::-webkit-scrollbar-thumb{background-color:#c2c2c2;background-clip:padding-box;border:1px solid #979797;min-height:28px}
-::-webkit-scrollbar-thumb:hover{border:1px solid #636363;background-color:#929292}
-body{font-size:13px;padding:0px;margin:0px;font-family:"微软雅黑";.user-select(none);}
-
-@navbar_height:40px;
-.navbar{
-	width:100%;height:(@navbar_height);color:#ddd;z-index:100;
-	background:#333;
-	position:fixed;box-shadow:0 0 1px #111;
-	.content{		
-		padding:0px;line-height:40px;
-		i{display: inline-block;padding-right: 10px;text-shadow:0 0 1px;font-size: 1.1em;}
-		a{display:block;text-decoration:none;color:#fff;padding:0px 1.5em;
-			.transition();padding:0px 1.5em;
-		}		
-		ul.dropmenu{list-style: none;padding: 0;margin: 0;padding: 5px 0 10px;height:auto;
-			position: absolute;top:38px;z-index: 9999;background: #fff;color: #666;display: none;
-			border: 1px solid #ddd;box-shadow: 0 2px 5px #ccc;border-top: none;right: 10px;
-			li{height: 30px;margin: 0;padding: 0;line-height: 30px;}
-			li a{margin: 0; padding-left: 30px;width:100px;border: none;color: #666;
-				&:hover{background:#ddd;color:#000;};
-			}
-		}
-		.top_left{			
-			a{	float:left;border-right:1px solid;margin-left:-1px;border-left:1px solid;border-color:#555;
-				&:hover,&.this{background:#666;}
-				&.title{font-size:18px;font-weight:800;width:151px;padding-left:49px;padding-right: 0;}
-				&.title:hover{background:none;}
-			}
-		}
-		.top_right{
-			a{border: none;}
-			.topbar_user{margin-top: 5px;line-height: 32px;.transition(none);}
-			&.this .topbar_user{color:#555;background: #fff;border: 1px solid #ddd;margin-top: 5px;}	
-			float:right;margin-right: 10px;
-		}		
-	}
-}
+@tree_background:#f3f3f3;
+.topback{.gradient(top,lighten(@top_back,15%),@top_back);};
+.topback_this{background:@top_back_select;.gradient(top,lighten(@top_back_select,15%),@top_back_select);};
+@import "../common.less";
+@import "./button.less";
+@import "./dialog.less";
