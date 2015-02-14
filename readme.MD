@@ -1,4 +1,4 @@
-﻿##KodExplorer (http://kalcaddle.com/)
+##KodExplorer (http://kalcaddle.com/)
 ###ver2.73(2014.9.17)
 `商业版授权请联系：kalcaddle#qq.com`
 
@@ -10,6 +10,7 @@
  - 中文等多语言支持：中文编码全面兼容,文件编辑自动适配。
  - 超快的速度：全面采用Ajax+Json进行数据通信,毫秒级的响应速度；
  - 全平台兼容性：Win Linux Mac (Apache、Nginx、IIS)
+---test
 
 #### 2.使用场景：
  - 取代FTP,服务端、客户端软件等复杂的安装配置。kod可以一键安装随处使用.
